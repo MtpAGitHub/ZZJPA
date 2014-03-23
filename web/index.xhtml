@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        <title>Login Page</title>
+        <h:outputStylesheet library="css" name="JPAstylesheet.css"/>
+    </h:head>
+    <h:body>
+        <h:form id="loginPage">
+            <div class="header">
+                <h1>PalPay Login</h1>
+            </div>
+            <div id="loginFields">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>Username :</td>
+                            <td><h:inputText id="username" value="#{login.username}"/></td>
+                        </tr>
+                        <tr>
+                            <td>Password :</td>
+                            <td><h:inputSecret id="password" value="#{login.password}"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="loginButtons">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><h:commandButton class="loginBtn" value="Login" action="#{login.loginUser()}"/></td>
+                            <td><h:button class="regBtn" value="Register" outcome="register"/></td>
+                            <td><h:commandButton class="logoutBtn" value="Logout" action="#{login.logoutUser()}"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="footer">
+                <h:outputText class="debugText" value="#{debug.debugText}"/>
+            </div>
+        </h:form>
+    </h:body>
+</html>
