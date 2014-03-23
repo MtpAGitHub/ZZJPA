@@ -35,9 +35,11 @@ public class ENTUser implements Serializable {
         
     }
     
-    public ENTUser(String cForename, String cSurname) {
+    public ENTUser(String cForename, String cSurname, String cUsername, String cPassword) {
         this.forename = cForename;
         this.surname = cSurname;
+        this.username = cUsername;
+        this.password = cPassword;
     }
     
     public Long getPersonId() {

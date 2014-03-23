@@ -22,8 +22,16 @@
     <navigation-rule>
         <from-view-id>/index.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>error</from-outcome>
+            <from-outcome>loginerr</from-outcome>
             <to-view-id>/error/loginError.xhtml</to-view-id>
+            <!--            <redirect></redirect>-->
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/index.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>logout</from-outcome>
+            <to-view-id>/logout.xhtml</to-view-id>
             <!--            <redirect></redirect>-->
         </navigation-case>
     </navigation-rule>

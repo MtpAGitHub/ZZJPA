@@ -4,9 +4,48 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html">
     <h:head>
         <title>PalPay Homepage</title>
+        <h:outputStylesheet library="css" name="JPAPagestyle.css"/>
+        <h:outputStylesheet library="css" name="JPAHomestyle.css"/>
     </h:head>
     <h:body>
-        <h1>Welcome to the home page !</h1>
+        <h:form id="userHome">
+            <div class="header">
+                <h1>PalPay User Home Page</h1>
+            </div>
+            <div class="homepage">
+                <table class="hometbl">
+                    <thead>
+                        <tr>
+                            <th>User details</th>
+                            <th>Account list</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>user data</td>
+                            <td>account data</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="hometbl">
+                    <thead>
+                        <tr>
+                            <th>Transaction details</th>
+                            <th>Request details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>transaction data</td>
+                            <td>request data</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="footer">
+                <h:outputText class="debugText" value="#{debug.debugText}"/>
+            </div>
+        </h:form>
     </h:body>
 </html>
 

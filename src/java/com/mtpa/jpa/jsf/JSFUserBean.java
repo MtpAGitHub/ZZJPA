@@ -2,7 +2,7 @@
 
 package com.mtpa.jpa.jsf;
 
-import com.mtpa.jpa.ejb.UserStorageLocal;
+import com.mtpa.jpa.iface.UserStorageLocal;
 import com.mtpa.jpa.entity.ENTUser;
 import java.io.Serializable;
 import java.util.List;

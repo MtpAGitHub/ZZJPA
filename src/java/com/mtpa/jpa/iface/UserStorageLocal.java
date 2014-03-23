@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.mtpa.jpa.ejb;
+package com.mtpa.jpa.iface;
 
 import com.mtpa.jpa.entity.ENTUser;
 import java.util.List;
@@ -17,6 +17,6 @@ public interface UserStorageLocal {
 
     List<ENTUser> getUserDetails();
 
-    void setUserDetails(String vForename, String vSurname);
+    void setUserDetails(String vForename, String vSurname, String vUsername, String vPassword);
     
 }
