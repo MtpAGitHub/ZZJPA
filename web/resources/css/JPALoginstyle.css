@@ -9,6 +9,7 @@
     box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 2px;
     width: 300px;
     height: 200px;
+    background-color: lightblue;
 }
 
 .loginButtons {
