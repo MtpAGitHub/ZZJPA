@@ -7,6 +7,7 @@
 package com.mtpa.jpa.iface;
 
 import com.mtpa.jpa.entity.ENTUser;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -17,6 +18,6 @@ public interface UserStorageLocal {
 
     List<ENTUser> getUserDetails();
 
-    void setUserDetails(String vForename, String vSurname, String vUsername, String vPassword);
+    void setUserDetails(String vForename, String vSurname, String vUsername, String vPassword, Date vCreatedDate);
     
 }

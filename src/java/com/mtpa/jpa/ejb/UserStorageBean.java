@@ -5,6 +5,7 @@ package com.mtpa.jpa.ejb;
 import com.mtpa.jpa.entity.ENTUser;
 import com.mtpa.jpa.iface.UserStorageLocal;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -30,8 +31,8 @@ public class UserStorageBean implements Serializable, UserStorageLocal {
     }
     
     @Override
-    public void setUserDetails(String vForename, String vSurname, String vUsername, String vPassword) {
-        ENTUser user = new ENTUser(vForename, vSurname, vUsername, vPassword);
+    public void setUserDetails(String vForename, String vSurname, String vUsername, String vPassword, Date vCreatedDate) {
+        ENTUser user = new ENTUser(vForename, vSurname, vUsername, vPassword, vCreatedDate);
         userEM.persist(user);
     }
     

@@ -3,12 +3,14 @@
 package com.mtpa.jpa.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
+import javax.persistence.Temporal;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -31,15 +33,20 @@ public class ENTUser implements Serializable {
     @NotNull
     private String password;
     
+    @NotNull
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date createdDate;
+    
     public ENTUser() {
         
     }
     
-    public ENTUser(String cForename, String cSurname, String cUsername, String cPassword) {
+    public ENTUser(String cForename, String cSurname, String cUsername, String cPassword, Date cCreatedDate) {
         this.forename = cForename;
         this.surname = cSurname;
         this.username = cUsername;
         this.password = cPassword;
+        this.createdDate =cCreatedDate;
     }
     
     public Long getPersonId() {
@@ -82,14 +89,23 @@ public class ENTUser implements Serializable {
         this.password = password;
     }
 
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 47 * hash + Objects.hashCode(this.personId);
-        hash = 47 * hash + Objects.hashCode(this.forename);
-        hash = 47 * hash + Objects.hashCode(this.surname);
-        hash = 47 * hash + Objects.hashCode(this.username);
-        hash = 47 * hash + Objects.hashCode(this.password);
+        hash = 71 * hash + Objects.hashCode(this.personId);
+        hash = 71 * hash + Objects.hashCode(this.forename);
+        hash = 71 * hash + Objects.hashCode(this.surname);
+        hash = 71 * hash + Objects.hashCode(this.username);
+        hash = 71 * hash + Objects.hashCode(this.password);
+        hash = 71 * hash + Objects.hashCode(this.createdDate);
         return hash;
     }
 
@@ -117,12 +133,15 @@ public class ENTUser implements Serializable {
         if (!Objects.equals(this.password, other.password)) {
             return false;
         }
+        if (!Objects.equals(this.createdDate, other.createdDate)) {
+            return false;
+        }
         return true;
     }
 
     @Override
     public String toString() {
-        return "ENTUser{" + "personId=" + personId + ", forename=" + forename + ", surname=" + surname + ", username=" + username + ", password=" + password + '}';
+        return "ENTUser{" + "personId=" + personId + ", forename=" + forename + ", surname=" + surname + ", username=" + username + ", password=" + password + ", createdDate=" + createdDate + '}';
     }
 
 }

@@ -2,6 +2,9 @@
 
 package com.mtpa.jpa.jsf;
 
+import com.mtpa.jpa.iface.DateStampLocal;
+import com.mtpa.jpa.iface.UserStorageLocal;
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -9,6 +12,11 @@ import javax.inject.Named;
 @Named("register")
 @RequestScoped
 public class JSFRegisterBean {
+
+    @EJB
+    UserStorageLocal registeredUser;
+    @EJB
+    DateStampLocal registerDate;
     
     @Inject
     JSFDebugBean debugMsg;
@@ -63,6 +71,7 @@ public class JSFRegisterBean {
     }
 
     public String registerUser() {
+        registeredUser.setUserDetails(userForename, userSurname, userUsername, userPassword, registerDate.getWsDateStamp());
         debugMsg.setDebugText("We have registered");
         return "index";
     }
