@@ -10,32 +10,34 @@
     <h:body>
         <h:form id="loginPage">
             <div class="header">
-                <h1>PalPay Login</h1>
+                <h3>PalPay Login</h3>
             </div>
-            <div id="loginFields">
-                <table>
-                    <tbody>
-                        <tr>
-                            <td>Username :</td>
-                            <td><h:inputText id="username" value="#{login.username}"/></td>
-                        </tr>
-                        <tr>
-                            <td>Password :</td>
-                            <td><h:inputSecret id="password" value="#{login.password}"/></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div id="loginButtons">
-                <table>
-                    <tbody>
-                        <tr>
-                            <td><h:commandButton class="loginBtn" value="Login" action="#{login.loginUser()}"/></td>
-                            <td><h:button class="regBtn" value="Register" outcome="register"/></td>
-                            <td><h:commandButton class="logoutBtn" value="Logout" action="#{login.logoutUser()}"/></td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="loginBox">
+                <div class="loginFields">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>Username :</td>
+                                <td><h:inputText id="username" value="#{login.username}"/></td>
+                            </tr>
+                            <tr>
+                                <td>Password :</td>
+                                <td><h:inputSecret id="password" value="#{login.password}"/></td>
+                            </tr>
+                        </tbody>
+                    </table>                    
+                </div>
+                <div class="loginButtons">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td><h:commandButton class="loginBtn" value="Login" action="#{login.loginUser()}"/></td>
+                                <td><h:button class="regBtn" value="Register" outcome="register"/></td>
+                                <td><h:commandButton class="logoutBtn" value="Logout" action="#{login.logoutUser()}"/></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <div class="footer">
                 <h:outputText class="debugText" value="#{debug.debugText}"/>
