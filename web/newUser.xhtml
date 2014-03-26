@@ -1,56 +1,66 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>User Registration</title>
         <h:outputScript library="js" name="passwordConfirm.js"/>
         <h:outputStylesheet library="css" name="JPAPagestyle.css"/>
-        <h:outputStylesheet library="css" name="JPALoginstyle.css"/>
+        <h:outputStylesheet library="css" name="JPARegisterstyle.css"/>
     </h:head>
     <h:body>
         <h:form id="userReg" onsubmit="return passwordConfirm()">
             <div class="header">
                 <h3>PalPay Registration</h3>
             </div>
-            <div id="registerBody" class="detailsBox, registerBox">
-                <div id="registerFields">
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>Forename :</td>
-                                <td><h:inputText id="forename" value="#{register.userForename}" required="true" 
-                                                 requiredMessage="You must have forename"/></td>
-                            </tr>
-                            <tr>
-                                <td>Surname :</td>
-                                <td><h:inputText id="surname" value="#{register.userSurname}"/></td>
-                            </tr>
-                            <tr>
-                                <td>Username :</td>
-                                <td><h:inputText id="username" value="#{register.userUsername}"/></td>
-                            </tr>
-                            <tr>
-                                <td>Password :</td>
-                                <td><h:inputSecret id="password" value="#{register.userPassword}"/></td>
-                            </tr>
-                            <tr>
-                                <td>Confirm Password :</td>
-                                <td><h:inputSecret id="confPassword" value="#{register.confPassword}"/></td>
-                            </tr>
-                        </tbody>
-                    </table>                    
-                </div>
-                <div class="registerButtons">
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td><h:commandButton id="submit" value="Submit" action="#{register.registerUser()}"/></td>
-                                <td><h:button id="cancel" value="Cancel" outcome="index"/></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+            <div class="pageBody">
+                <div class="detailsBox, registerBox">
+                    <div id="registerFields">
+                        <table>
+                            <tbody class="space05em">
+                                <tr>
+                                    <td>Forename :</td>
+                                    <td><h:inputText id="forename" value="#{register.userForename}" required="true" 
+                                                     requiredMessage="You must have forename"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Surname :</td>
+                                    <td><h:inputText id="surname" value="#{register.userSurname}"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Currency :</td>
+                                    <td><h:selectOneMenu id="currency" value="#{register.userCurrency}">
+                                            <f:selectItems value="#{prefcurrency.preferredCurrency}"/>
+                                        </h:selectOneMenu>
+                                    </td>
+                                </tr>                                
+                                <tr>
+                                    <td>Username :</td>
+                                    <td><h:inputText id="username" value="#{register.userUsername}"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Password :</td>
+                                    <td><h:inputSecret id="password" value="#{register.userPassword}"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Confirm Password :</td>
+                                    <td><h:inputSecret id="confPassword" value="#{register.confPassword}"/></td>
+                                </tr>
+                            </tbody>
+                        </table>                    
+                    </div>
+                    <div class="registerButtons">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td><h:commandButton id="submit" value="Submit" action="#{register.registerUser()}"/></td>
+                                    <td><h:button id="cancel" value="Cancel" outcome="index"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>                
             </div>
             <div class="errors">
                 <h:outputText id="errorTxt" class="loginErrors" value="#{error.errorText}"/>

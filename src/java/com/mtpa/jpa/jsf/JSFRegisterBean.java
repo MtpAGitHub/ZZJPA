@@ -2,6 +2,7 @@
 
 package com.mtpa.jpa.jsf;
 
+import com.mtpa.jpa.enums.CurrencyEnum;
 import com.mtpa.jpa.iface.DateStampLocal;
 import com.mtpa.jpa.iface.UserStorageLocal;
 import javax.ejb.EJB;
@@ -23,6 +24,7 @@ public class JSFRegisterBean {
     
     private String  userForename;
     private String  userSurname;
+    private CurrencyEnum userCurrency;
     private String  userUsername;
     private String  userPassword;
     private String  confPassword;
@@ -44,6 +46,14 @@ public class JSFRegisterBean {
 
     public void setUserSurname(String userSurname) {
         this.userSurname = userSurname;
+    }
+
+    public CurrencyEnum getUserCurrency() {
+        return userCurrency;
+    }
+
+    public void setUserCurrency(CurrencyEnum userCurrency) {
+        this.userCurrency = userCurrency;
     }
 
     public String getUserUsername() {

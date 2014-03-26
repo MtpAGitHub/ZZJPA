@@ -1,3 +1,4 @@
+//260314    MtpA    Added NOTNULL annotations to username & groupname
 //230314    MtpA    Created directly from the SYSTEMUSERGROUP example in the Security exercise
 
 package com.mtpa.jpa.entity;
@@ -8,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Version;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class ENTUserGroup implements Serializable {
@@ -19,7 +21,10 @@ public class ENTUserGroup implements Serializable {
     @Version
     private Long version;
 
+    @NotNull
     private String username;
+    
+    @NotNull
     private String groupName;
 
     public ENTUserGroup() {

@@ -34,7 +34,7 @@ public class ENTUser implements Serializable {
     private String password;
     
     @NotNull
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date createdDate;
     
     public ENTUser() {
