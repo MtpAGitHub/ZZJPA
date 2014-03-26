@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>PalPay Account Screen</title>
+        <h:outputStylesheet library="css" name="JPAPagestyle.css"/>
+        <h:outputStylesheet library="css" name="JPABoxstyle.css"/>
+        <h:outputStylesheet library="css" name="JPAButtonstyle.css"/>
+        <h:outputStylesheet library="css" name="JPATablestyle.css"/>
+    </h:head>
+    <h:body>
+        <h:form id="newAccount">
+            <div class="header">
+                <h3>PalPay New Account</h3>
+            </div>
+            <div class="pageBody">
+                <div class="shadowBox Box300150">
+                    <div class="acctFields">
+                        <table>
+                            <tbody class="space05em">
+                                <tr>
+                                    <td>Account Name :</td>
+                                    <td><h:inputText id="acctname" value="#{account.accountName}"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Currency :</td>
+                                    <td><h:selectOneMenu id="currency" value="#{account.accountCur}">
+                                            <f:selectItems value="#{prefcurrency.preferredCurrency}"/>
+                                        </h:selectOneMenu>
+                                    </td>
+                                </tr>                                
+                                <tr>
+                                    <td>Account Balance :</td>
+                                    <td><h:outputText id="balance" value="#{account.accountBal}"/></td>
+                                </tr>
+                            </tbody>
+                        </table>                    
+                    </div>
+                    <div class="submitButtons">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td><h:commandButton class="submitBtn" value="Submit" action="#{account.submitAccount()}"/></td>
+                                    <td><h:button class="cancelBtn" value="Cancel" outcome="home"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <h:outputText class="debugText" value="#{debug.debugText}"/>
+            </div>
+        </h:form>
+    </h:body>
+</html>
+

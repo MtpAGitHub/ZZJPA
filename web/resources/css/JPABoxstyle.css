@@ -1,0 +1,22 @@
+/*130314    MtpA    Created stylesheet*/
+
+.Box300300 {
+    margin-top: 50px;
+    margin-left: 100px;
+    width: 300px;
+    height: 300px;
+    background-color: lightblue;
+}
+
+.Box300150 {
+    margin-top: 100px;
+    margin-left: 100px;
+    width: 300px;
+    height: 150px;
+    background-color: lightblue;
+}
+
+.shadowBox {
+    border-bottom: 1px solid #bbb;
+    box-shadow: 5px 5px 2px #888888;
+}

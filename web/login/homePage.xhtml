@@ -5,14 +5,17 @@
     <h:head>
         <title>PalPay Homepage</title>
         <h:outputStylesheet library="css" name="JPAPagestyle.css"/>
-        <h:outputStylesheet library="css" name="JPAHomestyle.css"/>
+        <h:outputStylesheet library="css" name="JPABoxstyle.css"/>
+        <h:outputStylesheet library="css" name="JPAButtonstyle.css"/>
+        <h:outputStylesheet library="css" name="JPATablestyle.css"/>
     </h:head>
     <h:body>
         <h:form id="userHome">
             <div class="header">
-                <h1>PalPay User Home Page</h1>
+                <h3>PalPay User Home Page</h3>
+                <h:commandLink class="logout" value="logout" action="#{user.logoutUser()}"/>
             </div>
-            <div class="homepage">
+            <div class="pageBody">
                 <table class="hometbl">
                     <thead>
                         <tr>
@@ -22,7 +25,29 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>user data</td>
+                            <td>
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td>Forename :</td>
+                                            <td><h:outputText id="userForename" value="#{user.forename}"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Surname :</td>
+                                            <td><h:outputText id="userSurname" value="#{user.surname}"/></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td><h:commandButton id="newaccount" value="New Account" action="#{user.newAccount()}"/></td>
+                                            <td><h:commandButton id="newrequest" value="New Request" action="#{user.newRequest()}"/></td>
+                                            <td><h:commandButton id="newpayment" value="New Payment" action="#{user.newPayment()}"/></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
                             <td>account data</td>
                         </tr>
                     </tbody>

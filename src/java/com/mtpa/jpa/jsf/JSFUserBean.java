@@ -51,4 +51,23 @@ public class JSFUserBean implements Serializable {
     public List<ENTUser> getAllUser() {
         return userDet.getUserDetails();
     }
+    
+    public String logoutUser() {
+        return "logout";
+    }
+    
+    public String newAccount() {
+        debugMsg.setDebugText("New account");
+        return "account";
+    }
+    
+    public String newRequest() {
+        debugMsg.setDebugText("New request");
+        return "request";
+    }
+    
+    public String newPayment() {
+        debugMsg.setDebugText("New payment");
+        return "payment";
+    }
 }

@@ -26,14 +26,6 @@
     position: relative;    
 }
 
-.detailsBox {
-    border-bottom: 1px solid #bbb;
-    -webkit-box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 2px;
-    -moz-box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 2px;
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 2px;
-}
-
-
 .debugText {
     color: green;
 }
@@ -50,7 +42,9 @@
     color: red;
 }
 
-tbody.space05em > tr > td {
-    padding-bottom: 0.5em;
-    padding-top: 0.5em;
+.logout {
+    font-size: 12pt;
+    position: absolute;
+    border-right: 0;
+    color: blue;
 }

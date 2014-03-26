@@ -24,7 +24,6 @@ public class JSFRegisterBean {
     
     private String  userForename;
     private String  userSurname;
-    private CurrencyEnum userCurrency;
     private String  userUsername;
     private String  userPassword;
     private String  confPassword;
@@ -46,14 +45,6 @@ public class JSFRegisterBean {
 
     public void setUserSurname(String userSurname) {
         this.userSurname = userSurname;
-    }
-
-    public CurrencyEnum getUserCurrency() {
-        return userCurrency;
-    }
-
-    public void setUserCurrency(CurrencyEnum userCurrency) {
-        this.userCurrency = userCurrency;
     }
 
     public String getUserUsername() {
@@ -83,6 +74,6 @@ public class JSFRegisterBean {
     public String registerUser() {
         registeredUser.setUserDetails(userForename, userSurname, userUsername, userPassword, registerDate.getWsDateStamp());
         debugMsg.setDebugText("We have registered");
-        return "index";
+        return "home";
     }
 }

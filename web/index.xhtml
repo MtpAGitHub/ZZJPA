@@ -5,7 +5,9 @@
     <h:head>
         <title>Login Page</title>
         <h:outputStylesheet library="css" name="JPAPagestyle.css"/>
-        <h:outputStylesheet library="css" name="JPALoginstyle.css"/>
+        <h:outputStylesheet library="css" name="JPABoxstyle.css"/>
+        <h:outputStylesheet library="css" name="JPAButtonstyle.css"/>
+        <h:outputStylesheet library="css" name="JPATablestyle.css"/>
     </h:head>
     <h:body>
         <h:form id="loginPage">
@@ -13,7 +15,7 @@
                 <h3>PalPay Login</h3>
             </div>
             <div class="pageBody">
-                <div class="detailsBox, loginBox">
+                <div class="shadowBox Box300150">
                     <div class="loginFields">
                         <table>
                             <tbody class="space05em">
@@ -34,7 +36,6 @@
                                 <tr>
                                     <td><h:commandButton class="loginBtn" value="Login" action="#{login.loginUser()}"/></td>
                                     <td><h:button class="regBtn" value="Register" outcome="register"/></td>
-                                    <td><h:commandButton class="logoutBtn" value="Logout" action="#{login.logoutUser()}"/></td>
                                 </tr>
                             </tbody>
                         </table>

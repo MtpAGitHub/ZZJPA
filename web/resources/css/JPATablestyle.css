@@ -1,9 +1,14 @@
 /*130314    MtpA    Created stylesheet*/
 
 .hometbl {
-    width: 600px;
+    width: 950px;
     height: 300px;
     margin-bottom: 10px;
     margin-top: 10px;
     background-color: lightgray;
+}
+
+tbody.space05em > tr > td {
+    padding-bottom: 0.5em;
+    padding-top: 0.5em;
 }

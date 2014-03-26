@@ -7,7 +7,9 @@
         <title>User Registration</title>
         <h:outputScript library="js" name="passwordConfirm.js"/>
         <h:outputStylesheet library="css" name="JPAPagestyle.css"/>
-        <h:outputStylesheet library="css" name="JPARegisterstyle.css"/>
+        <h:outputStylesheet library="css" name="JPABoxstyle.css"/>
+        <h:outputStylesheet library="css" name="JPAButtonstyle.css"/>
+        <h:outputStylesheet library="css" name="JPATablestyle.css"/>
     </h:head>
     <h:body>
         <h:form id="userReg" onsubmit="return passwordConfirm()">
@@ -15,7 +17,7 @@
                 <h3>PalPay Registration</h3>
             </div>
             <div class="pageBody">
-                <div class="detailsBox, registerBox">
+                <div class="shadowBox Box300300">
                     <div id="registerFields">
                         <table>
                             <tbody class="space05em">
@@ -28,13 +30,6 @@
                                     <td>Surname :</td>
                                     <td><h:inputText id="surname" value="#{register.userSurname}"/></td>
                                 </tr>
-                                <tr>
-                                    <td>Currency :</td>
-                                    <td><h:selectOneMenu id="currency" value="#{register.userCurrency}">
-                                            <f:selectItems value="#{prefcurrency.preferredCurrency}"/>
-                                        </h:selectOneMenu>
-                                    </td>
-                                </tr>                                
                                 <tr>
                                     <td>Username :</td>
                                     <td><h:inputText id="username" value="#{register.userUsername}"/></td>

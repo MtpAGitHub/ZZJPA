@@ -3,6 +3,9 @@
     xmlns="http://xmlns.jcp.org/xml/ns/javaee"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+
+<!-- login page -->
+
     <navigation-rule>
         <from-view-id>/index.xhtml</from-view-id>
         <navigation-case>
@@ -27,16 +30,22 @@
             <!--            <redirect></redirect>-->
         </navigation-case>
     </navigation-rule>
+
+<!-- error page -->
+
     <navigation-rule>
-        <from-view-id>/index.xhtml</from-view-id>
+        <from-view-id>/error/loginError.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>logout</from-outcome>
-            <to-view-id>/logout.xhtml</to-view-id>
+            <from-outcome>index</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
             <!--            <redirect></redirect>-->
         </navigation-case>
     </navigation-rule>
+
+<!-- registration page -->
+
     <navigation-rule>
-        <from-view-id>/error/loginError.xhtml</from-view-id>
+        <from-view-id>/newUser.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>index</from-outcome>
             <to-view-id>/index.xhtml</to-view-id>
@@ -46,8 +55,46 @@
     <navigation-rule>
         <from-view-id>/newUser.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>index</from-outcome>
-            <to-view-id>/index.xhtml</to-view-id>
+            <from-outcome>home</from-outcome>
+            <to-view-id>/login/homePage.xhtml</to-view-id>
+            <!--            <redirect></redirect>-->
+        </navigation-case>
+    </navigation-rule>
+
+<!-- home page -->
+
+    <navigation-rule>
+        <from-view-id>/login/homePage.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>logout</from-outcome>
+            <to-view-id>/logout.xhtml</to-view-id>
+            <!--            <redirect></redirect>-->
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/login/homePage.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>account</from-outcome>
+            <to-view-id>/login/newAccount.xhtml</to-view-id>
+            <!--            <redirect></redirect>-->
+        </navigation-case>
+    </navigation-rule>
+
+<!-- account page -->
+
+    <navigation-rule>
+        <from-view-id>/login/newAccount.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>home</from-outcome>
+            <to-view-id>/login/homePage.xhtml</to-view-id>
+            <!--            <redirect></redirect>-->
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/login/newAccount.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>logout</from-outcome>
+            <to-view-id>/logout.xhtml</to-view-id>
             <!--            <redirect></redirect>-->
         </navigation-case>
     </navigation-rule>
