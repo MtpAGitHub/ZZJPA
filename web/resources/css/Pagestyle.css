@@ -9,6 +9,7 @@
   border-bottom-width: 2px;
   border-bottom-color: blue;
   margin-bottom: 50px;
+  position: relative;
 }
 
 .footer { 
@@ -44,7 +45,6 @@
 
 .logout {
     font-size: 12pt;
-    position: absolute;
-    border-right: 0;
     color: blue;
+    float: right;
 }

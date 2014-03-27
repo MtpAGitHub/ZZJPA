@@ -32,7 +32,7 @@ public class ENTTransaction implements Serializable {
     private Long tpAccountId;
     
     @NotNull
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date transactionDate;
     
     public Long getId() {
