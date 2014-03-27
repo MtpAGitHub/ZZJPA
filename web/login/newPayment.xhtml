@@ -4,51 +4,47 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>PalPay Account Screen</title>
+        <title>Page title</title>
         <h:outputStylesheet library="css" name="Pagestyle.css"/>
         <h:outputStylesheet library="css" name="Boxstyle.css"/>
         <h:outputStylesheet library="css" name="Buttonstyle.css"/>
         <h:outputStylesheet library="css" name="Tablestyle.css"/>
     </h:head>
     <h:body>
-        <h:form id="newAccount">
+        <h:form id="formID">
             <div class="header">
-                <h3>PalPay New Account</h3>
+                <h3>PalPay Payment Screen</h3>
             </div>
             <div class="pageBody">
                 <div class="shadowBox Box300150">
-                    <div class="acctFields">
-                        <table>
-                            <tbody class="space05em">
-                                <tr>
-                                    <td>Account Name :</td>
-                                    <td><h:inputText id="acctname" value="#{account.accountName}"/></td>
-                                </tr>
-                                <tr>
-                                    <td>Currency :</td>
-                                    <td><h:selectOneMenu id="currency" value="#{account.accountCur}">
-                                            <f:selectItems value="#{prefcurrency.preferredCurrency}"/>
-                                        </h:selectOneMenu>
-                                    </td>
-                                </tr>                                
-                                <tr>
-                                    <td>Account Balance :</td>
-                                    <td><h:outputText id="balance" value="#{account.accountBal}"/></td>
-                                </tr>
-                            </tbody>
-                        </table>                    
-                    </div>
-                    <div class="submitButtons">
+                    <div id="divDetails">
                         <table>
                             <tbody>
                                 <tr>
-                                    <td><h:commandButton class="submitBtn" value="Submit" action="#{account.submitAccount()}"/></td>
-                                    <td><h:button class="cancelBtn" value="Cancel" outcome="home"/></td>
+                                    <td>Payee :</td>
+                                    <td><h:inputText id="payee" value="#{payment.paymentUser}" title="Payee username"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Payment Amount :</td>
+                                    <td><h:inputText id="payamount" value="#{payment.paymentAmt}" title="Amount in YOUR currency"/></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                </div>
+                    <div class="divButtons">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td><h:commandButton id="submit" value="Submit" action="#{payment.submitPayment()}"/></td>
+                                    <td><h:button id="cancel" value="Cancel" outcome="home"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>                
+            </div>
+            <div class="errors">
+                <h:outputText id="errorTxt" class="loginErrors" value="#{error.errorText}"/>
             </div>
             <div class="footer">
                 <h:outputText class="debugText" value="#{debug.debugText}"/>

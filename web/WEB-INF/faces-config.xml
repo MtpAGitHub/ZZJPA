@@ -79,6 +79,14 @@
             <!--            <redirect></redirect>-->
         </navigation-case>
     </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/login/homePage.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>payment</from-outcome>
+            <to-view-id>/login/newPayment.xhtml</to-view-id>
+            <!--            <redirect></redirect>-->
+        </navigation-case>
+    </navigation-rule>
 
 <!-- account page -->
 
@@ -92,6 +100,25 @@
     </navigation-rule>
     <navigation-rule>
         <from-view-id>/login/newAccount.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>logout</from-outcome>
+            <to-view-id>/logout.xhtml</to-view-id>
+            <!--            <redirect></redirect>-->
+        </navigation-case>
+    </navigation-rule>
+
+<!-- payment page -->
+
+    <navigation-rule>
+        <from-view-id>/login/newPayment.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>home</from-outcome>
+            <to-view-id>/login/homePage.xhtml</to-view-id>
+            <!--            <redirect></redirect>-->
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/login/newPayment.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>logout</from-outcome>
             <to-view-id>/logout.xhtml</to-view-id>
