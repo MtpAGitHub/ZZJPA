@@ -9,12 +9,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.validation.constraints.NotNull;
 
 @Entity
-@NamedQuery(name="findAllUsers", query = "SELECT c FROM ENTUser c")
+@NamedQueries({
+    @NamedQuery(name="findAllUsers", query = "SELECT user FROM ENTUser user"),
+    @NamedQuery(name="findSingleUser", query = "SELECT user FROM ENTUser user WHERE user.username = :username")
+})
 public class ENTUser implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

@@ -4,7 +4,7 @@ package com.mtpa.jpa.jsf;
 
 import com.mtpa.jpa.enums.CurrencyEnum;
 import com.mtpa.jpa.iface.DateStampLocal;
-import com.mtpa.jpa.iface.UserStorageLocal;
+import com.mtpa.jpa.iface.UserJPALocal;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -15,7 +15,7 @@ import javax.inject.Named;
 public class JSFRegisterBean {
 
     @EJB
-    UserStorageLocal registeredUser;
+    UserJPALocal registeredUser;
     @EJB
     DateStampLocal registerDate;
     

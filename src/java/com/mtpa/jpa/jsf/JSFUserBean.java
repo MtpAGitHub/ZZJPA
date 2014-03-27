@@ -2,24 +2,24 @@
 
 package com.mtpa.jpa.jsf;
 
-import com.mtpa.jpa.iface.UserStorageLocal;
+import com.mtpa.jpa.iface.UserJPALocal;
 import com.mtpa.jpa.entity.ENTUser;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 @Named("user")
-@RequestScoped
+@SessionScoped
 public class JSFUserBean implements Serializable {
 
     @Inject
     JSFDebugBean debugMsg;
     
     @EJB
-    UserStorageLocal userDet;
+    UserJPALocal userDet;
     
     private String forename;
     private String surname;
@@ -49,7 +49,7 @@ public class JSFUserBean implements Serializable {
     }
 
     public List<ENTUser> getAllUser() {
-        return userDet.getUserDetails();
+        return userDet.getAllUsers();
     }
     
     public String logoutUser() {

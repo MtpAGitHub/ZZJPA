@@ -5,7 +5,7 @@ package com.mtpa.jpa.ejb;
 
 import com.mtpa.jpa.entity.ENTUser;
 import com.mtpa.jpa.entity.ENTUserGroup;
-import com.mtpa.jpa.iface.UserStorageLocal;
+import com.mtpa.jpa.iface.UserJPALocal;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
@@ -21,23 +21,40 @@ import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 @Stateless
-@Local(UserStorageLocal.class)
-public class UserStorageBean implements Serializable, UserStorageLocal {
+@Local(UserJPALocal.class)
+public class UserJPABean implements Serializable, UserJPALocal {
 
     @PersistenceContext
     EntityManager userEM;
     
-    public UserStorageBean() {
+    public UserJPABean() {
         
     }
 
     @Override
-    public List<ENTUser> getUserDetails() {
+    public List<ENTUser> getAllUsers() {
         return userEM.createNamedQuery("findAllUsers").getResultList();
     }
     
+    @Override
+    public ENTUser getUser(String vUsername) {
+        
+        //See reference notes for why used getResultList as opposed to getSingleResult (unhandled exception)
+        //Did not use find() method as username is not the PK
+        
+        Query findSingleUser = userEM.createNamedQuery("findSingleUser");
+        findSingleUser.setParameter("username", vUsername);
+        List<ENTUser> userDetail = findSingleUser.getResultList();
+        if (!userDetail.isEmpty()) {
+            return userDetail.get(0);
+        } else {
+            return null;
+        }
+    }
+
     @Override
     public void setUserDetails(String vForename, String vSurname, String vUsername, String vPassword, Date vCreatedDate) {
         try {
@@ -54,7 +71,7 @@ public class UserStorageBean implements Serializable, UserStorageLocal {
             ENTUserGroup userGroup = new ENTUserGroup(vUsername, "users");
             userEM.persist(userGroup);
         } catch (UnsupportedEncodingException | NoSuchAlgorithmException ex) {
-            Logger.getLogger(UserStorageBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserJPABean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     

@@ -14,9 +14,11 @@ import java.util.List;
  *
  * @author MtpA
  */
-public interface UserStorageLocal {
+public interface UserJPALocal {
 
-    List<ENTUser> getUserDetails();
+    List<ENTUser> getAllUsers();
+    
+    ENTUser getUser(String vUsername);
 
     void setUserDetails(String vForename, String vSurname, String vUsername, String vPassword, Date vCreatedDate);
     
