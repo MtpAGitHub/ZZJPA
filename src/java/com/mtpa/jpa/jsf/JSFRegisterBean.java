@@ -2,7 +2,6 @@
 
 package com.mtpa.jpa.jsf;
 
-import com.mtpa.jpa.enums.CurrencyEnum;
 import com.mtpa.jpa.iface.DateStampLocal;
 import com.mtpa.jpa.iface.UserJPALocal;
 import javax.ejb.EJB;
@@ -74,6 +73,6 @@ public class JSFRegisterBean {
     public String registerUser() {
         registeredUser.setUserDetails(userForename, userSurname, userUsername, userPassword, registerDate.getWsDateStamp());
         debugMsg.setDebugText("We have registered");
-        return "home";
+        return "index";
     }
 }

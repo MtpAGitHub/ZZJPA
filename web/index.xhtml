@@ -21,11 +21,11 @@
                             <tbody class="space05em">
                                 <tr>
                                     <td>Username :</td>
-                                    <td><h:inputText id="username" value="#{login.username}"/></td>
+                                    <td><h:inputText id="username" value="#{user.username}"/></td>
                                 </tr>
                                 <tr>
                                     <td>Password :</td>
-                                    <td><h:inputSecret id="password" value="#{login.password}"/></td>
+                                    <td><h:inputSecret id="password" value="#{user.userPassword}"/></td>
                                 </tr>
                             </tbody>
                         </table>                    
@@ -34,7 +34,7 @@
                         <table>
                             <tbody>
                                 <tr>
-                                    <td><h:commandButton class="loginBtn" value="Login" action="#{login.loginUser()}"/></td>
+                                    <td><h:commandButton class="loginBtn" value="Login" action="#{user.loginUser()}"/></td>
                                     <td><h:button class="regBtn" value="Register" outcome="register"/></td>
                                 </tr>
                             </tbody>

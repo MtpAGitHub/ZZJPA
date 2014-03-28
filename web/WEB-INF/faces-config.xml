@@ -52,14 +52,6 @@
             <!--            <redirect></redirect>-->
         </navigation-case>
     </navigation-rule>
-    <navigation-rule>
-        <from-view-id>/newUser.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>home</from-outcome>
-            <to-view-id>/login/homePage.xhtml</to-view-id>
-            <!--            <redirect></redirect>-->
-        </navigation-case>
-    </navigation-rule>
 
 <!-- home page -->
 
