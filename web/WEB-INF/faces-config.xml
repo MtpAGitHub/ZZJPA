@@ -10,7 +10,7 @@
         <from-view-id>/index.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>home</from-outcome>
-            <to-view-id>/login/homePage.xhtml</to-view-id>
+            <to-view-id>/user/homePage.xhtml</to-view-id>
             <!--            <redirect></redirect>-->
         </navigation-case>
     </navigation-rule>
@@ -56,7 +56,7 @@
 <!-- home page -->
 
     <navigation-rule>
-        <from-view-id>/login/homePage.xhtml</from-view-id>
+        <from-view-id>/user/homePage.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>logout</from-outcome>
             <to-view-id>/logout.xhtml</to-view-id>
@@ -64,26 +64,26 @@
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/login/homePage.xhtml</from-view-id>
+        <from-view-id>/user/homePage.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>account</from-outcome>
-            <to-view-id>/login/newAccount.xhtml</to-view-id>
+            <to-view-id>/user/newAccount.xhtml</to-view-id>
             <!--            <redirect></redirect>-->
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/login/homePage.xhtml</from-view-id>
+        <from-view-id>/user/homePage.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>payment</from-outcome>
-            <to-view-id>/login/newPayment.xhtml</to-view-id>
+            <to-view-id>/user/newPayment.xhtml</to-view-id>
             <!--            <redirect></redirect>-->
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/login/homePage.xhtml</from-view-id>
+        <from-view-id>/user/homePage.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>request</from-outcome>
-            <to-view-id>/login/newRequest.xhtml</to-view-id>
+            <to-view-id>/user/newRequest.xhtml</to-view-id>
             <!--            <redirect></redirect>-->
         </navigation-case>
     </navigation-rule>
@@ -91,10 +91,10 @@
 <!-- account page -->
 
     <navigation-rule>
-        <from-view-id>/login/newAccount.xhtml</from-view-id>
+        <from-view-id>/user/newAccount.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>home</from-outcome>
-            <to-view-id>/login/homePage.xhtml</to-view-id>
+            <to-view-id>/user/homePage.xhtml</to-view-id>
             <!--            <redirect></redirect>-->
         </navigation-case>
     </navigation-rule>
@@ -102,10 +102,10 @@
 <!-- request page -->
 
     <navigation-rule>
-        <from-view-id>/login/newRequest.xhtml</from-view-id>
+        <from-view-id>/user/newRequest.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>home</from-outcome>
-            <to-view-id>/login/homePage.xhtml</to-view-id>
+            <to-view-id>/user/homePage.xhtml</to-view-id>
             <!--            <redirect></redirect>-->
         </navigation-case>
     </navigation-rule>
