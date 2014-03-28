@@ -35,14 +35,14 @@ public class UserJPABean implements Serializable, UserJPALocal {
     }
 
     @Override
-    public List<ENTUser> getAllUsers() {
+    public synchronized List<ENTUser> getAllUsers() {
         return userEM.createNamedQuery("findAllUsers").getResultList();
     }
     
     @Override
-    public ENTUser getUser(String vUsername) {
+    public synchronized ENTUser getUser(String vUsername) {
         
-        //See reference notes for why used getResultList as opposed to getSingleResult (unhandled exception)
+        //Used getResultList as opposed to getSingleResult (exception handling as can't guarantee only one record)
         //Did not use find() method as username is not the PK
         
         Query findSingleUser = userEM.createNamedQuery("findSingleUser");
@@ -56,7 +56,23 @@ public class UserJPABean implements Serializable, UserJPALocal {
     }
 
     @Override
-    public void setUserDetails(String vForename, String vSurname, String vUsername, String vPassword, Date vCreatedDate) {
+    public synchronized boolean userExist(String vUsername) {
+        
+        //Used getResultList as opposed to getSingleResult (exception handling as can't guarantee only one record)
+        //Did not use find() method as username is not the PK
+
+        Query findSingleUser = userEM.createNamedQuery("findSingleUser");
+        findSingleUser.setParameter("username", vUsername);
+        List<ENTUser> userDetail = findSingleUser.getResultList();
+        if (!userDetail.isEmpty()) {
+            return true;
+        } else {
+            return false;
+        }        
+    }
+    
+    @Override
+    public synchronized void setUserDetails(String vForename, String vSurname, String vUsername, String vPassword, Date vCreatedDate) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             String passwd = vPassword;

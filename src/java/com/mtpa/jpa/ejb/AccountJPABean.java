@@ -12,6 +12,7 @@ import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 @Stateless
 @Local(AccountJPALocal.class)
@@ -27,6 +28,30 @@ public class AccountJPABean implements AccountJPALocal {
     @Override
     public synchronized List<ENTAccount> getAccountList() {
         return accountEm.createNamedQuery("findAllAccounts").getResultList();
+    }
+    
+    @Override
+    public synchronized ENTAccount getSingleAccount(String vAccountName) {
+        Query findSingleAcct = accountEm.createNamedQuery("findSingleAccount");
+        findSingleAcct.setParameter("acctname", vAccountName);
+        List<ENTAccount> acctDetail = findSingleAcct.getResultList();
+        if (!acctDetail.isEmpty()) {
+            return acctDetail.get(0);
+        } else {
+            return null;
+        }
+    }
+    
+    @Override
+    public synchronized boolean accountExist(String vAccountName) {
+        Query findSingleAcct = accountEm.createNamedQuery("findSingleAccount");
+        findSingleAcct.setParameter("acctname", vAccountName);
+        List<ENTAccount> acctDetail = findSingleAcct.getResultList();
+        if (!acctDetail.isEmpty()) {
+            return true;
+        } else {
+            return false;
+        }        
     }
     
     @Override

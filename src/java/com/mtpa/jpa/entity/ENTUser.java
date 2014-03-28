@@ -14,6 +14,10 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.validation.constraints.NotNull;
 
+// Using NamedQueries annotation as got more than one.  Tried Google on 'multiple named queries'
+// Oracle documentation just came back with single NamedQuery examples and no obvious link anywhere else
+// http://www.objectdb.com/java/jpa/query/named came back with @NamedQueries annotation below
+
 @Entity
 @NamedQueries({
     @NamedQuery(name="findAllUsers", query = "SELECT user FROM ENTUser user"),

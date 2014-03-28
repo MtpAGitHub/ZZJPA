@@ -1,8 +1,10 @@
 //120314    MtpA    Created
 package com.mtpa.jpa.jsf;
 
+import com.mtpa.jpa.entity.ENTAccount;
 import com.mtpa.jpa.iface.UserJPALocal;
 import com.mtpa.jpa.entity.ENTUser;
+import com.mtpa.jpa.iface.AccountJPALocal;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
@@ -19,6 +21,8 @@ public class JSFUserBean implements Serializable {
 
     @EJB
     UserJPALocal userDet;
+    @EJB
+    AccountJPALocal accountDet;
 
     private long userId;
     private String username;
@@ -91,10 +95,14 @@ public class JSFUserBean implements Serializable {
          */
         if (!this.username.equals("error")) {
             ENTUser validUser = userDet.getUser(username);
-            this.userId = validUser.getPersonId();
-            this.userForename = validUser.getForename();
-            this.userSurname = validUser.getSurname();
-            return "home";
+            if (validUser != null) {
+                this.userId = validUser.getPersonId();
+                this.userForename = validUser.getForename();
+                this.userSurname = validUser.getSurname();
+                return "home";
+            } else {
+                return "loginerr";
+            }
         } else {
             return "loginerr";
         }
@@ -126,6 +134,10 @@ public class JSFUserBean implements Serializable {
     public String newAccount() {
         debugMsg.setDebugText("New account");
         return "account";
+    }
+
+    public List<ENTAccount> getAllAccounts() {
+        return accountDet.getAccountList();
     }
 
     public String newRequest() {

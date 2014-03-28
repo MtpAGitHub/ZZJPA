@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+//280314    MtpA    Created
 
 package com.mtpa.jpa.entity;
 
@@ -13,15 +9,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.validation.constraints.NotNull;
 
-/**
- *
- * @author MtpA
- */
 @Entity
-@NamedQuery(name="findAllAccounts",query="SELECT c FROM ENTAccount c ")
+@NamedQueries({
+    @NamedQuery(name="findAllAccounts",query="SELECT acct FROM ENTAccount acct"),
+    @NamedQuery(name="findSingleAccount", query = "SELECT acct FROM ENTAccount acct WHERE acct.accountName = :acctname")
+})
 public class ENTAccount implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

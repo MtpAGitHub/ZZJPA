@@ -2,7 +2,10 @@
 
 package com.mtpa.jpa.jsf;
 
+import com.mtpa.jpa.entity.ENTAccount;
 import com.mtpa.jpa.enums.CurrencyEnum;
+import com.mtpa.jpa.iface.AccountJPALocal;
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -11,14 +14,19 @@ import javax.inject.Named;
 @RequestScoped
 public class JSFAcctBean {
 
+    @EJB
+    AccountJPALocal accountDet;
+    
     @Inject
     JSFErrorBean errorTxt;
     @Inject
     JSFDebugBean debugTxt;
+    @Inject
+    JSFUserBean curUser;
     
     private String accountName;
     private CurrencyEnum accountCur;
-    private double accountBal = 1000000;        //should be STATIC but cannot access from JSF page
+    private double accountBal = 1000000;        //should be STATIC FINAL but cannot access from JSF page
     
     public JSFAcctBean() {
         
@@ -48,7 +56,13 @@ public class JSFAcctBean {
         this.accountBal = accountBal;
     }
 
-    public void submitAccount() {
-        debugTxt.setDebugText("Add a new account");
+    public String submitAccount() {
+        if (!accountDet.accountExist(accountName)) {
+            accountDet.createAccount(curUser.getUserId(), accountName, accountBal, accountCur);
+            return "home";
+        } else {
+            errorTxt.setErrorText("Account already exists");
+            return "home";
+        }
     }
 }

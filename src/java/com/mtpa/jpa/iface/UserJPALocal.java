@@ -19,6 +19,8 @@ public interface UserJPALocal {
     List<ENTUser> getAllUsers();
     
     ENTUser getUser(String vUsername);
+    
+    boolean userExist(String vUsername);
 
     void setUserDetails(String vForename, String vSurname, String vUsername, String vPassword, Date vCreatedDate);
     

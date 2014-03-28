@@ -10,6 +10,10 @@ public interface AccountJPALocal {
 
     void createAccount(long vUserId, String vAccountName, double vBalance, CurrencyEnum vCurrency);
 
+    ENTAccount getSingleAccount(String vAccountName);
+
+    boolean accountExist(String vAccountName);
+    
     List<ENTAccount> getAccountList();
     
 }
