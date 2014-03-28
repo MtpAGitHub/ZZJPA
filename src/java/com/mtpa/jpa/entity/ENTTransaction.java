@@ -9,10 +9,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.validation.constraints.NotNull;
 
 @Entity
+@NamedQueries({
+    @NamedQuery(name="findAllTransactions",query="SELECT trans FROM ENTTransaction trans"),
+})
 public class ENTTransaction implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -34,6 +39,18 @@ public class ENTTransaction implements Serializable {
     @NotNull
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date transactionDate;
+    
+    public ENTTransaction() {
+        
+    }
+    
+    public ENTTransaction(long vAccountId, double vAmount, long vTPUserId, long vTPAccoutId, Date vCreatedDate) {
+        this.accountId = vAccountId;
+        this.transactionAmt = vAmount;
+        this.tpUserId = vTPUserId;
+        this.tpAccountId = vTPAccoutId;
+        this.transactionDate = vCreatedDate;
+    }
     
     public Long getId() {
         return id;

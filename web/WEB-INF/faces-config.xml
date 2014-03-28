@@ -110,4 +110,15 @@
         </navigation-case>
     </navigation-rule>
 
+<!-- payment page -->
+
+    <navigation-rule>
+        <from-view-id>/user/newPayment.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>home</from-outcome>
+            <to-view-id>/user/homePage.xhtml</to-view-id>
+            <!--            <redirect></redirect>-->
+        </navigation-case>
+    </navigation-rule>
+
 </faces-config>

@@ -9,10 +9,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.validation.constraints.NotNull;
 
 @Entity
+@NamedQueries({
+    @NamedQuery(name="findAllRequests",query="SELECT req FROM ENTRequest req"),
+})
 public class ENTRequest implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -32,6 +37,17 @@ public class ENTRequest implements Serializable {
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date requestDate;
 
+    public ENTRequest() {
+        
+    }
+    
+    public ENTRequest(long vRequestorId, long vRequesteeId, double vAmount, Date vCreateDate) {
+        this.requestorId = vRequestorId;
+        this.requesteeId = vRequesteeId;
+        this.requestAmt = vAmount;
+        this.requestDate = vCreateDate;
+    }
+    
     public Long getId() {
         return id;
     }

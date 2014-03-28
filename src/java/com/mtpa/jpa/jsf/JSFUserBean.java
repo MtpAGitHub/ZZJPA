@@ -2,9 +2,13 @@
 package com.mtpa.jpa.jsf;
 
 import com.mtpa.jpa.entity.ENTAccount;
+import com.mtpa.jpa.entity.ENTRequest;
+import com.mtpa.jpa.entity.ENTTransaction;
 import com.mtpa.jpa.iface.UserJPALocal;
 import com.mtpa.jpa.entity.ENTUser;
 import com.mtpa.jpa.iface.AccountJPALocal;
+import com.mtpa.jpa.iface.RequestJPALocal;
+import com.mtpa.jpa.iface.TransactionJPALocal;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
@@ -23,6 +27,10 @@ public class JSFUserBean implements Serializable {
     UserJPALocal userDet;
     @EJB
     AccountJPALocal accountDet;
+    @EJB
+    TransactionJPALocal transDet;
+    @EJB
+    RequestJPALocal requestDet;
 
     private long userId;
     private String username;
@@ -131,22 +139,15 @@ public class JSFUserBean implements Serializable {
         return userDet.getAllUsers();
     }
 
-    public String newAccount() {
-        debugMsg.setDebugText("New account");
-        return "account";
-    }
-
     public List<ENTAccount> getAllAccounts() {
         return accountDet.getAccountList();
     }
 
-    public String newRequest() {
-        debugMsg.setDebugText("New request");
-        return "request";
+    public List<ENTRequest> getAllRequests() {
+        return requestDet.getRequestList();
     }
 
-    public String newPayment() {
-        debugMsg.setDebugText("New payment");
-        return "payment";
+    public List<ENTTransaction> getAllTransactions() {
+        return transDet.getTransactionList();
     }
 }

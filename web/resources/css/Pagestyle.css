@@ -48,3 +48,9 @@
     color: blue;
     float: right;
 }
+
+.backlink {
+    font-size: 12pt;
+    color: blue;
+    float: left;    
+}

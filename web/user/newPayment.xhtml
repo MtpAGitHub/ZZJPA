@@ -17,7 +17,7 @@
             </div>
             <div class="pageBody">
                 <div class="shadowBox Box300150">
-                    <div class="loginButtons">
+                    <div class="paymentFields">
                         <table>
                             <tbody class="space05em">
                                 <tr>
@@ -35,7 +35,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="divButtons">
+                    <div class="submitButtons">
                         <table>
                             <tbody>
                                 <tr>
@@ -51,6 +51,7 @@
                 <h:outputText id="errorTxt" class="loginErrors" value="#{error.errorText}"/>
             </div>
             <div class="footer">
+                <h:link class="backlink" value="Back" outcome="home"></h:link>
                 <h:outputText class="debugText" value="#{debug.debugText}"/>
             </div>
         </h:form>

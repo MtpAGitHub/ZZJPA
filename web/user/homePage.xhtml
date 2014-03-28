@@ -50,9 +50,9 @@
                                 <table>
                                     <tbody>
                                         <tr>
-                                            <td><h:commandButton id="newaccount" value="New Account" action="#{user.newAccount()}"/></td>
-                                            <td><h:commandButton id="newrequest" value="New Request" action="#{user.newRequest()}"/></td>
-                                            <td><h:commandButton id="newpayment" value="New Payment" action="#{user.newPayment()}"/></td>
+                                            <td><h:button id="newaccount" value="New Account" outcome="account"/></td>
+                                            <td><h:button id="newrequest" value="New Request" outcome="request"/></td>
+                                            <td><h:button id="newpayment" value="New Payment" outcome="payment"/></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -91,8 +91,46 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>transaction data</td>
-                            <td>request data</td>
+                            <td>
+                                <h:outputText value="No transaction records" rendered="#{user.allTransactions.size() == 0}"/>
+                                <h:dataTable value="#{user.allTransactions}" var="trans" frame="border" rendered="#{user.allTransactions.size() > 0}"
+                                             styleClass="userdatatbl" headerClass="userdatahdr" rowClasses="userdatarow">
+                                    <h:column>
+                                        <f:facet name="header">Account Id</f:facet>
+                                            #{trans.accountId}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Amount</f:facet>
+                                            #{trans.transactionAmt}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Transaction User</f:facet>
+                                            #{trans.tpUserId}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Transaction Date</f:facet>
+                                            #{trans.transactionDate}
+                                    </h:column>
+                                </h:dataTable>                                
+                            </td>
+                            <td>
+                                <h:outputText value="No request records" rendered="#{user.allRequests.size() == 0}"/>
+                                <h:dataTable value="#{user.allRequests}" var="req" frame="border" rendered="#{user.allRequests.size() > 0}"
+                                             styleClass="userdatatbl" headerClass="userdatahdr" rowClasses="userdatarow">
+                                    <h:column>
+                                        <f:facet name="header">Requestor Id</f:facet>
+                                            #{req.requestorId}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Amount</f:facet>
+                                            #{req.requestAmt}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Request Date</f:facet>
+                                            #{req.requestDate}
+                                    </h:column>
+                                </h:dataTable>                                
+                            </td>
                         </tr>
                     </tbody>
                 </table>
