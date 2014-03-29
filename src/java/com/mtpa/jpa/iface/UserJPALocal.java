@@ -18,6 +18,8 @@ public interface UserJPALocal {
 
     List<ENTUser> getAllUsers();
     
+    List<ENTUser> getAllTpUsers(long vUserId);
+    
     ENTUser getUser(String vUsername);
     
     boolean userExist(String vUsername);

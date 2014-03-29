@@ -15,5 +15,7 @@ public interface AccountJPALocal {
     boolean accountExist(String vAccountName);
     
     List<ENTAccount> getAccountList();
+
+    List<ENTAccount> getUserAccountList(long vUserId);
     
 }

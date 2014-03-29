@@ -22,16 +22,26 @@
                             <tbody class="space05em">
                                 <tr>
                                     <td>Payee :</td>
-                                    <td><h:inputText id="payee" value="#{payment.paymentUser}" title="Payee username"/></td>
+                                    <td><h:selectOneMenu id="payee" value="#{payment.payeeUsername}" title="Payee username">
+                                            <f:selectItems value="#{payment.tpUsers}"/>
+                                        </h:selectOneMenu>
+                                    </td>
                                 </tr>
-                                <tr>
+                                <tr id="payeeAct">
                                     <td>Account :</td>
-                                    <td><h:inputText id="payact" value="#{payment.paymentAct}" title="Payee account no"/></td>
+                                    <td><h:inputText id="payeeacct" value="#{payment.payeeActName}" title="Payee account name"</td>
                                 </tr>
                                 <tr>
                                     <td>Payment Amount :</td>
                                     <td><h:inputText id="payamount" value="#{payment.paymentAmt}" title="Amount in YOUR currency"/></td>
                                 </tr>
+                                <tr>
+                                    <td>From account :</td>
+                                    <td><h:selectOneMenu id="payee" value="#{payment.paymentActName}" title="From which of your accounts">
+                                            <f:selectItems value="#{payment.myAccounts}"/>
+                                        </h:selectOneMenu>
+                                    </td>
+                                </tr>                                
                             </tbody>
                         </table>
                     </div>

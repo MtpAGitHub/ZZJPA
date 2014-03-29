@@ -40,6 +40,13 @@ public class UserJPABean implements Serializable, UserJPALocal {
     }
     
     @Override
+    public synchronized List<ENTUser> getAllTpUsers(long vUserId) {
+        Query findAllTpUsers = userEM.createNamedQuery("findAllTpUsers");
+        findAllTpUsers.setParameter("userid", vUserId);
+        return findAllTpUsers.getResultList();
+    }
+
+    @Override
     public synchronized ENTUser getUser(String vUsername) {
         
         //Used getResultList as opposed to getSingleResult (exception handling as can't guarantee only one record)

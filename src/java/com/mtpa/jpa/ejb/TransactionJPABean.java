@@ -31,10 +31,10 @@ public class TransactionJPABean implements TransactionJPALocal {
     
     @Override
     public synchronized void createTransaction(long vAccountId, double vAmount, long vTPUserId, long vTPAccoutId, Date vCreatedDate) {
-        ENTTransaction transaction = new ENTTransaction(vAccountId, vAmount, vTPUserId, vTPAccoutId, vCreatedDate);
-        transactionEm.persist(transaction);
+        ENTTransaction outTransaction = new ENTTransaction(vAccountId, vAmount, vTPUserId, vTPAccoutId, vCreatedDate);
+        transactionEm.persist(outTransaction);
     }
-        
+    
     @PostConstruct
     public void postConstruct() {
         System.out.println("TransactionStore: PostConstruct");

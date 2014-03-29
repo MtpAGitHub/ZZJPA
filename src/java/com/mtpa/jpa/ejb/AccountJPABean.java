@@ -31,6 +31,11 @@ public class AccountJPABean implements AccountJPALocal {
     }
     
     @Override
+    public synchronized List<ENTAccount> getUserAccountList(long vUserId) {
+        return accountEm.createNamedQuery("findUserAccounts").getResultList();
+    }
+
+    @Override
     public synchronized ENTAccount getSingleAccount(String vAccountName) {
         Query findSingleAcct = accountEm.createNamedQuery("findSingleAccount");
         findSingleAcct.setParameter("acctname", vAccountName);
