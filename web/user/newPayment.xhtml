@@ -16,7 +16,7 @@
                 <h3>PalPay Payment Screen</h3>
             </div>
             <div class="pageBody">
-                <div class="shadowBox Box300150">
+                <div class="shadowBox Box300300">
                     <div class="paymentFields">
                         <table>
                             <tbody class="space05em">
@@ -29,7 +29,7 @@
                                 </tr>
                                 <tr id="payeeAct">
                                     <td>Account :</td>
-                                    <td><h:inputText id="payeeacct" value="#{payment.payeeActName}" title="Payee account name"</td>
+                                    <td><h:inputText id="payeeacct" value="#{payment.payeeActName}" title="Payee account name"/></td>
                                 </tr>
                                 <tr>
                                     <td>Payment Amount :</td>
@@ -37,7 +37,7 @@
                                 </tr>
                                 <tr>
                                     <td>From account :</td>
-                                    <td><h:selectOneMenu id="payee" value="#{payment.paymentActName}" title="From which of your accounts">
+                                    <td><h:selectOneMenu id="payor" value="#{payment.payorActName}" title="From which of your accounts">
                                             <f:selectItems value="#{payment.myAccounts}"/>
                                         </h:selectOneMenu>
                                     </td>

@@ -3,6 +3,7 @@
 package com.mtpa.jpa.jsf;
 
 import com.mtpa.jpa.entity.ENTAccount;
+import com.mtpa.jpa.entity.ENTTransaction_;
 import com.mtpa.jpa.entity.ENTUser;
 import com.mtpa.jpa.iface.AccountJPALocal;
 import com.mtpa.jpa.iface.AdjustBalanceLocal;
@@ -39,8 +40,8 @@ public class JSFPaymentBean {
     @EJB
     AdjustBalanceLocal changedBalance;
     
-    private String paymentActName;
-    private long paymentActId;
+    private String payorActName;
+    private long payorActId;
     private String payeeUsername;
     private long payeeUserId;
     private String payeeActName;
@@ -76,20 +77,20 @@ public class JSFPaymentBean {
         this.paymentAmt = paymentAmt;
     }
 
-    public String getPaymentActName() {
-        return paymentActName;
+    public String getPayorActName() {
+        return payorActName;
     }
 
-    public void setPaymentActName(String paymentActName) {
-        this.paymentActName = paymentActName;
+    public void setPayorActName(String paymentActName) {
+        this.payorActName = paymentActName;
     }
 
-    public long getPaymentActId() {
-        return paymentActId;
+    public long getPayorActId() {
+        return payorActId;
     }
 
-    public void setPaymentActId(long paymentActId) {
-        this.paymentActId = paymentActId;
+    public void setPayorActId(long payorActId) {
+        this.payorActId = payorActId;
     }
 
     public long getPayeeUserId() {
@@ -140,6 +141,7 @@ public class JSFPaymentBean {
     public void getAccountList(long acctListUserId) {
         List<ENTAccount> acctList = userAcct.getUserAccountList(acctListUserId);
         if (acctList.size() > 0) {
+            accountNameList = new ArrayList<>();
             for (ENTAccount curAcct : acctList) {
                 accountNameList.add(curAcct.getAccountName());
             }
@@ -149,17 +151,29 @@ public class JSFPaymentBean {
     }
 
     public String submitPayment() {
-        ENTAccount paymentAcct = userAcct.getSingleAccount(payeeActName);
-        if (paymentAcct != null) {
-            if (paymentAcct.getBalance() - paymentAmt > 0) {
+        ENTAccount payorAcct = userAcct.getSingleAccount(payorActName);
+        if (payorAcct != null) {
+            if (payorAcct.getBalance() - paymentAmt > 0) {
                 //take money out of my account
-                paymentActId = paymentAcct.getId();
+                payorActId = payorAcct.getId();
                 double debitAmt = 0 - paymentAmt;
-                paymentTrans.createTransaction(paymentActId, debitAmt, payeeUserId, payeeActId, createdDate.getWsDateStamp());
-                changedBalance.adjustBalance(paymentActId, debitAmt);
-                //pay money into their account
-                paymentTrans.createTransaction(payeeActId, paymentAmt, curUser.getUserId(), paymentActId, createdDate.getWsDateStamp());                
-                changedBalance.adjustBalance(payeeActId, debitAmt);
+                ENTUser selectedUser = tpUser.getUser(payeeUsername);
+                if (selectedUser != null) {
+                    payeeUserId = selectedUser.getPersonId();
+                    ENTAccount selectedAcct = userAcct.getSingleAccount(payeeActName);
+                    if (selectedAcct != null) {
+                        payeeActId = selectedAcct.getId();
+                        paymentTrans.createTransaction(payorActId, debitAmt, payeeUserId, payeeActId, createdDate.getWsDateStamp());
+                        changedBalance.adjustBalance(payorActId, debitAmt);
+                        //pay money into their account
+                        paymentTrans.createTransaction(payeeActId, paymentAmt, curUser.getUserId(), payorActId, createdDate.getWsDateStamp());                
+                        changedBalance.adjustBalance(payeeActId, paymentAmt);                                            
+                    } else {
+                        errorTxt.setErrorText("Cannot find payee account record");
+                    }
+                } else {
+                    errorTxt.setErrorText("Cannot find payee record");
+                }
             } else {
                 errorTxt.setErrorText("Insufficient funds !");
             }

@@ -32,7 +32,9 @@ public class AccountJPABean implements AccountJPALocal {
     
     @Override
     public synchronized List<ENTAccount> getUserAccountList(long vUserId) {
-        return accountEm.createNamedQuery("findUserAccounts").getResultList();
+        Query findUserAcct = accountEm.createNamedQuery("findUserAccounts");
+        findUserAcct.setParameter("userid", vUserId);
+        return findUserAcct.getResultList();
     }
 
     @Override
