@@ -2,6 +2,7 @@
 
 package com.mtpa.jpa.entity;
 
+import com.mtpa.jpa.enums.RequestStatusEnum;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
@@ -34,6 +35,9 @@ public class ENTRequest implements Serializable {
     private double requestAmt;
     
     @NotNull
+    private RequestStatusEnum requestStatus;
+    
+    @NotNull
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date requestDate;
 
@@ -45,6 +49,7 @@ public class ENTRequest implements Serializable {
         this.requestorId = vRequestorId;
         this.requesteeId = vRequesteeId;
         this.requestAmt = vAmount;
+        this.requestStatus = RequestStatusEnum.PENDING;
         this.requestDate = vCreateDate;
     }
     
@@ -88,14 +93,23 @@ public class ENTRequest implements Serializable {
         this.requestDate = requestDate;
     }
 
+    public RequestStatusEnum getRequestStatus() {
+        return requestStatus;
+    }
+
+    public void setRequestStatus(RequestStatusEnum requestStatus) {
+        this.requestStatus = requestStatus;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 89 * hash + Objects.hashCode(this.id);
-        hash = 89 * hash + Objects.hashCode(this.requestorId);
-        hash = 89 * hash + Objects.hashCode(this.requesteeId);
-        hash = 89 * hash + (int) (Double.doubleToLongBits(this.requestAmt) ^ (Double.doubleToLongBits(this.requestAmt) >>> 32));
-        hash = 89 * hash + Objects.hashCode(this.requestDate);
+        hash = 17 * hash + Objects.hashCode(this.id);
+        hash = 17 * hash + Objects.hashCode(this.requestorId);
+        hash = 17 * hash + Objects.hashCode(this.requesteeId);
+        hash = 17 * hash + (int) (Double.doubleToLongBits(this.requestAmt) ^ (Double.doubleToLongBits(this.requestAmt) >>> 32));
+        hash = 17 * hash + Objects.hashCode(this.requestStatus);
+        hash = 17 * hash + Objects.hashCode(this.requestDate);
         return hash;
     }
 
@@ -120,6 +134,9 @@ public class ENTRequest implements Serializable {
         if (Double.doubleToLongBits(this.requestAmt) != Double.doubleToLongBits(other.requestAmt)) {
             return false;
         }
+        if (this.requestStatus != other.requestStatus) {
+            return false;
+        }
         if (!Objects.equals(this.requestDate, other.requestDate)) {
             return false;
         }
@@ -128,8 +145,7 @@ public class ENTRequest implements Serializable {
 
     @Override
     public String toString() {
-        return "ENTRequest{" + "id=" + id + ", requestorId=" + requestorId + ", requesteeId=" + requesteeId + ", requestAmt=" + requestAmt + ", requestDate=" + requestDate + '}';
+        return "ENTRequest{" + "id=" + id + ", requestorId=" + requestorId + ", requesteeId=" + requesteeId + ", requestAmt=" + requestAmt + ", requestStatus=" + requestStatus + ", requestDate=" + requestDate + '}';
     }
 
-    
 }

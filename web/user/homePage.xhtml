@@ -109,7 +109,9 @@
                                     </h:column>
                                     <h:column>
                                         <f:facet name="header">Transaction Date</f:facet>
-                                            #{trans.transactionDate}
+                                        <h:outputText value="#{trans.transactionDate}">
+                                            <f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss"/>
+                                        </h:outputText>                                            
                                     </h:column>
                                 </h:dataTable>                                
                             </td>
@@ -127,7 +129,13 @@
                                     </h:column>
                                     <h:column>
                                         <f:facet name="header">Request Date</f:facet>
-                                            #{req.requestDate}
+                                        <h:outputText value="#{req.requestDate}">
+                                            <f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss"/>
+                                        </h:outputText>                                            
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Status</f:facet>
+                                            #{req.requestStatus}
                                     </h:column>
                                 </h:dataTable>                                
                             </td>

@@ -8,6 +8,7 @@ import com.mtpa.jpa.entity.ENTUser;
 import com.mtpa.jpa.iface.AccountJPALocal;
 import com.mtpa.jpa.iface.AdjustBalanceLocal;
 import com.mtpa.jpa.iface.DateStampLocal;
+import com.mtpa.jpa.iface.GetTPUserLocal;
 import com.mtpa.jpa.iface.TransactionJPALocal;
 import com.mtpa.jpa.iface.UserJPALocal;
 import java.util.ArrayList;
@@ -39,6 +40,8 @@ public class JSFPaymentBean {
     DateStampLocal createdDate;
     @EJB
     AdjustBalanceLocal changedBalance;
+    @EJB
+    GetTPUserLocal tpUserList;
     
     private String payorActName;
     private long payorActId;
@@ -110,16 +113,7 @@ public class JSFPaymentBean {
     }
     
     public List<String> getTpUsers() {
-        List<ENTUser> userList = tpUser.getAllTpUsers(curUser.getUserId());
-        List<String> usernameList = new ArrayList<>();
-        if (userList.size() > 0) {
-            for (ENTUser curUser : userList) {
-                usernameList.add(curUser.getUsername());
-            }            
-        } else {
-            usernameList.add("NoRecordsFound");
-        }
-        return usernameList;
+        return tpUserList.getTPUserList(curUser.getUserId());
     }
     
     public List<String> getTpAccounts() {

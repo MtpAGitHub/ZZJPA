@@ -21,9 +21,11 @@
                         <table>
                             <tbody class="space05em">
                                 <tr>
-                                    <td>Username :</td>
-                                    <td><h:inputText id="requestee" value="#{newrequest.requestUser}" title="Username of requestee"
-                                                     required="true" requiredMessage="You must have a username"/></td>
+                                    <td>Requestee username :</td>
+                                    <td><h:selectOneMenu id="requestee" value="#{newrequest.requestUser}" title="Username of the person you request money from">
+                                            <f:selectItems value="#{newrequest.allTpUsers}"/>
+                                        </h:selectOneMenu>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Requested Amount :</td>
