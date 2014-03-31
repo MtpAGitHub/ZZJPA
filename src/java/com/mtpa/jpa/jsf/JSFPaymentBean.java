@@ -1,3 +1,4 @@
+//310314    MtpA    Added currency conversion
 //270314    MtpA    Created
 
 package com.mtpa.jpa.jsf;
@@ -5,8 +6,10 @@ package com.mtpa.jpa.jsf;
 import com.mtpa.jpa.entity.ENTAccount;
 import com.mtpa.jpa.entity.ENTTransaction_;
 import com.mtpa.jpa.entity.ENTUser;
+import com.mtpa.jpa.enums.CurrencyEnum;
 import com.mtpa.jpa.iface.AccountJPALocal;
 import com.mtpa.jpa.iface.AdjustBalanceLocal;
+import com.mtpa.jpa.iface.ConvertCurrencyLocal;
 import com.mtpa.jpa.iface.DateStampLocal;
 import com.mtpa.jpa.iface.GetTPUserLocal;
 import com.mtpa.jpa.iface.TransactionJPALocal;
@@ -42,6 +45,8 @@ public class JSFPaymentBean {
     AdjustBalanceLocal changedBalance;
     @EJB
     GetTPUserLocal tpUserList;
+    @EJB
+    ConvertCurrencyLocal convertAmt;
     
     private String payorActName;
     private long payorActId;
@@ -159,7 +164,8 @@ public class JSFPaymentBean {
                         payeeActId = selectedAcct.getId();
                         paymentTrans.createTransaction(payorActId, debitAmt, payeeUserId, payeeActId, createdDate.getWsDateStamp());
                         changedBalance.adjustBalance(payorActId, debitAmt);
-                        //pay money into their account
+                        //pay money into their account (including converting the amount into the account currency - ConvertCurrency
+                        paymentAmt = convertAmt.ConvertCurrency(paymentAmt, payorAcct.getAcctCurrency(),selectedAcct.getAcctCurrency());
                         paymentTrans.createTransaction(payeeActId, paymentAmt, curUser.getUserId(), payorActId, createdDate.getWsDateStamp());                
                         changedBalance.adjustBalance(payeeActId, paymentAmt);                                            
                     } else {

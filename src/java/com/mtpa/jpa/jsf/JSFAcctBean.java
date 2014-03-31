@@ -1,10 +1,11 @@
+//310314    MtpA    Added currency conversion
 //260314    MtpA    Created
 
 package com.mtpa.jpa.jsf;
 
-import com.mtpa.jpa.entity.ENTAccount;
 import com.mtpa.jpa.enums.CurrencyEnum;
 import com.mtpa.jpa.iface.AccountJPALocal;
+import com.mtpa.jpa.iface.ConvertCurrencyLocal;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -16,6 +17,8 @@ public class JSFAcctBean {
 
     @EJB
     AccountJPALocal accountDet;
+    @EJB
+    ConvertCurrencyLocal convertAmt;
     
     @Inject
     JSFErrorBean errorTxt;
@@ -58,7 +61,8 @@ public class JSFAcctBean {
 
     public String submitAccount() {
         if (!accountDet.accountExist(accountName)) {
-            accountDet.createAccount(curUser.getUserId(), accountName, accountBal, accountCur);
+            // add new account and default 'from' currency always GBP
+            accountDet.createAccount(curUser.getUserId(), accountName, convertAmt.ConvertCurrency(accountBal, CurrencyEnum.GBP, accountCur), accountCur);
             return "home";
         } else {
             errorTxt.setErrorText("Account already exists");
