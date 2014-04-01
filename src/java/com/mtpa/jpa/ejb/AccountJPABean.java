@@ -66,7 +66,19 @@ public class AccountJPABean implements AccountJPALocal {
         ENTAccount account = new ENTAccount(vUserId, vAccountName, vBalance, vCurrency);
         accountEm.persist(account);
     }
-    
+
+    @Override
+    public void adjustBalance(long vAccountId, double vAmount) {        
+        ENTAccount balanceAcct = accountEm.find(ENTAccount.class, vAccountId);
+        if (balanceAcct != null) {
+            vAmount = vAmount + balanceAcct.getBalance();
+            accountEm.persist(balanceAcct);
+            balanceAcct.setBalance(vAmount);
+        } else {
+            System.out.println("Something gone astray with the balance");
+        }
+    }
+
     @PostConstruct
     public void postConstruct() {
         System.out.println("AccountStore: PostConstruct");

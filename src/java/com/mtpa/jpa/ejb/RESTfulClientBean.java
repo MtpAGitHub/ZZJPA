@@ -10,9 +10,11 @@ import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import javax.ejb.Local;
 import javax.ejb.Stateless;
  
 @Stateless
+@Local(RESTfulClientLocal.class)
 public class RESTfulClientBean implements RESTfulClientLocal {
     
     private String restUrl;

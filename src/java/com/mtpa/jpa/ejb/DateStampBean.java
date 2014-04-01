@@ -5,11 +5,13 @@ package com.mtpa.jpa.ejb;
 import com.mtpa.jpa.iface.DateStampLocal;
 import com.mtpa.wsassign.WSDateStamp_Service;
 import java.util.Date;
+import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.ws.WebServiceRef;
 
 @Stateless
+@Local(DateStampLocal.class)
 public class DateStampBean implements DateStampLocal {
     @WebServiceRef(wsdlLocation = "WEB-INF/wsdl/localhost_8080/WSDateStamp/WSDateStamp.wsdl")
     private WSDateStamp_Service service;

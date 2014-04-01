@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @NamedQueries({
-    @NamedQuery(name="findAllTransactions",query="SELECT trans FROM ENTTransaction trans"),
+    @NamedQuery(name="findAllTransactions",query="SELECT trans FROM ENTTransaction trans")
 })
 public class ENTTransaction implements Serializable {
     private static final long serialVersionUID = 1L;

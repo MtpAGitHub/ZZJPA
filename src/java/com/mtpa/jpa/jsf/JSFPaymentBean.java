@@ -1,3 +1,4 @@
+//010414    MtpA    Refactored to move account list functionality to EJB
 //310314    MtpA    Added currency conversion
 //270314    MtpA    Created
 
@@ -6,17 +7,14 @@ package com.mtpa.jpa.jsf;
 import com.mtpa.jpa.entity.ENTAccount;
 import com.mtpa.jpa.entity.ENTTransaction_;
 import com.mtpa.jpa.entity.ENTUser;
-import com.mtpa.jpa.enums.CurrencyEnum;
 import com.mtpa.jpa.iface.AccountJPALocal;
-import com.mtpa.jpa.iface.AdjustBalanceLocal;
 import com.mtpa.jpa.iface.ConvertCurrencyLocal;
-import com.mtpa.jpa.iface.DateStampLocal;
+import com.mtpa.jpa.iface.GetAccountListLocal;
 import com.mtpa.jpa.iface.GetTPUserLocal;
-import com.mtpa.jpa.iface.TransactionJPALocal;
+import com.mtpa.jpa.iface.PaymentLocal;
 import com.mtpa.jpa.iface.UserJPALocal;
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -38,15 +36,13 @@ public class JSFPaymentBean {
     @EJB
     AccountJPALocal userAcct;
     @EJB
-    TransactionJPALocal paymentTrans;
-    @EJB
-    DateStampLocal createdDate;
-    @EJB
-    AdjustBalanceLocal changedBalance;
-    @EJB
     GetTPUserLocal tpUserList;
     @EJB
     ConvertCurrencyLocal convertAmt;
+    @EJB
+    PaymentLocal acctPayment;
+    @EJB
+    GetAccountListLocal acctList;
     
     private String payorActName;
     private long payorActId;
@@ -122,52 +118,32 @@ public class JSFPaymentBean {
     }
     
     public List<String> getTpAccounts() {
-        ENTUser selectedUser = tpUser.getUser(payeeUsername);
-        accountNameList = new ArrayList<>();
-        if (selectedUser !=null) {
-            getAccountList(selectedUser.getPersonId());
-        } else {
-            accountNameList.add("NoRecordsFound");
-        }
-        return accountNameList;
+        return acctList.tpAccountList(payeeUsername);
     }
 
     public List<String> getMyAccounts() {
-        getAccountList(curUser.getUserId());
-        return accountNameList;
+        return acctList.myAccountList(curUser.getUserId());
     }
     
-    public void getAccountList(long acctListUserId) {
-        List<ENTAccount> acctList = userAcct.getUserAccountList(acctListUserId);
-        if (acctList.size() > 0) {
-            accountNameList = new ArrayList<>();
-            for (ENTAccount curAcct : acctList) {
-                accountNameList.add(curAcct.getAccountName());
-            }
-        } else {
-            accountNameList.add("NoRecordsFound");
-        }        
-    }
-
     public String submitPayment() {
         ENTAccount payorAcct = userAcct.getSingleAccount(payorActName);
         if (payorAcct != null) {
             if (payorAcct.getBalance() - paymentAmt > 0) {
                 //take money out of my account
                 payorActId = payorAcct.getId();
-                double debitAmt = 0 - paymentAmt;
-                ENTUser selectedUser = tpUser.getUser(payeeUsername);
+                ENTUser selectedUser = tpUser.getUserByName(payeeUsername);
                 if (selectedUser != null) {
                     payeeUserId = selectedUser.getPersonId();
                     ENTAccount selectedAcct = userAcct.getSingleAccount(payeeActName);
                     if (selectedAcct != null) {
                         payeeActId = selectedAcct.getId();
-                        paymentTrans.createTransaction(payorActId, debitAmt, payeeUserId, payeeActId, createdDate.getWsDateStamp());
-                        changedBalance.adjustBalance(payorActId, debitAmt);
-                        //pay money into their account (including converting the amount into the account currency - ConvertCurrency
+                        double debitAmt = 0 - paymentAmt;
+                        // take money from payor account
+                        acctPayment.paymentTransaction(payorActId, payeeUserId, payeeActId, debitAmt);
+                        // convert payment amount to payee account currency
                         paymentAmt = convertAmt.ConvertCurrency(paymentAmt, payorAcct.getAcctCurrency(),selectedAcct.getAcctCurrency());
-                        paymentTrans.createTransaction(payeeActId, paymentAmt, curUser.getUserId(), payorActId, createdDate.getWsDateStamp());                
-                        changedBalance.adjustBalance(payeeActId, paymentAmt);                                            
+                        // pay money into payee account
+                        acctPayment.paymentTransaction(payeeActId, curUser.getUserId(), payorActId, paymentAmt);
                     } else {
                         errorTxt.setErrorText("Cannot find payee account record");
                     }

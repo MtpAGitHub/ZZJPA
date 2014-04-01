@@ -102,7 +102,7 @@ public class JSFUserBean implements Serializable {
          }
          */
         if (!this.username.equals("error")) {
-            ENTUser validUser = userDet.getUser(username);
+            ENTUser validUser = userDet.getUserByName(username);
             if (validUser != null) {
                 this.userId = validUser.getPersonId();
                 this.userForename = validUser.getForename();

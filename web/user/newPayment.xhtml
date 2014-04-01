@@ -33,7 +33,11 @@
                                 </tr>
                                 <tr>
                                     <td>Payment Amount :</td>
-                                    <td><h:inputText id="payamount" value="#{payment.paymentAmt}" title="Amount in YOUR currency"/></td>
+                                    <td>
+                                        <h:inputText id="payamount" value="#{payment.paymentAmt}" title="Amount in YOUR currency">
+                                            <f:convertNumber maxFractionDigits="2"/>
+                                        </h:inputText>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>From account :</td>

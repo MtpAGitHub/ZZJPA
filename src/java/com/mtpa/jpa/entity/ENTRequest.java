@@ -7,6 +7,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,6 +19,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @NamedQueries({
     @NamedQuery(name="findAllRequests",query="SELECT req FROM ENTRequest req"),
+    @NamedQuery(name="findAllPendingRequests", query="SELECT req FROM ENTRequest req WHERE req.requestStatus = :status")
 })
 public class ENTRequest implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -35,6 +37,9 @@ public class ENTRequest implements Serializable {
     private double requestAmt;
     
     @NotNull
+    private long accountId;
+    
+    @NotNull
     private RequestStatusEnum requestStatus;
     
     @NotNull
@@ -45,10 +50,11 @@ public class ENTRequest implements Serializable {
         
     }
     
-    public ENTRequest(long vRequestorId, long vRequesteeId, double vAmount, Date vCreateDate) {
+    public ENTRequest(long vRequestorId, long vRequesteeId, double vAmount, long vRequesteeAccId, Date vCreateDate) {
         this.requestorId = vRequestorId;
         this.requesteeId = vRequesteeId;
         this.requestAmt = vAmount;
+        this.accountId = vRequesteeAccId;
         this.requestStatus = RequestStatusEnum.PENDING;
         this.requestDate = vCreateDate;
     }
@@ -101,15 +107,24 @@ public class ENTRequest implements Serializable {
         this.requestStatus = requestStatus;
     }
 
+    public long getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(long accountId) {
+        this.accountId = accountId;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 17 * hash + Objects.hashCode(this.id);
-        hash = 17 * hash + Objects.hashCode(this.requestorId);
-        hash = 17 * hash + Objects.hashCode(this.requesteeId);
-        hash = 17 * hash + (int) (Double.doubleToLongBits(this.requestAmt) ^ (Double.doubleToLongBits(this.requestAmt) >>> 32));
-        hash = 17 * hash + Objects.hashCode(this.requestStatus);
-        hash = 17 * hash + Objects.hashCode(this.requestDate);
+        hash = 59 * hash + Objects.hashCode(this.id);
+        hash = 59 * hash + Objects.hashCode(this.requestorId);
+        hash = 59 * hash + Objects.hashCode(this.requesteeId);
+        hash = 59 * hash + (int) (Double.doubleToLongBits(this.requestAmt) ^ (Double.doubleToLongBits(this.requestAmt) >>> 32));
+        hash = 59 * hash + (int) (this.accountId ^ (this.accountId >>> 32));
+        hash = 59 * hash + Objects.hashCode(this.requestStatus);
+        hash = 59 * hash + Objects.hashCode(this.requestDate);
         return hash;
     }
 
@@ -134,6 +149,9 @@ public class ENTRequest implements Serializable {
         if (Double.doubleToLongBits(this.requestAmt) != Double.doubleToLongBits(other.requestAmt)) {
             return false;
         }
+        if (this.accountId != other.accountId) {
+            return false;
+        }
         if (this.requestStatus != other.requestStatus) {
             return false;
         }
@@ -145,7 +163,7 @@ public class ENTRequest implements Serializable {
 
     @Override
     public String toString() {
-        return "ENTRequest{" + "id=" + id + ", requestorId=" + requestorId + ", requesteeId=" + requesteeId + ", requestAmt=" + requestAmt + ", requestStatus=" + requestStatus + ", requestDate=" + requestDate + '}';
+        return "ENTRequest{" + "id=" + id + ", requestorId=" + requestorId + ", requesteeId=" + requesteeId + ", requestAmt=" + requestAmt + ", accountId=" + accountId + ", requestStatus=" + requestStatus + ", requestDate=" + requestDate + '}';
     }
 
 }

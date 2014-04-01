@@ -7,6 +7,7 @@
 package com.mtpa.jpa.iface;
 
 import com.mtpa.jpa.entity.ENTRequest;
+import com.mtpa.jpa.enums.RequestStatusEnum;
 import java.util.Date;
 import java.util.List;
 
@@ -16,8 +17,10 @@ import java.util.List;
  */
 public interface RequestJPALocal {
 
-    void createRequest(long vRequestorId, long vRequesteeId, double vAmount, Date vCreateDate);
+    void createRequest(long vRequestorId, long vRequesteeId, double vAmount, long vRequesteeAccId,  Date vCreateDate);
 
+    List<ENTRequest> getPendingList(RequestStatusEnum vRequestStatus);
+            
     List<ENTRequest> getRequestList();
     
 }

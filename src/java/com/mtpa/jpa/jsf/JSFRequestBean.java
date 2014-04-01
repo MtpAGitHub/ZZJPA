@@ -2,13 +2,14 @@
 
 package com.mtpa.jpa.jsf;
 
-import com.mtpa.jpa.entity.ENTTransaction_;
+import com.mtpa.jpa.entity.ENTAccount;
 import com.mtpa.jpa.entity.ENTUser;
+import com.mtpa.jpa.iface.AccountJPALocal;
 import com.mtpa.jpa.iface.DateStampLocal;
+import com.mtpa.jpa.iface.GetAccountListLocal;
 import com.mtpa.jpa.iface.GetTPUserLocal;
 import com.mtpa.jpa.iface.RequestJPALocal;
 import com.mtpa.jpa.iface.UserJPALocal;
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -34,8 +35,13 @@ public class JSFRequestBean {
     UserJPALocal tpUser;
     @EJB
     DateStampLocal dateStamp;
+    @EJB
+    GetAccountListLocal acctList;
+    @EJB
+    AccountJPALocal requestorAccount;
     
     private String requestUser;
+    private String myAcctName;
     private double requestAmt;
 
     public JSFRequestBean() {
@@ -58,14 +64,27 @@ public class JSFRequestBean {
         this.requestAmt = requestAmt;
     }
 
+    public String getMyAcctName() {
+        return myAcctName;
+    }
+
+    public void setMyAcctName(String myAcctName) {
+        this.myAcctName = myAcctName;
+    }
+
     public List<String> getAllTpUsers() {
         return userList.getTPUserList(curUser.getUserId());
     }
+
+    public List<String> getMyAccounts() {
+        return acctList.myAccountList(curUser.getUserId());        
+    }
     
     public String submitRequest() {
-        ENTUser requesteeUser = tpUser.getUser(requestUser);
+        ENTUser requesteeUser = tpUser.getUserByName(requestUser);
         if (requesteeUser != null) {
-            userRequest.createRequest(curUser.getUserId(), requesteeUser.getPersonId(), requestAmt, dateStamp.getWsDateStamp());
+            ENTAccount myAcct = requestorAccount.getSingleAccount(myAcctName);
+            userRequest.createRequest(curUser.getUserId(), requesteeUser.getPersonId(), requestAmt, myAcct.getId(), dateStamp.getWsDateStamp());
         } else {
         }
         debugTxt.setDebugText("Requested " + requestAmt + " from " + requestUser);

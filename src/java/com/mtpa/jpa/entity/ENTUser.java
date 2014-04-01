@@ -22,7 +22,8 @@ import javax.validation.constraints.NotNull;
 @NamedQueries({
     @NamedQuery(name="findAllUsers", query = "SELECT user FROM ENTUser user"),
     @NamedQuery(name="findAllTpUsers", query = "SELECT user FROM ENTUser user WHERE user.personId <> :userid"),
-    @NamedQuery(name="findSingleUser", query = "SELECT user FROM ENTUser user WHERE user.username = :username")
+    @NamedQuery(name="findUserByName", query = "SELECT user FROM ENTUser user WHERE user.username = :username"),
+    @NamedQuery(name="findUserById", query = "SELECT user FROM ENTUser user WHERE user.personId = :userid")
 })
 public class ENTUser implements Serializable {
     private static final long serialVersionUID = 1L;

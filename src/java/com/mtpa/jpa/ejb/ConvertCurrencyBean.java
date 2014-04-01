@@ -10,10 +10,12 @@ import com.mtpa.jpa.enums.ReqTypeEnum;
 import com.mtpa.jpa.iface.RESTfulXMLExtractLocal;
 import com.mtpa.jpa.jsf.JSFErrorBean;
 import javax.ejb.EJB;
+import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
 @Stateless
+@Local(ConvertCurrencyLocal.class)
 public class ConvertCurrencyBean implements ConvertCurrencyLocal {
     
     @Inject

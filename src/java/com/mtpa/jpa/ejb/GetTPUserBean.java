@@ -7,9 +7,11 @@ import com.mtpa.jpa.iface.UserJPALocal;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.ejb.Local;
 import javax.ejb.Stateless;
 
 @Stateless
+@Local(GetTPUserLocal.class)
 public class GetTPUserBean implements GetTPUserLocal {
 
     @EJB

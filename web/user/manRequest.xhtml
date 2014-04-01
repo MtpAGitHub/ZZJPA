@@ -4,16 +4,16 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Request Payment</title>
+        <title>Manage Requests</title>
         <h:outputStylesheet library="css" name="Pagestyle.css"/>
         <h:outputStylesheet library="css" name="Boxstyle.css"/>
         <h:outputStylesheet library="css" name="Buttonstyle.css"/>
         <h:outputStylesheet library="css" name="Tablestyle.css"/>
     </h:head>
     <h:body>
-        <h:form id="JPARequest">
+        <h:form id="JPAManRequest">
             <div class="header">
-                <h3>PalPay Request Screen</h3>
+                <h3>PalPay Request Management Screen</h3>
             </div>
             <div class="pageBody">
                 <div class="shadowBox Box300150">
@@ -21,20 +21,16 @@
                         <table>
                             <tbody class="space05em">
                                 <tr>
-                                    <td>Requestee username :</td>
-                                    <td><h:selectOneMenu id="requestee" value="#{newrequest.requestUser}" title="Username of the person you request money from">
-                                            <f:selectItems value="#{newrequest.allTpUsers}"/>
+                                    <td>Requests :</td>
+                                    <td><h:selectOneMenu id="request" value="#{manrequest.selectedRequest}" title="Select the request you want">
+                                            <f:selectItems value="#{manrequest.allPendingRequests}"/>
                                         </h:selectOneMenu>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Requested Amount :</td>
-                                    <td><h:inputText id="reqamount" value="#{newrequest.requestAmt}" title="Amount in YOUR currency"/></td>
-                                </tr>
-                                <tr>
-                                    <td>Home account :</td>
-                                    <td><h:selectOneMenu id="reqhomeacct" value="#{newrequest.myAcctName}" title="Account you want the money paid to">
-                                            <f:selectItems value="#{newrequest.myAccounts}"/>
+                                    <td>Status :</td>
+                                    <td><h:selectOneMenu id="reqstatus" value="#{manrequest.reqStatus}" title="Select the request you want">
+                                            <f:selectItems value="#{reqstatus.requestStatus}"/>
                                         </h:selectOneMenu>
                                     </td>
                                 </tr>
@@ -45,7 +41,7 @@
                         <table>
                             <tbody>
                                 <tr>
-                                    <td><h:commandButton id="submit" value="Submit" action="#{newrequest.submitRequest()}"/></td>
+                                    <td><h:commandButton id="submit" value="Submit" action="#{manrequest.submitManRequest()}"/></td>
                                     <td><h:button id="cancel" value="Cancel" outcome="home"/></td>
                                 </tr>
                             </tbody>
