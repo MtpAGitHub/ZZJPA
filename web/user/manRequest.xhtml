@@ -34,6 +34,13 @@
                                         </h:selectOneMenu>
                                     </td>
                                 </tr>
+                                <tr>
+                                    <td>Payment Account :</td>
+                                    <td><h:selectOneMenu id="reqpayacct" value="#{manrequest.selectedAccount}" title="Select the account you want to pay into">
+                                            <f:selectItems value="#{manrequest.myAccounts}"/>
+                                        </h:selectOneMenu>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>

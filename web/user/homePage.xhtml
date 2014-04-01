@@ -129,6 +129,10 @@
                                             #{req.requestAmt}
                                     </h:column>
                                     <h:column>
+                                        <f:facet name="header">Currency</f:facet>
+                                            #{req.currency}
+                                    </h:column>
+                                    <h:column>
                                         <f:facet name="header">Request Date</f:facet>
                                         <h:outputText value="#{req.requestDate}">
                                             <f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss"/>

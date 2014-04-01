@@ -84,7 +84,7 @@ public class JSFRequestBean {
         ENTUser requesteeUser = tpUser.getUserByName(requestUser);
         if (requesteeUser != null) {
             ENTAccount myAcct = requestorAccount.getSingleAccount(myAcctName);
-            userRequest.createRequest(curUser.getUserId(), requesteeUser.getPersonId(), requestAmt, myAcct.getId(), dateStamp.getWsDateStamp());
+            userRequest.createRequest(curUser.getUserId(), requesteeUser.getPersonId(), requestAmt, myAcct.getId(), myAcct.getAcctCurrency(),dateStamp.getWsDateStamp());
         } else {
         }
         debugTxt.setDebugText("Requested " + requestAmt + " from " + requestUser);
