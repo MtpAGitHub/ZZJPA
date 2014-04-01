@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Page title</title>
+        <h:outputStylesheet library="css" name="Pagestyle.css"/>
+        <h:outputStylesheet library="css" name="Boxstyle.css"/>
+        <h:outputStylesheet library="css" name="Buttonstyle.css"/>
+        <h:outputStylesheet library="css" name="Tablestyle.css"/>
+    </h:head>
+    <h:body>
+        <h:form id="adminMain">
+            <div class="header">
+                <h3>PalPay Admin Main</h3>
+            </div>
+            <div class="pageBody">
+                <div class="shadowBox Box400300">
+                    <div id="divDetails">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td>User ID :</td>
+                                    <td><h:outputText id="userId" value="#{user.userId}"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Username :</td>
+                                    <td><h:outputText id="username" value="#{user.username}"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Forename :</td>
+                                    <td><h:outputText id="userForename" value="#{user.userForename}"/></td>
+                                </tr>
+                                <tr>
+                                    <td>Surname :</td>
+                                    <td><h:outputText id="userSurname" value="#{user.userSurname}"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="submitButtons">
+                        <h:button id="adminreg" value="Register Admin User" outcome="register"/>
+                        <h:button id="adminoneuser" value="View Single User" outcome="oneuser"/>
+                        <h:button id="adminmulti" value="View All Users" outcome="home"/>
+                    </div>
+                </div>                
+            </div>
+            <div class="errors">
+                <h:outputText id="errorTxt" class="loginErrors" value="#{error.errorText}"/>
+            </div>
+            <div class="footer">
+                <h:outputText class="debugText" value="#{debug.debugText}"/>
+            </div>
+        </h:form>
+    </h:body>
+</html>
+

@@ -10,13 +10,15 @@
 .loginButtons {
     position: absolute;
     bottom: 0;
-    margin-top: 20px;    
+    margin-top: 20px;
+    margin-bottom: 5px;
 }
 
 .submitButtons {
     position: absolute;
     bottom: 0;
     margin-top: 20px;    
+    margin-bottom: 5px;
 }
 
 .logoutBtn {

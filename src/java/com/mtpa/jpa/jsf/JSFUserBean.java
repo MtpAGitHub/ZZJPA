@@ -107,7 +107,11 @@ public class JSFUserBean implements Serializable {
                 this.userId = validUser.getPersonId();
                 this.userForename = validUser.getForename();
                 this.userSurname = validUser.getSurname();
-                return "home";
+                if (username.equals("admin")) {
+                    return "admin";
+                } else {
+                    return "home";
+                }
             } else {
                 return "loginerr";
             }
