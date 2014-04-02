@@ -1,16 +1,21 @@
+//020414    MtpA    Added annotations to link as a many to one to ENTUser and a one to many for ENTTransaction
 //280314    MtpA    Created
 
 package com.mtpa.jpa.entity;
 
 import com.mtpa.jpa.enums.CurrencyEnum;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 // Using NamedQueries annotation as got more than one.  Tried Google on 'multiple named queries'
@@ -28,6 +33,15 @@ public class ENTAccount implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    //link to parent ENTUser table via a many to one
+    @ManyToOne
+    @JoinColumn
+    private ENTUser user;
+
+    // link to the ENTTransaction table through a one to many relationship
+    @OneToMany(mappedBy = "account")
+    private List<ENTTransaction> transaction;
 
     @NotNull
     private Long userId;
@@ -92,14 +106,32 @@ public class ENTAccount implements Serializable {
         this.acctCurrency = acctCurrency;
     }
 
+    public ENTUser getUser() {
+        return user;
+    }
+
+    public void setUser(ENTUser user) {
+        this.user = user;
+    }
+
+    public List<ENTTransaction> getTransaction() {
+        return transaction;
+    }
+
+    public void setTransaction(List<ENTTransaction> transaction) {
+        this.transaction = transaction;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 37 * hash + Objects.hashCode(this.id);
-        hash = 37 * hash + Objects.hashCode(this.userId);
-        hash = 37 * hash + Objects.hashCode(this.accountName);
-        hash = 37 * hash + (int) (Double.doubleToLongBits(this.balance) ^ (Double.doubleToLongBits(this.balance) >>> 32));
-        hash = 37 * hash + Objects.hashCode(this.acctCurrency);
+        int hash = 7;
+        hash = 43 * hash + Objects.hashCode(this.id);
+        hash = 43 * hash + Objects.hashCode(this.user);
+        hash = 43 * hash + Objects.hashCode(this.transaction);
+        hash = 43 * hash + Objects.hashCode(this.userId);
+        hash = 43 * hash + Objects.hashCode(this.accountName);
+        hash = 43 * hash + (int) (Double.doubleToLongBits(this.balance) ^ (Double.doubleToLongBits(this.balance) >>> 32));
+        hash = 43 * hash + Objects.hashCode(this.acctCurrency);
         return hash;
     }
 
@@ -113,6 +145,12 @@ public class ENTAccount implements Serializable {
         }
         final ENTAccount other = (ENTAccount) obj;
         if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.user, other.user)) {
+            return false;
+        }
+        if (!Objects.equals(this.transaction, other.transaction)) {
             return false;
         }
         if (!Objects.equals(this.userId, other.userId)) {
@@ -130,9 +168,4 @@ public class ENTAccount implements Serializable {
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "ENTAccount{" + "id=" + id + ", userId=" + userId + ", accountName=" + accountName + ", balance=" + balance + ", acctCurrency=" + acctCurrency + '}';
-    }
-    
 }

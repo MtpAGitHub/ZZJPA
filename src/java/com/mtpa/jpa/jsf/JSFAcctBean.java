@@ -8,6 +8,8 @@ import com.mtpa.jpa.iface.AccountJPALocal;
 import com.mtpa.jpa.iface.ConvertCurrencyLocal;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.ValueChangeEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -59,6 +61,10 @@ public class JSFAcctBean {
         this.accountBal = accountBal;
     }
 
+    public void currencyChangeListener(AjaxBehaviorEvent currencyEvent) {
+        setAccountBal(convertAmt.ConvertCurrency(1000000, CurrencyEnum.GBP, accountCur));
+    }
+    
     public String submitAccount() {
         if (!accountDet.accountExist(accountName)) {
             // add new account and default 'from' currency always GBP

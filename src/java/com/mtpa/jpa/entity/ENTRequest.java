@@ -1,3 +1,4 @@
+//020414    MtpA    Added many to many with ENTUser
 //230314    MtpA    Created
 
 package com.mtpa.jpa.entity;
@@ -6,12 +7,13 @@ import com.mtpa.jpa.enums.CurrencyEnum;
 import com.mtpa.jpa.enums.RequestStatusEnum;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Entity;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
@@ -27,6 +29,10 @@ public class ENTRequest implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+    //link to users table as a request can relate to more than one user (requestor and requestee)
+    @ManyToMany(mappedBy = "request")
+    List<ENTUser> user;
     
     @NotNull
     private Long requestorId;
@@ -128,17 +134,26 @@ public class ENTRequest implements Serializable {
         this.currency = currency;
     }
 
+    public List<ENTUser> getUser() {
+        return user;
+    }
+
+    public void setUser(List<ENTUser> user) {
+        this.user = user;
+    }
+
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 97 * hash + Objects.hashCode(this.id);
-        hash = 97 * hash + Objects.hashCode(this.requestorId);
-        hash = 97 * hash + Objects.hashCode(this.requesteeId);
-        hash = 97 * hash + (int) (Double.doubleToLongBits(this.requestAmt) ^ (Double.doubleToLongBits(this.requestAmt) >>> 32));
-        hash = 97 * hash + (int) (this.accountId ^ (this.accountId >>> 32));
-        hash = 97 * hash + Objects.hashCode(this.currency);
-        hash = 97 * hash + Objects.hashCode(this.requestStatus);
-        hash = 97 * hash + Objects.hashCode(this.requestDate);
+        hash = 13 * hash + Objects.hashCode(this.id);
+        hash = 13 * hash + Objects.hashCode(this.user);
+        hash = 13 * hash + Objects.hashCode(this.requestorId);
+        hash = 13 * hash + Objects.hashCode(this.requesteeId);
+        hash = 13 * hash + (int) (Double.doubleToLongBits(this.requestAmt) ^ (Double.doubleToLongBits(this.requestAmt) >>> 32));
+        hash = 13 * hash + (int) (this.accountId ^ (this.accountId >>> 32));
+        hash = 13 * hash + Objects.hashCode(this.currency);
+        hash = 13 * hash + Objects.hashCode(this.requestStatus);
+        hash = 13 * hash + Objects.hashCode(this.requestDate);
         return hash;
     }
 
@@ -152,6 +167,9 @@ public class ENTRequest implements Serializable {
         }
         final ENTRequest other = (ENTRequest) obj;
         if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.user, other.user)) {
             return false;
         }
         if (!Objects.equals(this.requestorId, other.requestorId)) {
@@ -180,7 +198,8 @@ public class ENTRequest implements Serializable {
 
     @Override
     public String toString() {
-        return "ENTRequest{" + "id=" + id + ", requestorId=" + requestorId + ", requesteeId=" + requesteeId + ", requestAmt=" + requestAmt + ", accountId=" + accountId + ", currency=" + currency + ", requestStatus=" + requestStatus + ", requestDate=" + requestDate + '}';
+        return "ENTRequest{" + "id=" + id + ", user=" + user + ", requestorId=" + requestorId + ", requesteeId=" + requesteeId + ", requestAmt=" + requestAmt + ", accountId=" + accountId + ", currency=" + currency + ", requestStatus=" + requestStatus + ", requestDate=" + requestDate + '}';
     }
+
 
 }

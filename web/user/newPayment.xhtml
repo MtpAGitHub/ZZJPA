@@ -22,14 +22,18 @@
                             <tbody class="space05em">
                                 <tr>
                                     <td>Payee :</td>
-                                    <td><h:selectOneMenu id="payee" value="#{payment.payeeUsername}" title="Payee username">
+                                    <td><h:selectOneMenu id="payee" value="#{payment.payeeUsername}" title="Payee username" onclick="">
                                             <f:selectItems value="#{payment.tpUsers}"/>
+                                            <f:ajax listener="#{payment.userChangeListener}" render="payeeAct"/>
                                         </h:selectOneMenu>
                                     </td>
                                 </tr>
-                                <tr id="payeeAct">
+                                <tr>
                                     <td>Account :</td>
-                                    <td><h:inputText id="payeeacct" value="#{payment.payeeActName}" title="Payee account name"/></td>
+                                    <td><h:selectOneMenu id="payeeAct" value="#{payment.payeeActName}" title="Payee account name">
+                                            <f:selectItems id="payeeacct" value="#{payment.tpAccounts}"/>
+                                        </h:selectOneMenu>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Payment Amount :</td>

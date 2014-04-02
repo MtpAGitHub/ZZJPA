@@ -1,3 +1,4 @@
+//020414    MtpA    Added ManyToOne link to accounts
 //230314    MtpA    Created
 
 package com.mtpa.jpa.entity;
@@ -9,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
@@ -23,6 +26,11 @@ public class ENTTransaction implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+    //link to accounts as many transactions can relate to a single account
+    @ManyToOne
+    @JoinColumn
+    private ENTAccount account;
 
     @NotNull
     private Long accountId;
@@ -100,15 +108,24 @@ public class ENTTransaction implements Serializable {
         this.transactionDate = transactionDate;
     }
 
+    public ENTAccount getAccount() {
+        return account;
+    }
+
+    public void setAccount(ENTAccount account) {
+        this.account = account;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 31 * hash + Objects.hashCode(this.id);
-        hash = 31 * hash + Objects.hashCode(this.accountId);
-        hash = 31 * hash + (int) (Double.doubleToLongBits(this.transactionAmt) ^ (Double.doubleToLongBits(this.transactionAmt) >>> 32));
-        hash = 31 * hash + Objects.hashCode(this.tpUserId);
-        hash = 31 * hash + Objects.hashCode(this.tpAccountId);
-        hash = 31 * hash + Objects.hashCode(this.transactionDate);
+        int hash = 7;
+        hash = 73 * hash + Objects.hashCode(this.id);
+        hash = 73 * hash + Objects.hashCode(this.account);
+        hash = 73 * hash + Objects.hashCode(this.accountId);
+        hash = 73 * hash + (int) (Double.doubleToLongBits(this.transactionAmt) ^ (Double.doubleToLongBits(this.transactionAmt) >>> 32));
+        hash = 73 * hash + Objects.hashCode(this.tpUserId);
+        hash = 73 * hash + Objects.hashCode(this.tpAccountId);
+        hash = 73 * hash + Objects.hashCode(this.transactionDate);
         return hash;
     }
 
@@ -122,6 +139,9 @@ public class ENTTransaction implements Serializable {
         }
         final ENTTransaction other = (ENTTransaction) obj;
         if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        if (!Objects.equals(this.account, other.account)) {
             return false;
         }
         if (!Objects.equals(this.accountId, other.accountId)) {
@@ -144,7 +164,7 @@ public class ENTTransaction implements Serializable {
 
     @Override
     public String toString() {
-        return "ENTTransaction{" + "id=" + id + ", accountId=" + accountId + ", transactionAmt=" + transactionAmt + ", tpUserId=" + tpUserId + ", tpAccountId=" + tpAccountId + ", transactionDate=" + transactionDate + '}';
+        return "ENTTransaction{" + "id=" + id + ", account=" + account + ", accountId=" + accountId + ", transactionAmt=" + transactionAmt + ", tpUserId=" + tpUserId + ", tpAccountId=" + tpAccountId + ", transactionDate=" + transactionDate + '}';
     }
     
 }

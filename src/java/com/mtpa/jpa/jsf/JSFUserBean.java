@@ -134,11 +134,6 @@ public class JSFUserBean implements Serializable {
         return "logout";
     }
 
-    public String submitUser() {
-        debugMsg.setDebugText("User submitted");
-        return "results";
-    }
-
     public List<ENTUser> getAllUser() {
         return userDet.getAllUsers();
     }

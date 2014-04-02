@@ -1,16 +1,21 @@
+//020414    MtpA    Added annotations to link to ENTAccount as a one to many and many to many link to ENTRequest
 //130314    MtpA    Create
 
 package com.mtpa.jpa.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.validation.constraints.NotNull;
 
@@ -30,6 +35,15 @@ public class ENTUser implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long personId;
+
+    //link to accounts as a user can have more than one account
+    @OneToMany(mappedBy = "user")
+    private List<ENTAccount> account;
+    
+    //link to requests as a user can have many payment requests
+    @ManyToMany
+    @JoinTable
+    List<ENTRequest> request;
     
     @NotNull
     private String forename;
@@ -107,15 +121,33 @@ public class ENTUser implements Serializable {
         this.createdDate = createdDate;
     }
 
+    public List<ENTAccount> getAccount() {
+        return account;
+    }
+
+    public void setAccount(List<ENTAccount> account) {
+        this.account = account;
+    }
+
+    public List<ENTRequest> getRequest() {
+        return request;
+    }
+
+    public void setRequest(List<ENTRequest> request) {
+        this.request = request;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 71 * hash + Objects.hashCode(this.personId);
-        hash = 71 * hash + Objects.hashCode(this.forename);
-        hash = 71 * hash + Objects.hashCode(this.surname);
-        hash = 71 * hash + Objects.hashCode(this.username);
-        hash = 71 * hash + Objects.hashCode(this.password);
-        hash = 71 * hash + Objects.hashCode(this.createdDate);
+        int hash = 3;
+        hash = 89 * hash + Objects.hashCode(this.personId);
+        hash = 89 * hash + Objects.hashCode(this.account);
+        hash = 89 * hash + Objects.hashCode(this.request);
+        hash = 89 * hash + Objects.hashCode(this.forename);
+        hash = 89 * hash + Objects.hashCode(this.surname);
+        hash = 89 * hash + Objects.hashCode(this.username);
+        hash = 89 * hash + Objects.hashCode(this.password);
+        hash = 89 * hash + Objects.hashCode(this.createdDate);
         return hash;
     }
 
@@ -129,6 +161,12 @@ public class ENTUser implements Serializable {
         }
         final ENTUser other = (ENTUser) obj;
         if (!Objects.equals(this.personId, other.personId)) {
+            return false;
+        }
+        if (!Objects.equals(this.account, other.account)) {
+            return false;
+        }
+        if (!Objects.equals(this.request, other.request)) {
             return false;
         }
         if (!Objects.equals(this.forename, other.forename)) {
@@ -151,7 +189,7 @@ public class ENTUser implements Serializable {
 
     @Override
     public String toString() {
-        return "ENTUser{" + "personId=" + personId + ", forename=" + forename + ", surname=" + surname + ", username=" + username + ", password=" + password + ", createdDate=" + createdDate + '}';
+        return "ENTUser{" + "personId=" + personId + ", account=" + account + ", request=" + request + ", forename=" + forename + ", surname=" + surname + ", username=" + username + ", password=" + password + ", createdDate=" + createdDate + '}';
     }
 
 }

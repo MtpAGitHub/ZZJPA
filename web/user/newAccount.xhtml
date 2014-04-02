@@ -26,8 +26,9 @@
                                 </tr>
                                 <tr>
                                     <td>Currency :</td>
-                                    <td><h:selectOneMenu id="currency" value="#{account.accountCur}">
+                                    <td><h:selectOneMenu id="currency" value="#{account.accountCur}" onclick="">
                                             <f:selectItems value="#{prefcurrency.preferredCurrency}"/>
+                                            <f:ajax listener="#{account.currencyChangeListener}" render="balance"/>
                                         </h:selectOneMenu>
                                     </td>
                                 </tr>                                

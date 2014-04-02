@@ -1,3 +1,4 @@
+//020414    MtpA    Add post construct so that accounts are pre-populated
 //010414    MtpA    Refactored to move account list functionality to EJB
 //310314    MtpA    Added currency conversion
 //270314    MtpA    Created
@@ -5,7 +6,6 @@
 package com.mtpa.jpa.jsf;
 
 import com.mtpa.jpa.entity.ENTAccount;
-import com.mtpa.jpa.entity.ENTTransaction_;
 import com.mtpa.jpa.entity.ENTUser;
 import com.mtpa.jpa.iface.AccountJPALocal;
 import com.mtpa.jpa.iface.ConvertCurrencyLocal;
@@ -13,10 +13,11 @@ import com.mtpa.jpa.iface.GetAccountListLocal;
 import com.mtpa.jpa.iface.GetTPUserLocal;
 import com.mtpa.jpa.iface.PaymentLocal;
 import com.mtpa.jpa.iface.UserJPALocal;
-import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -54,7 +55,6 @@ public class JSFPaymentBean {
     private List<String> accountNameList;
     
     public JSFPaymentBean() {
-        
     }
 
     public String getPayeeUsername() {
@@ -125,6 +125,10 @@ public class JSFPaymentBean {
         return acctList.myAccountList(curUser.getUserId());
     }
     
+    public void userChangeListener(AjaxBehaviorEvent usernameEvent) {
+        
+    }
+    
     public String submitPayment() {
         ENTAccount payorAcct = userAcct.getSingleAccount(payorActName);
         if (payorAcct != null) {
@@ -159,5 +163,9 @@ public class JSFPaymentBean {
         debugTxt.setDebugText("Amount paid " + paymentAmt + " to " + payeeUsername);
         return "home";
     }
-    
+
+    @PostConstruct
+    public void postConstruct() {
+        payeeUsername = getTpUsers().get(0);
+    }
 }

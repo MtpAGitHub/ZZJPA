@@ -1,3 +1,4 @@
+//020414    MtpA    Updated so that won't try and convert the same currency
 //310314    MtpA    Created
 
 package com.mtpa.jpa.ejb;
@@ -34,14 +35,18 @@ public class ConvertCurrencyBean implements ConvertCurrencyLocal {
 
     @Override
     public double ConvertCurrency(double vAmount, CurrencyEnum vCurrencyFrom, CurrencyEnum vCurrencyTo) {
-        String restfulUrl = RESTFUL_URI_ROOT + vCurrencyFrom.getValidCurrency() + "/" + vCurrencyTo.getValidCurrency() + "/" + vAmount;
-        try {
-            String xmlResponse = restfulClient.restfulRequest(restfulUrl, ReqAcceptEnum.XML, ReqTypeEnum.GET, "");
-            return convAmt.getConversion(xmlResponse);
-        } catch (Exception e) {
-            errorTxt.setErrorText("It's all gone Pete Tong");
-            System.out.println(e);
-            return -1;
-        }        
+        if (!vCurrencyFrom.equals(vCurrencyTo)) {
+            String restfulUrl = RESTFUL_URI_ROOT + vCurrencyFrom.getValidCurrency() + "/" + vCurrencyTo.getValidCurrency() + "/" + vAmount;
+            try {
+                String xmlResponse = restfulClient.restfulRequest(restfulUrl, ReqAcceptEnum.XML, ReqTypeEnum.GET, "");
+                return convAmt.getConversion(xmlResponse);
+            } catch (Exception e) {
+                errorTxt.setErrorText("It's all gone Pete Tong");
+                System.out.println(e);
+                return -1;
+            }        
+        } else {
+            return vAmount;
+        }
     }
 }
