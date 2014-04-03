@@ -1,3 +1,4 @@
+//030414    MtpA    Add new list query using FETCH JOIN for newly added annotations & remove redundant code
 //120314    MtpA    Created
 package com.mtpa.jpa.jsf;
 
@@ -11,6 +12,7 @@ import com.mtpa.jpa.iface.RequestJPALocal;
 import com.mtpa.jpa.iface.TransactionJPALocal;
 import java.io.Serializable;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
@@ -138,10 +140,18 @@ public class JSFUserBean implements Serializable {
         return userDet.getAllUsers();
     }
 
+    public ENTUser getUserFetchByName() {
+        return userDet.getUserByNameFetch(username);
+    }
+
     public List<ENTAccount> getAllAccounts() {
         return accountDet.getAccountList();
     }
 
+    public List<ENTAccount> getAccountsByUserId() {
+        return accountDet.getUserAccountList(userId);
+    }
+    
     public List<ENTRequest> getAllRequests() {
         return requestDet.getRequestList();
     }
@@ -149,4 +159,5 @@ public class JSFUserBean implements Serializable {
     public List<ENTTransaction> getAllTransactions() {
         return transDet.getTransactionList();
     }
+        
 }

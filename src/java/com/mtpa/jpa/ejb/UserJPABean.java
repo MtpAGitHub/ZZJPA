@@ -77,6 +77,36 @@ public class UserJPABean implements Serializable, UserJPALocal {
             return null;
         }
     }
+    
+    @Override
+    public synchronized ENTUser getUserByIDFetch(long vUserId) {
+        //Used getResultList as opposed to getSingleResult (exception handling as can't guarantee only one record)
+        //Did not use find() method as wanted JOIN FETCH
+
+        Query idFetch = userEM.createNamedQuery("findUserIdFetch");
+        idFetch.setParameter("userid", vUserId);
+        List<ENTUser> userDetail = idFetch.getResultList();
+        if (!userDetail.isEmpty()) {
+            return userDetail.get(0);
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public synchronized ENTUser getUserByNameFetch(String vUsername) {
+        //Used getResultList as opposed to getSingleResult (exception handling as can't guarantee only one record)
+        //Did not use find() method as username is not the PK
+
+        Query nameFetch = userEM.createNamedQuery("findUsernameFetch");
+        nameFetch.setParameter("username", vUsername);
+        List<ENTUser> userDetail = nameFetch.getResultList();
+        if (!userDetail.isEmpty()) {
+            return userDetail.get(0);
+        } else {
+            return null;
+        }
+    }
 
     @Override
     public synchronized boolean userExist(String vUsername) {

@@ -24,6 +24,10 @@ public interface UserJPALocal {
     
     ENTUser getUserById(long vUserId);
     
+    ENTUser getUserByIDFetch(long vUserId);
+    
+    ENTUser getUserByNameFetch(String vUsername);
+    
     boolean userExist(String vUsername);
 
     void setUserDetails(String vForename, String vSurname, String vUsername, String vPassword, Date vCreatedDate);

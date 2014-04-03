@@ -1,3 +1,4 @@
+//020414    MtpA    Add eager search with FETCH for user details
 //020414    MtpA    Added annotations to link to ENTAccount as a one to many and many to many link to ENTRequest
 //130314    MtpA    Create
 
@@ -28,7 +29,9 @@ import javax.validation.constraints.NotNull;
     @NamedQuery(name="findAllUsers", query = "SELECT user FROM ENTUser user"),
     @NamedQuery(name="findAllTpUsers", query = "SELECT user FROM ENTUser user WHERE user.personId <> :userid"),
     @NamedQuery(name="findUserByName", query = "SELECT user FROM ENTUser user WHERE user.username = :username"),
-    @NamedQuery(name="findUserById", query = "SELECT user FROM ENTUser user WHERE user.personId = :userid")
+    @NamedQuery(name="findUserById", query = "SELECT user FROM ENTUser user WHERE user.personId = :userid"),
+    @NamedQuery(name="findUserIdFetch", query = "SELECT user FROM ENTUser user JOIN FETCH user.account WHERE user.personId = :userid"),
+    @NamedQuery(name="findUsernameFetch", query = "SELECT user FROM ENTUser user JOIN FETCH user.account WHERE user.username = :username")
 })
 public class ENTUser implements Serializable {
     private static final long serialVersionUID = 1L;

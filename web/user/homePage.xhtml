@@ -59,8 +59,8 @@
                                 </table>
                             </td>
                             <td>
-                                <h:outputText value="No account records" rendered="#{user.allAccounts.size() == 0}"/>
-                                <h:dataTable value="#{user.allAccounts}" var="acct" frame="border" rendered="#{user.allAccounts.size() > 0}"
+                                <h:outputText value="No account records" rendered="#{user.accountsByUserId.size() == 0}"/>
+                                <h:dataTable value="#{user.accountsByUserId}" var="acct" frame="border" rendered="#{user.accountsByUserId.size() > 0}"
                                              styleClass="userdatatbl" headerClass="userdatahdr" rowClasses="userdatarow">
                                     <h:column>
                                         <f:facet name="header">Acct ID</f:facet>
