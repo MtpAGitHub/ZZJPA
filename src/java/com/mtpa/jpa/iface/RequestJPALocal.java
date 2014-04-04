@@ -26,4 +26,7 @@ public interface RequestJPALocal {
             
     List<ENTRequest> getRequestList();
     
+    List<ENTRequest> getRequesteeList(long vUserId);
+    
+    List<ENTRequest> getRequestorList(long vUserId);
 }

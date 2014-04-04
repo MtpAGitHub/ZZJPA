@@ -117,8 +117,8 @@
                                 </h:dataTable>                                
                             </td>
                             <td>
-                                <h:outputText value="No request records" rendered="#{user.allRequests.size() == 0}"/>
-                                <h:dataTable value="#{user.allRequests}" var="req" frame="border" rendered="#{user.allRequests.size() > 0}"
+                                <h:outputText value="No request records" rendered="#{user.requesteeRequests.size() == 0}"/>
+                                <h:dataTable value="#{user.requesteeRequests}" var="req" frame="border" rendered="#{user.requesteeRequests.size() > 0}"
                                              styleClass="userdatatbl" headerClass="userdatahdr" rowClasses="userdatarow">
                                     <h:column>
                                         <f:facet name="header">Requestor Id</f:facet>

@@ -1,3 +1,4 @@
+//040414    MtpA    Added queries to get requests made to and for me
 //020414    MtpA    Added many to many with ENTUser
 //230314    MtpA    Created
 
@@ -23,6 +24,8 @@ import javax.validation.constraints.NotNull;
 @NamedQueries({
     @NamedQuery(name="findAllRequests",query="SELECT req FROM ENTRequest req"),
     @NamedQuery(name="findAllPendingRequests", query="SELECT req FROM ENTRequest req WHERE req.requestStatus = :status"),
+    @NamedQuery(name="findRequestsByRequestor", query="SELECT req FROM ENTRequest req WHERE req.requestorId = :userid"),
+    @NamedQuery(name="findRequestsByRequestee", query="SELECT req FROM ENTRequest req WHERE req.requesteeId = :userid")
 })
 public class ENTRequest implements Serializable {
     private static final long serialVersionUID = 1L;

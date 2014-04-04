@@ -1,3 +1,4 @@
+//040414    MtpA    Added list query for all requests made of me
 //030414    MtpA    Add new list query using FETCH JOIN for newly added annotations & remove redundant code
 //120314    MtpA    Created
 package com.mtpa.jpa.jsf;
@@ -156,8 +157,16 @@ public class JSFUserBean implements Serializable {
         return requestDet.getRequestList();
     }
 
+    public List<ENTRequest> getRequesteeRequests() {
+        return requestDet.getRequesteeList(userId);
+    }
+
+    public List<ENTRequest> getRequestorRequests() {
+        return requestDet.getRequestorList(userId);
+    }
+
     public List<ENTTransaction> getAllTransactions() {
         return transDet.getTransactionList();
     }
-        
+    
 }

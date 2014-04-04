@@ -1,3 +1,4 @@
+//040414    MtpA    Added requestor and requestee calls
 //280314    MtpA    Created
 
 package com.mtpa.jpa.ejb;
@@ -30,7 +31,21 @@ public class RequestJPABean implements RequestJPALocal {
     public synchronized List<ENTRequest> getRequestList() {
         return requestEm.createNamedQuery("findAllRequests").getResultList();
     }
+
+    @Override
+    public synchronized List<ENTRequest> getRequesteeList(long vUserId) {
+        Query requesteeRequests = requestEm.createNamedQuery("findRequestsByRequestee");
+        requesteeRequests.setParameter("userid", vUserId);
+        return requesteeRequests.getResultList();        
+    }
     
+    @Override
+    public synchronized List<ENTRequest> getRequestorList(long vUserId) {
+        Query requestorRequests = requestEm.createNamedQuery("findRequestsByRequestor");
+        requestorRequests.setParameter("userid", vUserId);
+        return requestorRequests.getResultList();        
+    }
+
     @Override
     public synchronized List<ENTRequest> getPendingList(RequestStatusEnum vRequestStatus) {
         Query pendingRequests = requestEm.createNamedQuery("findAllPendingRequests");
