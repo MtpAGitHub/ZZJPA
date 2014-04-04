@@ -1,4 +1,4 @@
-//040414    MtpA    Added list query for all requests made of me
+//040414    MtpA    Added list query for all requests made of me & all transactions relating to my accounts
 //030414    MtpA    Add new list query using FETCH JOIN for newly added annotations & remove redundant code
 //120314    MtpA    Created
 package com.mtpa.jpa.jsf;
@@ -12,6 +12,7 @@ import com.mtpa.jpa.iface.AccountJPALocal;
 import com.mtpa.jpa.iface.RequestJPALocal;
 import com.mtpa.jpa.iface.TransactionJPALocal;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -167,6 +168,20 @@ public class JSFUserBean implements Serializable {
 
     public List<ENTTransaction> getAllTransactions() {
         return transDet.getTransactionList();
+    }
+    
+    public List<ENTTransaction> getMyTransactions() {
+        List<ENTAccount> myAccounts = getAccountsByUserId();
+        if (myAccounts.size() > 0) {
+            List<Long> myAcctIds = new ArrayList<>();
+            for (ENTAccount curAcct : myAccounts) {
+                myAcctIds.add(curAcct.getId());
+            }
+            return transDet.getTransByAcctId(myAcctIds);
+        } else {
+            List<ENTTransaction> emptyList = new ArrayList<>();
+            return emptyList;
+        }
     }
     
 }

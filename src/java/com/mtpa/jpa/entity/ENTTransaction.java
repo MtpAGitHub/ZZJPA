@@ -1,3 +1,4 @@
+//040414    MtpA    Added query to find own transactions
 //020414    MtpA    Added ManyToOne link to accounts
 //230314    MtpA    Created
 
@@ -19,7 +20,8 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @NamedQueries({
-    @NamedQuery(name="findAllTransactions",query="SELECT trans FROM ENTTransaction trans")
+    @NamedQuery(name="findAllTransactions",query="SELECT trans FROM ENTTransaction trans"),
+    @NamedQuery(name="findTransactionByAccountId",query="SELECT trans FROM ENTTransaction trans WHERE trans.accountId IN :acctlist")
 })
 public class ENTTransaction implements Serializable {
     private static final long serialVersionUID = 1L;

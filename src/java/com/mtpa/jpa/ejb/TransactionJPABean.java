@@ -1,3 +1,4 @@
+//040414    MtpA    Added call to get own transactions
 //280314    MtpA    Created
 
 package com.mtpa.jpa.ejb;
@@ -12,6 +13,7 @@ import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 @Stateless
 @Local(TransactionJPALocal.class)
@@ -27,6 +29,13 @@ public class TransactionJPABean implements TransactionJPALocal {
     @Override
     public synchronized List<ENTTransaction> getTransactionList() {
         return transactionEm.createNamedQuery("findAllTransactions").getResultList();
+    }
+    
+    @Override
+    public synchronized List<ENTTransaction> getTransByAcctId(List<Long> vAcctList) {
+        Query myTransactions = transactionEm.createNamedQuery("findTransactionByAccountId");
+        myTransactions.setParameter("acctlist", vAcctList);
+        return myTransactions.getResultList();        
     }
     
     @Override

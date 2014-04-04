@@ -93,8 +93,8 @@
                     <tbody>
                         <tr>
                             <td>
-                                <h:outputText value="No transaction records" rendered="#{user.allTransactions.size() == 0}"/>
-                                <h:dataTable value="#{user.allTransactions}" var="trans" frame="border" rendered="#{user.allTransactions.size() > 0}"
+                                <h:outputText value="No transaction records" rendered="#{user.myTransactions.size() == 0}"/>
+                                <h:dataTable value="#{user.myTransactions}" var="trans" frame="border" rendered="#{user.myTransactions.size() > 0}"
                                              styleClass="userdatatbl" headerClass="userdatahdr" rowClasses="userdatarow">
                                     <h:column>
                                         <f:facet name="header">Account Id</f:facet>

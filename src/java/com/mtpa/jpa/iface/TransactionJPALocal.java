@@ -20,4 +20,6 @@ public interface TransactionJPALocal {
 
     List<ENTTransaction> getTransactionList();
     
+    List<ENTTransaction> getTransByAcctId(List<Long> vAcctList);
+    
 }
