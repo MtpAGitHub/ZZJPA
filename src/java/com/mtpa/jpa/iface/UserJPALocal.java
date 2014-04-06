@@ -7,7 +7,7 @@
 package com.mtpa.jpa.iface;
 
 import com.mtpa.jpa.entity.ENTUser;
-import com.mtpa.jpa.enums.UserRoleEnum;
+import com.mtpa.jpa.enums.UserGroupEnum;
 import java.util.Date;
 import java.util.List;
 
@@ -32,6 +32,6 @@ public interface UserJPALocal {
     
     boolean userExist(String vUsername);
 
-    void setUserDetails(String vForename, String vSurname, String vUsername, String vPassword, UserRoleEnum vUserGroup, Date vCreatedDate);
+    void setUserDetails(String vForename, String vSurname, String vUsername, String vPassword, UserGroupEnum vUserGroup, Date vCreatedDate);
     
 }

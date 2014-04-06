@@ -1,9 +1,23 @@
-//020414    MtpA    Add post construct so that accounts are pre-populated
-//010414    MtpA    Refactored to move account list functionality to EJB
-//310314    MtpA    Added currency conversion
-//270314    MtpA    Created
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+//
+//
+//
+//
 
 package com.mtpa.jpa.jsf;
+
+/**
+ *
+ * @author MtpA
+ * 020414    Add post construct so that accounts are pre-populated
+ * 010414    Refactored to move account list functionality to EJB
+ * 310314    Added currency conversion
+ * 270314    Created
+ */
 
 import com.mtpa.jpa.entity.ENTAccount;
 import com.mtpa.jpa.entity.ENTUser;
@@ -125,6 +139,7 @@ public class JSFPaymentBean {
         return acctList.myAccountList(curUser.getUserId());
     }
     
+    //listens to the payment JSF form user list for a change (through onclick) and fires to allow the page to rerender with the new data
     public void userChangeListener(AjaxBehaviorEvent usernameEvent) {
         
     }

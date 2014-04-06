@@ -9,7 +9,9 @@ package com.mtpa.jpa.jsf;
  *
  * @author MtpA
  * 060414   Added RolesAllowed annotations to restrict access to admin only methods
- *          Added workingUserId so that can show user home page (with user specific data) and admin page (with a picked user)
+ *          Added workingUserId & workingUsername so that can show user home page (with user specific data) and admin page (with a picked user)
+ *          Added all of the getAdmin...() methods to can differentiate the above
+ *          Added the usergroup stuff to allow an admin user to add another admin user
  * 040414   Added list query for all requests made of me & all transactions relating to my accounts
  * 030414   Add new list query using FETCH JOIN for newly added annotations & remove redundant code
  * 120314   Created
@@ -19,7 +21,10 @@ import com.mtpa.jpa.entity.ENTRequest;
 import com.mtpa.jpa.entity.ENTTransaction;
 import com.mtpa.jpa.iface.UserJPALocal;
 import com.mtpa.jpa.entity.ENTUser;
+import com.mtpa.jpa.enums.AllUserEnum;
+import com.mtpa.jpa.enums.UserGroupEnum;
 import com.mtpa.jpa.iface.AccountJPALocal;
+import com.mtpa.jpa.iface.GetTPUserLocal;
 import com.mtpa.jpa.iface.RequestJPALocal;
 import com.mtpa.jpa.iface.TransactionJPALocal;
 import java.io.Serializable;
@@ -28,6 +33,7 @@ import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -46,14 +52,19 @@ public class JSFUserBean implements Serializable {
     TransactionJPALocal transDet;
     @EJB
     RequestJPALocal requestDet;
+    @EJB
+    GetTPUserLocal tpUserList;
 
     private long userId;
     private long workingUserId;
     private String username;
+    private String workingUsername;
     private String userForename;
     private String userSurname;
     private String userPassword;
     private String confirmPassword;
+    private UserGroupEnum userGroup;
+    private boolean allUser;
 
     public JSFUserBean() {
     }
@@ -114,6 +125,30 @@ public class JSFUserBean implements Serializable {
         this.workingUserId = workingUserId;
     }
 
+    public String getWorkingUsername() {
+        return workingUsername;
+    }
+
+    public void setWorkingUsername(String workingUsername) {
+        this.workingUsername = workingUsername;
+    }
+
+    public boolean isAllUser() {
+        return allUser;
+    }
+
+    public void setAllUser(boolean allUser) {
+        this.allUser = allUser;
+    }
+
+    public UserGroupEnum getUserGroup() {
+        return userGroup;
+    }
+
+    public void setUserGroup(UserGroupEnum userGroup) {
+        this.userGroup = userGroup;
+    }
+
     public String loginUser() {
         /*        FacesContext context = FacesContext.getCurrentInstance();
          HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
@@ -133,8 +168,10 @@ public class JSFUserBean implements Serializable {
                 this.userForename = validUser.getForename();
                 this.userSurname = validUser.getSurname();
                 if (username.equals("admin")) {
+                    this.workingUsername = AllUserEnum.ALLUSER.getAllUsers();
                     return "admin";
                 } else {
+                    this.workingUsername = this.username;
                     return "home";
                 }
             } else {
@@ -159,41 +196,77 @@ public class JSFUserBean implements Serializable {
         return "logout";
     }
     
+    //these methods get the user lists for the main home pages for users and admins
+    //all user in the database regardless of which user
+//    @RolesAllowed("admin")
     public List<ENTUser> getAllUser() {
         return userDet.getAllUsers();
     }
 
+    //all users with a FETCH JOIN (not yet implemented)
     public ENTUser getUserFetchByName() {
         return userDet.getUserByNameFetch(username);
     }
 
+    //these methods get the account lists for the main home pages for users and admins
+    //all user in the database regardless of which user
 //    @RolesAllowed("admin")
     public List<ENTAccount> getAllAccounts() {
         return accountDet.getAccountList();
     }
 
+    //get the accounts that belong to the logged in user
     public List<ENTAccount> getAccountsByUserId() {
         return accountDet.getUserAccountList(workingUserId);
     }
     
+    //used on the admin home page only.  If 'All users' selected then get all accounts otherwise get the accounts of the selected user
+    public List<ENTAccount> getAdminAccounts() {
+        if(workingUsername.equals(AllUserEnum.ALLUSER.getAllUsers())) {
+            return accountDet.getAccountList();
+        } else {
+            ENTUser workingUser = userDet.getUserByName(workingUsername);
+            workingUserId = workingUser.getPersonId();
+            return accountDet.getUserAccountList(workingUserId);            
+        }
+    }
+    
+    //these methods get the request lists for the main home pages for users and admins
+    //all requests in the database regardless of which user
 //    @RolesAllowed("admin")
     public List<ENTRequest> getAllRequests() {
         return requestDet.getRequestList();
     }
 
+    //get requests made of me by other users
     public List<ENTRequest> getRequesteeRequests() {
         return requestDet.getRequesteeList(workingUserId);
     }
 
+    //get requests made by me of other users (not yet implemented)
     public List<ENTRequest> getRequestorRequests() {
         return requestDet.getRequestorList(workingUserId);
     }
 
+    //used on the admin home page only.  If 'All users' selected then get all requests otherwise get the requests of the selected user
+    public List<ENTRequest> getAdminRequests() {
+        if(workingUsername.equals(AllUserEnum.ALLUSER.getAllUsers())) {
+            return requestDet.getRequestList();
+        } else {
+            ENTUser workingUser = userDet.getUserByName(workingUsername);
+            workingUserId = workingUser.getPersonId();
+            return requestDet.getRequesteeList(workingUserId);
+        }        
+    }
+    
+    //these methods get the transaction lists for the main home pages for users and admins
+    //all transactions in the database regardless of which account
 //    @RolesAllowed("admin")
     public List<ENTTransaction> getAllTransactions() {
         return transDet.getTransactionList();
     }
-    
+
+    //only transactions that belong to accounts that belong to the logged in user
     public List<ENTTransaction> getMyTransactions() {
         List<ENTAccount> myAccounts = getAccountsByUserId();
         if (myAccounts.size() > 0) {
@@ -207,5 +280,32 @@ public class JSFUserBean implements Serializable {
             return emptyList;
         }
     }
-    
+
+    //used on the admin home page only.  If 'All users' selected then get all transactions otherwise get the transactions of the selected user
+    public List<ENTTransaction> getAdminTrans() {
+        if(workingUsername.equals(AllUserEnum.ALLUSER.getAllUsers())) {
+            return transDet.getTransactionList();
+        } else {
+            ENTUser workingUser = userDet.getUserByName(workingUsername);
+            workingUserId = workingUser.getPersonId();
+            return getMyTransactions();
+        }                
+    }
+
+    //used on the admin home page to list all users that are not the logged in user and adds 'All users' as the top entry on drop down list
+    public List<String> getTpUsers() {
+        List<String> allTPUsers = tpUserList.getTPUserList(workingUserId);
+        allTPUsers.add(0, AllUserEnum.ALLUSER.getAllUsers());
+        return allTPUsers;
+    }
+
+    //listens on the adminHome page for a change of user.  If 'All Users' selected from enum set the boolean
+    public void userChangeListener(AjaxBehaviorEvent usernameEvent) {
+        if(workingUsername.equals(AllUserEnum.ALLUSER.getAllUsers())) {
+            setAllUser(true);
+        } else {
+            setAllUser(false);
+        }
+    }
+
 }

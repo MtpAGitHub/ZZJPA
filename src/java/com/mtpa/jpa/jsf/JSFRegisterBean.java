@@ -12,7 +12,7 @@ package com.mtpa.jpa.jsf;
  * 060414   Add new arg to registerUser to utilise enum and make safe allocation as a USER (always from this screen)
  * 230314   Created bean
  */
-import com.mtpa.jpa.enums.UserRoleEnum;
+import com.mtpa.jpa.enums.UserGroupEnum;
 import com.mtpa.jpa.iface.DateStampLocal;
 import com.mtpa.jpa.iface.UserJPALocal;
 import javax.ejb.EJB;
@@ -37,6 +37,7 @@ public class JSFRegisterBean {
     private String  userUsername;
     private String  userPassword;
     private String  confPassword;
+    private UserGroupEnum userGroup = UserGroupEnum.USER;
 
     public JSFRegisterBean() {
     }
@@ -81,9 +82,17 @@ public class JSFRegisterBean {
         this.confPassword = confPassword;
     }
 
-    //register the new user and utilise the ENUM to make sure the role is always a USER from this screen
+    public UserGroupEnum getUserGroup() {
+        return userGroup;
+    }
+
+    public void setUserGroup(UserGroupEnum userGroup) {
+        this.userGroup = userGroup;
+    }
+
+    //register the new user and utilise the ENUM to make sure the role cannot be invalid (default is USER)
     public String registerUser() {
-        registeredUser.setUserDetails(userForename, userSurname, userUsername, userPassword, UserRoleEnum.USER, registerDate.getWsDateStamp());
+        registeredUser.setUserDetails(userForename, userSurname, userUsername, userPassword, userGroup, registerDate.getWsDateStamp());
         debugMsg.setDebugText("We have registered");
         return "index";
     }

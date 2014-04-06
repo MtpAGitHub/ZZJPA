@@ -1,6 +1,8 @@
-//260314    MtpA    Added password encryption from lab example
-//140314    MtpA    Created
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.mtpa.jpa.ejb;
 
 /**
@@ -12,7 +14,7 @@ package com.mtpa.jpa.ejb;
  */
 import com.mtpa.jpa.entity.ENTUser;
 import com.mtpa.jpa.entity.ENTUserGroup;
-import com.mtpa.jpa.enums.UserRoleEnum;
+import com.mtpa.jpa.enums.UserGroupEnum;
 import com.mtpa.jpa.iface.UserJPALocal;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
@@ -133,7 +135,7 @@ public class UserJPABean implements Serializable, UserJPALocal {
     }
     
     @Override
-    public synchronized void setUserDetails(String vForename, String vSurname, String vUsername, String vPassword, UserRoleEnum vUserGroup, Date vCreatedDate) {
+    public synchronized void setUserDetails(String vForename, String vSurname, String vUsername, String vPassword, UserGroupEnum vUserGroup, Date vCreatedDate) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             String passwd = vPassword;
@@ -144,8 +146,8 @@ public class UserJPABean implements Serializable, UserJPALocal {
 
             ENTUser user = new ENTUser(vForename, vSurname, vUsername, vPassword, vCreatedDate);
             userEM.persist(user);
-            
-            ENTUserGroup userGroup = new ENTUserGroup(vUsername, vUserGroup.getUserRole());
+   System.out.println(">>" + vUserGroup.getUserGroup());
+            ENTUserGroup userGroup = new ENTUserGroup(vUsername, vUserGroup.getUserGroup());
             userEM.persist(userGroup);
         } catch (UnsupportedEncodingException | NoSuchAlgorithmException ex) {
             Logger.getLogger(UserJPABean.class.getName()).log(Level.SEVERE, null, ex);

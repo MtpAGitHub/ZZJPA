@@ -42,6 +42,13 @@
                                     <td>Confirm Password :</td>
                                     <td><h:inputSecret id="confPassword" value="#{register.confPassword}"/></td>
                                 </tr>
+                                <tr>
+                                    <td>User Group :</td>
+                                    <td><h:selectOneMenu id="currency" value="#{register.userGroup}">
+                                            <f:selectItems value="#{usergroup.userGroup}"/>
+                                        </h:selectOneMenu>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>                    
                     </div>
@@ -50,7 +57,7 @@
                             <tbody>
                                 <tr>
                                     <td><h:commandButton id="submit" value="Submit" action="#{register.registerUser()}"/></td>
-                                    <td><h:button id="cancel" value="Cancel" outcome="index"/></td>
+                                    <td><h:button id="cancel" value="Cancel" outcome="adminHome"/></td>
                                 </tr>
                             </tbody>
                         </table>

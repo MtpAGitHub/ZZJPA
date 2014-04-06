@@ -9,20 +9,18 @@ package com.mtpa.jpa.enums;
 /**
  *
  * @author MtpA
- * 060414   Created roles
+ * 060414   Created to set admin page all users text
  */
-public enum UserRoleEnum {
-    ADMIN("admins"),
-    USER("users");
+public enum AllUserEnum {
+    ALLUSER("All users");
     
-    private String userRole;
+    private String allUsers;
     
-    private UserRoleEnum(String vUserRole) {
-        this.userRole = vUserRole;
+    private AllUserEnum(String vAllUsers) {
+        this.allUsers = vAllUsers;
     }
 
-    public String getUserRole() {
-        return userRole;
+    public String getAllUsers() {
+        return allUsers;
     }
-    
 }
