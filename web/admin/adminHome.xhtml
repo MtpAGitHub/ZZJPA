@@ -1,0 +1,154 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>PalPay Admin Homepage</title>
+        <h:outputStylesheet library="css" name="Pagestyle.css"/>
+        <h:outputStylesheet library="css" name="Boxstyle.css"/>
+        <h:outputStylesheet library="css" name="Buttonstyle.css"/>
+        <h:outputStylesheet library="css" name="Tablestyle.css"/>
+    </h:head>
+    <h:body>
+        <h:form id="JPAAdminHome">
+            <div class="header">
+                <h:commandLink class="logout" value="logout" action="#{user.logoutUser()}"/>
+                <h3>PalPay Admin Home Page</h3>
+            </div>
+            <div class="pageBody">
+                <table class="hometbl">
+                    <thead>
+                        <tr>
+                            <th>User details</th>
+                            <th>Account list</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td>User ID :</td>
+                                            <td><h:outputText id="userId" value="#{user.userId}"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Username :</td>
+                                            <td><h:outputText id="username" value="#{user.username}"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Forename :</td>
+                                            <td><h:outputText id="userForename" value="#{user.userForename}"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Surname :</td>
+                                            <td><h:outputText id="userSurname" value="#{user.userSurname}"/></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table>
+                                    <tbody>
+                                        <tr>
+                                            <td><h:button id="adminreg" value="Register Admin User" outcome="adminreg"/></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td>
+                                <h:outputText value="No account records" rendered="#{user.accountsByUserId.size() == 0}"/>
+                                <h:dataTable value="#{user.accountsByUserId}" var="acct" frame="border" rendered="#{user.accountsByUserId.size() > 0}"
+                                             styleClass="userdatatbl" headerClass="userdatahdr" rowClasses="userdatarow">
+                                    <h:column>
+                                        <f:facet name="header">Acct ID</f:facet>
+                                            #{acct.id}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Acct Name</f:facet>
+                                            #{acct.accountName}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Acct Currency</f:facet>
+                                            #{acct.acctCurrency}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Acct Balanace</f:facet>
+                                            #{acct.balance}
+                                    </h:column>
+                                </h:dataTable>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="hometbl">
+                    <thead>
+                        <tr>
+                            <th>Transaction details</th>
+                            <th>Request details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <h:outputText value="No transaction records" rendered="#{user.myTransactions.size() == 0}"/>
+                                <h:dataTable value="#{user.myTransactions}" var="trans" frame="border" rendered="#{user.myTransactions.size() > 0}"
+                                             styleClass="userdatatbl" headerClass="userdatahdr" rowClasses="userdatarow">
+                                    <h:column>
+                                        <f:facet name="header">Account Id</f:facet>
+                                            #{trans.accountId}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Amount</f:facet>
+                                            #{trans.transactionAmt}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Transaction User</f:facet>
+                                            #{trans.tpUserId}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Transaction Date</f:facet>
+                                        <h:outputText value="#{trans.transactionDate}">
+                                            <f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss"/>
+                                        </h:outputText>                                            
+                                    </h:column>
+                                </h:dataTable>                                
+                            </td>
+                            <td>
+                                <h:outputText value="No request records" rendered="#{user.requesteeRequests.size() == 0}"/>
+                                <h:dataTable value="#{user.requesteeRequests}" var="req" frame="border" rendered="#{user.requesteeRequests.size() > 0}"
+                                             styleClass="userdatatbl" headerClass="userdatahdr" rowClasses="userdatarow">
+                                    <h:column>
+                                        <f:facet name="header">Requestor Id</f:facet>
+                                            #{req.requestorId}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Amount</f:facet>
+                                            #{req.requestAmt}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Currency</f:facet>
+                                            #{req.currency}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Request Date</f:facet>
+                                        <h:outputText value="#{req.requestDate}">
+                                            <f:convertDateTime pattern="dd-MM-yyyy HH:mm:ss"/>
+                                        </h:outputText>                                            
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Status</f:facet>
+                                            #{req.requestStatus}
+                                    </h:column>
+                                </h:dataTable>                                
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="footer">
+                <h:outputText class="debugText" value="#{debug.debugText}"/>
+            </div>
+        </h:form>
+    </h:body>
+</html>
+

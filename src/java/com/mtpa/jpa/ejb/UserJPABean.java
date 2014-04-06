@@ -3,8 +3,16 @@
 
 package com.mtpa.jpa.ejb;
 
+/**
+ *
+ * @author MtpA
+ * 060414   Added enum UserRole to args 
+ * 260314   Added password encryption from lab example
+ * 140314   Created bean
+ */
 import com.mtpa.jpa.entity.ENTUser;
 import com.mtpa.jpa.entity.ENTUserGroup;
+import com.mtpa.jpa.enums.UserRoleEnum;
 import com.mtpa.jpa.iface.UserJPALocal;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
@@ -125,7 +133,7 @@ public class UserJPABean implements Serializable, UserJPALocal {
     }
     
     @Override
-    public synchronized void setUserDetails(String vForename, String vSurname, String vUsername, String vPassword, Date vCreatedDate) {
+    public synchronized void setUserDetails(String vForename, String vSurname, String vUsername, String vPassword, UserRoleEnum vUserGroup, Date vCreatedDate) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             String passwd = vPassword;
@@ -137,7 +145,7 @@ public class UserJPABean implements Serializable, UserJPALocal {
             ENTUser user = new ENTUser(vForename, vSurname, vUsername, vPassword, vCreatedDate);
             userEM.persist(user);
             
-            ENTUserGroup userGroup = new ENTUserGroup(vUsername, "users");
+            ENTUserGroup userGroup = new ENTUserGroup(vUsername, vUserGroup.getUserRole());
             userEM.persist(userGroup);
         } catch (UnsupportedEncodingException | NoSuchAlgorithmException ex) {
             Logger.getLogger(UserJPABean.class.getName()).log(Level.SEVERE, null, ex);

@@ -1,7 +1,18 @@
-//230314    MtpA    Created
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
 package com.mtpa.jpa.jsf;
 
+/**
+ *
+ * @author MtpA
+ * 060414   Add new arg to registerUser to utilise enum and make safe allocation as a USER (always from this screen)
+ * 230314   Created bean
+ */
+import com.mtpa.jpa.enums.UserRoleEnum;
 import com.mtpa.jpa.iface.DateStampLocal;
 import com.mtpa.jpa.iface.UserJPALocal;
 import javax.ejb.EJB;
@@ -70,8 +81,9 @@ public class JSFRegisterBean {
         this.confPassword = confPassword;
     }
 
+    //register the new user and utilise the ENUM to make sure the role is always a USER from this screen
     public String registerUser() {
-        registeredUser.setUserDetails(userForename, userSurname, userUsername, userPassword, registerDate.getWsDateStamp());
+        registeredUser.setUserDetails(userForename, userSurname, userUsername, userPassword, UserRoleEnum.USER, registerDate.getWsDateStamp());
         debugMsg.setDebugText("We have registered");
         return "index";
     }

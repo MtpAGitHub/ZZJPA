@@ -1,8 +1,19 @@
-//040414    MtpA    Added list query for all requests made of me & all transactions relating to my accounts
-//030414    MtpA    Add new list query using FETCH JOIN for newly added annotations & remove redundant code
-//120314    MtpA    Created
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.mtpa.jpa.jsf;
 
+/**
+ *
+ * @author MtpA
+ * 060414   Added RolesAllowed annotations to restrict access to admin only methods
+ *          Added workingUserId so that can show user home page (with user specific data) and admin page (with a picked user)
+ * 040414   Added list query for all requests made of me & all transactions relating to my accounts
+ * 030414   Add new list query using FETCH JOIN for newly added annotations & remove redundant code
+ * 120314   Created
+ */
 import com.mtpa.jpa.entity.ENTAccount;
 import com.mtpa.jpa.entity.ENTRequest;
 import com.mtpa.jpa.entity.ENTTransaction;
@@ -14,7 +25,7 @@ import com.mtpa.jpa.iface.TransactionJPALocal;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.PostConstruct;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
@@ -37,6 +48,7 @@ public class JSFUserBean implements Serializable {
     RequestJPALocal requestDet;
 
     private long userId;
+    private long workingUserId;
     private String username;
     private String userForename;
     private String userSurname;
@@ -94,6 +106,14 @@ public class JSFUserBean implements Serializable {
         this.confirmPassword = confirmPassword;
     }
 
+    public long getWorkingUserId() {
+        return workingUserId;
+    }
+
+    public void setWorkingUserId(long workingUserId) {
+        this.workingUserId = workingUserId;
+    }
+
     public String loginUser() {
         /*        FacesContext context = FacesContext.getCurrentInstance();
          HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
@@ -109,6 +129,7 @@ public class JSFUserBean implements Serializable {
             ENTUser validUser = userDet.getUserByName(username);
             if (validUser != null) {
                 this.userId = validUser.getPersonId();
+                this.workingUserId = this.userId;
                 this.userForename = validUser.getForename();
                 this.userSurname = validUser.getSurname();
                 if (username.equals("admin")) {
@@ -137,7 +158,7 @@ public class JSFUserBean implements Serializable {
          */
         return "logout";
     }
-
+    
     public List<ENTUser> getAllUser() {
         return userDet.getAllUsers();
     }
@@ -146,26 +167,29 @@ public class JSFUserBean implements Serializable {
         return userDet.getUserByNameFetch(username);
     }
 
+//    @RolesAllowed("admin")
     public List<ENTAccount> getAllAccounts() {
         return accountDet.getAccountList();
     }
 
     public List<ENTAccount> getAccountsByUserId() {
-        return accountDet.getUserAccountList(userId);
+        return accountDet.getUserAccountList(workingUserId);
     }
     
+//    @RolesAllowed("admin")
     public List<ENTRequest> getAllRequests() {
         return requestDet.getRequestList();
     }
 
     public List<ENTRequest> getRequesteeRequests() {
-        return requestDet.getRequesteeList(userId);
+        return requestDet.getRequesteeList(workingUserId);
     }
 
     public List<ENTRequest> getRequestorRequests() {
-        return requestDet.getRequestorList(userId);
+        return requestDet.getRequestorList(workingUserId);
     }
 
+//    @RolesAllowed("admin")
     public List<ENTTransaction> getAllTransactions() {
         return transDet.getTransactionList();
     }

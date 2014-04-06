@@ -20,7 +20,7 @@
         </navigation-case>
         <navigation-case>
             <from-outcome>admin</from-outcome>
-            <to-view-id>/admin/adminMain.xhtml</to-view-id>
+            <to-view-id>/admin/adminHome.xhtml</to-view-id>
             <!--            <redirect></redirect>-->
         </navigation-case>
         <navigation-case>
@@ -132,34 +132,34 @@
         </navigation-case>
     </navigation-rule>
 
-<!-- admin main page -->
+<!-- admin home page -->
 
     <navigation-rule>
         <from-view-id>/admin/adminMain.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>register</from-outcome>
-            <to-view-id>/newUser.xhtml</to-view-id>
+            <from-outcome>adminreg</from-outcome>
+            <to-view-id>/admin/adminRegister.xhtml</to-view-id>
             <!--            <redirect></redirect>-->
         </navigation-case>
         <navigation-case>
-            <from-outcome>oneuser</from-outcome>
-            <to-view-id>/admin/oneUser.xhtml</to-view-id>
-            <!--            <redirect></redirect>-->
-        </navigation-case>
-        <navigation-case>
-            <from-outcome>home</from-outcome>
-            <to-view-id>/user/homePage.xhtml</to-view-id>
+            <from-outcome>logout</from-outcome>
+            <to-view-id>/logout.xhtml</to-view-id>
             <!--            <redirect></redirect>-->
         </navigation-case>
     </navigation-rule>
 
-<!-- admin one user page -->
+<!-- admin registration page -->
 
     <navigation-rule>
-        <from-view-id>/admin/oneUser.xhtml</from-view-id>
+        <from-view-id>/admin/adminRegister.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>adminhome</from-outcome>
-            <to-view-id>/admin/adminMain.xhtml</to-view-id>
+            <to-view-id>/admin/adminHome.xhtml</to-view-id>
+            <!--            <redirect></redirect>-->
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>logout</from-outcome>
+            <to-view-id>/logout.xhtml</to-view-id>
             <!--            <redirect></redirect>-->
         </navigation-case>
     </navigation-rule>

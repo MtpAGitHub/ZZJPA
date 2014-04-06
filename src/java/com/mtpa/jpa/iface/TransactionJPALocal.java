@@ -19,7 +19,7 @@ public interface TransactionJPALocal {
     void createTransaction(long vAccountId, double vAmount, long vTPUserId, long vTPAccoutId, Date vCreatedDate);
 
     List<ENTTransaction> getTransactionList();
-    
+
     List<ENTTransaction> getTransByAcctId(List<Long> vAcctList);
     
 }
