@@ -24,11 +24,13 @@ import javax.inject.Named;
 @RequestScoped
 public class JSFRegisterBean {
 
+     //uses backing beans in the business container (to do the business logic)
     @EJB
     UserJPALocal registeredUser;
     @EJB
     DateStampLocal registerDate;
     
+     //uses JSF backing beans from the JSF container
     @Inject
     JSFDebugBean debugMsg;
     
@@ -42,6 +44,7 @@ public class JSFRegisterBean {
     public JSFRegisterBean() {
     }
 
+    //standard getters & setters
     public String getUserForename() {
         return userForename;
     }

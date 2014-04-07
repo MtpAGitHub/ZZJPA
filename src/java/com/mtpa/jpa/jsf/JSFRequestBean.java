@@ -1,6 +1,17 @@
-//270314    MtpA    Created
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
 package com.mtpa.jpa.jsf;
+
+ /**
+ *
+ * @author MtpA
+ * 270314   Created to make requests for payments from other accounts
+ *
+ */
 
 import com.mtpa.jpa.entity.ENTAccount;
 import com.mtpa.jpa.entity.ENTUser;
@@ -20,6 +31,7 @@ import javax.inject.Named;
 @RequestScoped
 public class JSFRequestBean {
 
+     //uses JSF backing beans from the JSF container
     @Inject
     JSFDebugBean debugTxt;
     @Inject
@@ -27,6 +39,7 @@ public class JSFRequestBean {
     @Inject
     JSFUserBean curUser;
     
+     //uses backing beans in the business container (to do the business logic)
     @EJB
     RequestJPALocal userRequest;
     @EJB
@@ -48,6 +61,7 @@ public class JSFRequestBean {
         
     }
 
+    //standard getters & setters
     public String getRequestUser() {
         return requestUser;
     }
@@ -72,14 +86,20 @@ public class JSFRequestBean {
         this.myAcctName = myAcctName;
     }
 
+    //get all third party users to show on the screen drop down list
     public List<String> getAllTpUsers() {
         return userList.getTPUserList(curUser.getUserId());
     }
 
+    //get all third party user accounts to show on the screen drop down list
     public List<String> getMyAccounts() {
         return acctList.myAccountList(curUser.getUserId());        
     }
     
+    //get the requested user and instantiate an object
+    //get details of my account which I have selected them to pay into
+    //add the request to the table saying it is from me, for an amount, in my currency, to my account and to whom I want the payment from
+    //lastly there is the web service call to timestamp the request
     public String submitRequest() {
         ENTUser requesteeUser = tpUser.getUserByName(requestUser);
         if (requesteeUser != null) {

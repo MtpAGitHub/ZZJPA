@@ -39,6 +39,7 @@ import javax.inject.Named;
 @RequestScoped
 public class JSFPaymentBean {
 
+     //uses JSF backing beans from the JSF container
     @Inject
     JSFDebugBean debugTxt;
     @Inject
@@ -46,6 +47,7 @@ public class JSFPaymentBean {
     @Inject
     JSFUserBean curUser;
 
+     //uses backing beans in the business container (to do the business logic)
     @EJB
     UserJPALocal tpUser;
     @EJB
@@ -71,6 +73,7 @@ public class JSFPaymentBean {
     public JSFPaymentBean() {
     }
 
+    //standard getters & setters
     public String getPayeeUsername() {
         return payeeUsername;
     }
@@ -143,7 +146,13 @@ public class JSFPaymentBean {
     public void userChangeListener(AjaxBehaviorEvent usernameEvent) {
         
     }
-    
+
+    //this will do the actual payments
+    //check that we have a valid account to pay the money from (payor)
+    //check that payor has enough money in the bank to make the payment
+    //first take the money from my (payor) account
+    //second convert the amount to the payee currency
+    //third pay the money into their account
     public String submitPayment() {
         ENTAccount payorAcct = userAcct.getSingleAccount(payorActName);
         if (payorAcct != null) {
@@ -179,6 +188,7 @@ public class JSFPaymentBean {
         return "home";
     }
 
+    //this was added so that we always have a payee username ready to build JSF page lists from.  Get the first third party user returned
     @PostConstruct
     public void postConstruct() {
         payeeUsername = getTpUsers().get(0);

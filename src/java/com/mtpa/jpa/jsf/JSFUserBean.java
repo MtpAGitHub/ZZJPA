@@ -30,6 +30,7 @@ import com.mtpa.jpa.iface.TransactionJPALocal;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
@@ -200,7 +201,7 @@ public class JSFUserBean implements Serializable {
     
     //these methods get the user lists for the main home pages for users and admins
     //all user in the database regardless of which user
-//    @RolesAllowed("admin")
+    @RolesAllowed("admins")
     public List<ENTUser> getAllUser() {
         return userDet.getAllUsers();
     }
@@ -212,7 +213,7 @@ public class JSFUserBean implements Serializable {
 
     //these methods get the account lists for the main home pages for users and admins
     //all user in the database regardless of which user
-//    @RolesAllowed("admin")
+    @RolesAllowed("admins")
     public List<ENTAccount> getAllAccounts() {
         return accountDet.getAccountList();
     }
@@ -235,7 +236,7 @@ public class JSFUserBean implements Serializable {
     
     //these methods get the request lists for the main home pages for users and admins
     //all requests in the database regardless of which user
-//    @RolesAllowed("admin")
+    @RolesAllowed("admins")
     public List<ENTRequest> getAllRequests() {
         return requestDet.getRequestList();
     }
@@ -263,7 +264,7 @@ public class JSFUserBean implements Serializable {
     
     //these methods get the transaction lists for the main home pages for users and admins
     //all transactions in the database regardless of which account
-//    @RolesAllowed("admin")
+    @RolesAllowed("admins")
     public List<ENTTransaction> getAllTransactions() {
         return transDet.getTransactionList();
     }

@@ -1,7 +1,17 @@
-//270314    MtpA    Created
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
 package com.mtpa.jpa.jsf;
 
+ /**
+ *
+ * @author MtpA
+ * 270314   Created to manage the requests made from another user
+ *
+ */
 import com.mtpa.jpa.entity.ENTAccount;
 import com.mtpa.jpa.entity.ENTRequest;
 import com.mtpa.jpa.entity.ENTUser;
@@ -23,6 +33,7 @@ import javax.inject.Named;
 @RequestScoped
 public class JSFManageRequestBean {
 
+     //uses JSF backing beans from the JSF container
     @Inject
     JSFDebugBean debugTxt;
     @Inject
@@ -30,6 +41,7 @@ public class JSFManageRequestBean {
     @Inject
     JSFUserBean curUser;
     
+     //uses backing beans in the business container (to do the business logic)
     @EJB
     RequestJPALocal userRequest;
     @EJB
@@ -54,6 +66,7 @@ public class JSFManageRequestBean {
         
     }
 
+    //standard getters & setters
     public ENTRequest getPendRequest() {
         return pendRequest;
     }
@@ -102,6 +115,9 @@ public class JSFManageRequestBean {
         this.requestId = requestId;
     }
 
+    //when looking to manage requests made of us we are only interested in PENDING ones as they have not yet been processed
+    //get all requests with a PENDING status and then process them into a string to show request id:username:amount:currency
+    //this is done to make the list readable on the screen
     public List<String> getAllPendingRequests() {
         requestList = userRequest.getPendingList(reqStatus.PENDING);
         List<String> reqDetailsList = new ArrayList<>();
@@ -121,6 +137,10 @@ public class JSFManageRequestBean {
         return accountList.myAccountList(curUser.getUserId());            
     }
     
+    //when submitting a request management do different things based on status
+    //pending = nothing
+    //rejected = just update the status (no payments)
+    //confirmed = update the status and make a payment to the selected user/account
     public String submitManRequest() {
         switch(reqStatus) {
             case PENDING:
@@ -138,6 +158,7 @@ public class JSFManageRequestBean {
         return "home";
     }
     
+    //change the status on the request for payment
     private void changeRequestStatus() {
         String[] selectionArray = selectedRequest.split(":");
         try {
@@ -148,6 +169,9 @@ public class JSFManageRequestBean {
         }
     }
     
+    //this will loop through the list of requests until we match the one we picked (there will be a better way of doing this I am sure)
+    //when found the one we want then take the money from our account (converting the amount to our currency first)
+    //then make a payment to the third party account in the original (requested) currency
     private void makePayment() {
         for (ENTRequest curReq : requestList) {
             if (curReq.getId() == requestId) {

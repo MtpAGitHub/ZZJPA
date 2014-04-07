@@ -1,7 +1,18 @@
-//310314    MtpA    Added currency conversion
-//260314    MtpA    Created
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
 package com.mtpa.jpa.jsf;
+
+ /**
+ *
+ * @author MtpA
+ * 310314   Added the currency conversion
+ * 260314   Created backing bean
+ *
+ */
 
 import com.mtpa.jpa.enums.CurrencyEnum;
 import com.mtpa.jpa.iface.AccountJPALocal;
@@ -17,11 +28,13 @@ import javax.inject.Named;
 @RequestScoped
 public class JSFAcctBean {
 
+    //uses backing beans in the business container (to do the business logic)
     @EJB
     AccountJPALocal accountDet;
     @EJB
     ConvertCurrencyLocal convertAmt;
     
+    //uses JSF backing beans from the JSF container
     @Inject
     JSFErrorBean errorTxt;
     @Inject
@@ -37,6 +50,8 @@ public class JSFAcctBean {
         
     }
 
+    //standard getters & setters
+    
     public String getAccountName() {
         return accountName;
     }
@@ -61,10 +76,12 @@ public class JSFAcctBean {
         this.accountBal = accountBal;
     }
 
+    //change of value listener on the currency drop down triggered by onclick.  Based on the selected currency show the right amount on screen
     public void currencyChangeListener(AjaxBehaviorEvent currencyEvent) {
         setAccountBal(convertAmt.ConvertCurrency(1000000, CurrencyEnum.GBP, accountCur));
     }
     
+    //response to pressing the submit button on the accout page.  Will check if there is already an account with the same name before creating
     public String submitAccount() {
         if (!accountDet.accountExist(accountName)) {
             // add new account and default 'from' currency always GBP
