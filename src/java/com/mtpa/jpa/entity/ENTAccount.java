@@ -1,8 +1,17 @@
-//020414    MtpA    Added annotations to link as a many to one to ENTUser and a one to many for ENTTransaction
-//280314    MtpA    Created
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
 package com.mtpa.jpa.entity;
 
+/**
+ *
+ * @author MtpA
+ * 020414   Added annotations to link as a many to one to ENTUser and a one to many for ENTTransaction
+ * 280314   Created entity
+ */
 import com.mtpa.jpa.enums.CurrencyEnum;
 import java.io.Serializable;
 import java.util.List;
@@ -22,6 +31,10 @@ import javax.validation.constraints.NotNull;
 // Oracle documentation just came back with single NamedQuery examples and no obvious link anywhere else
 // http://www.objectdb.com/java/jpa/query/named came back with @NamedQueries annotation below
 
+//all queries should be self explanatory
+//findAllAccounts - every single account in the table
+//findUserAccounts - accounts that relate to a specified user id
+//findSingleAccount - a single account that has a specific account name
 @Entity
 @NamedQueries({
     @NamedQuery(name="findAllAccounts",query="SELECT acct FROM ENTAccount acct"),
@@ -30,6 +43,7 @@ import javax.validation.constraints.NotNull;
 })
 public class ENTAccount implements Serializable {
     private static final long serialVersionUID = 1L;
+    //primary key
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -58,7 +72,8 @@ public class ENTAccount implements Serializable {
     public ENTAccount() {
         
     }
-    
+
+    //constructor with args to create a new instance
     public ENTAccount(long vUserId, String vAccountName, double vBalance, CurrencyEnum vCurrency) {
         this.userId = vUserId;
         this.accountName = vAccountName;

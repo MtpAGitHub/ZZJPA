@@ -9,7 +9,7 @@ package com.mtpa.jpa.enums;
 /**
  *
  * @author MtpA
- * 060414   Created roles
+ * 060414   Groups that are available to users
  */
 public enum UserGroupEnum {
     USER("users"),

@@ -1,8 +1,19 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 //260314    MtpA    Added NOTNULL annotations to username & groupname
 //230314    MtpA    Created directly from the SYSTEMUSERGROUP example in the Security exercise
 
 package com.mtpa.jpa.entity;
 
+/**
+ *
+ * @author MtpA
+ * 260314   Added NOTNULL annotations to username & groupname
+ * 230314   Created entity using the SYSTEMUSERGROUP example in the Security lab exercise
+ */
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

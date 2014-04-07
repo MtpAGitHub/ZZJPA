@@ -1,9 +1,18 @@
-//040414    MtpA    Added query to find own transactions
-//020414    MtpA    Added ManyToOne link to accounts
-//230314    MtpA    Created
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
 package com.mtpa.jpa.entity;
 
+/**
+ *
+ * @author MtpA
+ * 040414   Added query to find own transactions
+ * 020414   Added ManyToOne link to accounts
+ * 230314   Created entity
+ */
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
@@ -18,6 +27,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.validation.constraints.NotNull;
 
+//findAllTransactions - all transactions in the table
+//findTransactionsByAccountId - all transactions that are in a list of account ids (IN will match all account ids with transaction account ids)
 @Entity
 @NamedQueries({
     @NamedQuery(name="findAllTransactions",query="SELECT trans FROM ENTTransaction trans"),

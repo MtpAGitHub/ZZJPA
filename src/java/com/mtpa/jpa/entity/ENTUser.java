@@ -1,9 +1,18 @@
-//020414    MtpA    Add eager search with FETCH for user details
-//020414    MtpA    Added annotations to link to ENTAccount as a one to many and many to many link to ENTRequest
-//130314    MtpA    Create
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
 package com.mtpa.jpa.entity;
 
+/**
+ *
+ * @author MtpA
+ * 020414   Add eager search with FETCH for user details
+ * 020414   Added annotations to link to ENTAccount as a one to many and many to many link to ENTRequest
+ * 130314   Created entity
+ */
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -24,6 +33,12 @@ import javax.validation.constraints.NotNull;
 // Oracle documentation just came back with single NamedQuery examples and no obvious link anywhere else
 // http://www.objectdb.com/java/jpa/query/named came back with @NamedQueries annotation below
 
+//findAllUsers - get all users that are in the table
+//findAllTpUsers - find all users that are not yourself.  Match on any id <> the parameter id
+//findUserByName - find any users that correspond to a given username
+//findUserById - find any user corresponding to the parameter id
+//findUserIdFetch - join to the account table to return the given user (by id) and all account records held by them
+//findUsernameFetch - join to the account table to return the given user (by username) and all account records held by them
 @Entity
 @NamedQueries({
     @NamedQuery(name="findAllUsers", query = "SELECT user FROM ENTUser user"),

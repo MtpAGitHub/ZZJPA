@@ -1,9 +1,18 @@
-//040414    MtpA    Added queries to get requests made to and for me
-//020414    MtpA    Added many to many with ENTUser
-//230314    MtpA    Created
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
 package com.mtpa.jpa.entity;
 
+/**
+ *
+ * @author MtpA
+ * 040414   Added queries to get requests made to and for me
+ * 020414   Added many-many with ENTUser
+ * 230314   Created entity
+ */
 import com.mtpa.jpa.enums.CurrencyEnum;
 import com.mtpa.jpa.enums.RequestStatusEnum;
 import java.io.Serializable;
@@ -20,6 +29,10 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Temporal;
 import javax.validation.constraints.NotNull;
 
+//findAllRequests - all requests in the table
+//findAllPendingRequests - all requests that have a status of PENDING
+//findRequestsByRequestor - all requests where a user id is equal to the stored requestor id
+//findRequestsByRequestee - all requests where a user id is equal to the stored requestee id
 @Entity
 @NamedQueries({
     @NamedQuery(name="findAllRequests",query="SELECT req FROM ENTRequest req"),
