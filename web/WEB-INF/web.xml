@@ -21,4 +21,53 @@
     <welcome-file-list>
         <welcome-file>faces/index.xhtml</welcome-file>
     </welcome-file-list>
+    <security-constraint>
+        <display-name>UserSecurity</display-name>
+        <web-resource-collection>
+            <web-resource-name>user pages</web-resource-name>
+            <description>pages accessible to users</description>
+            <url-pattern>/faces/user/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>who can access these pages</description>
+            <role-name>users</role-name>
+            <role-name>admins</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <description>https</description>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>AdminSecurity</display-name>
+        <web-resource-collection>
+            <web-resource-name>admin pages</web-resource-name>
+            <description>pages that admin users can reach</description>
+            <url-pattern>/faces/admin/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>admin only access</description>
+            <role-name>admins</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <description>https security</description>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <realm-name>palpayJDBCRealm</realm-name>
+        <form-login-config>
+            <form-login-page>/faces/index.xhtml</form-login-page>
+            <form-error-page>/faces/loginError.xhtml</form-error-page>
+        </form-login-config>
+    </login-config>
+    <security-role>
+        <description>user role</description>
+        <role-name>users</role-name>
+    </security-role>
+    <security-role>
+        <description>administrator role</description>
+        <role-name>admins</role-name>
+    </security-role>
 </web-app>

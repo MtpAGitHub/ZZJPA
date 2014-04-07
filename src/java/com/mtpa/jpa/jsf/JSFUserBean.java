@@ -30,12 +30,15 @@ import com.mtpa.jpa.iface.TransactionJPALocal;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 
 @Named("user")
 @SessionScoped
@@ -150,50 +153,49 @@ public class JSFUserBean implements Serializable {
     }
 
     public String loginUser() {
-        /*        FacesContext context = FacesContext.getCurrentInstance();
-         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-         try {
-         //this method will actually check in the realm for the provided credentials
-         request.login(this.username, this.password);
-         } catch (ServletException e) {
-         context.addMessage(null, new FacesMessage("Login failed."));
-         return "loginerr";
-         }
-         */
-        if (!this.username.equals("error")) {
+        //creates an instance (context) holding the state information of the JSF request
+        //creates an instance (request) which links the JSF context to a Servlet by which the realm information can be accessed
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        try {
+            //checks against the realm in the Servlet (palpayJDBCRealm) for the users login credentials
+            request.login(this.username, this.userPassword);
             ENTUser validUser = userDet.getUserByName(username);
             if (validUser != null) {
                 this.userId = validUser.getPersonId();
                 this.workingUserId = this.userId;
                 this.userForename = validUser.getForename();
                 this.userSurname = validUser.getSurname();
-                if (username.equals("admin")) {
+                //checks to see what role the user has, against the predefined roles in the enum.  Note it is if-else if-else for safety
+                if (request.isUserInRole(UserGroupEnum.ADMIN.getUserGroup())) {
                     this.workingUsername = AllUserEnum.ALLUSER.getAllUsers();
                     return "admin";
-                } else {
+                } else if (request.isUserInRole(UserGroupEnum.USER.getUserGroup())){
                     this.workingUsername = this.username;
                     return "home";
+                } else {
+                    return "loginerr";
                 }
             } else {
                 return "loginerr";
             }
-        } else {
+        } catch (ServletException e) {
+            context.addMessage(null, new FacesMessage("Login failed."));
             return "loginerr";
         }
     }
 
     public String logoutUser() {
-        /*        FacesContext context = FacesContext.getCurrentInstance();
-         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-         try {
-         //this method will disassociate the principal from the session (effectively logging him/her out)
-         request.logout();
-         return "logout";
-         } catch (ServletException e) {
-         return "logouterr";
-         }
-         */
-        return "logout";
+        //as per login it binds the JSF context to a Servlet allowing the user to be removed from the session
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        try {
+            //this method will disassociate the principal from the session (effectively logging him/her out)
+            request.logout();
+            return "logout";
+        } catch (ServletException e) {
+            return "logouterr";
+        }
     }
     
     //these methods get the user lists for the main home pages for users and admins

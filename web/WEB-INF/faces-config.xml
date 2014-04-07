@@ -21,11 +21,11 @@
         <navigation-case>
             <from-outcome>admin</from-outcome>
             <to-view-id>/admin/adminHome.xhtml</to-view-id>
-            <!--            <redirect></redirect>-->
+            <redirect></redirect>
         </navigation-case>
         <navigation-case>
             <from-outcome>loginerr</from-outcome>
-            <to-view-id>/error/loginError.xhtml</to-view-id>
+            <to-view-id>/loginError.xhtml</to-view-id>
             <!--            <redirect></redirect>-->
         </navigation-case>
     </navigation-rule>
@@ -33,7 +33,7 @@
 <!-- error page -->
 
     <navigation-rule>
-        <from-view-id>/error/loginError.xhtml</from-view-id>
+        <from-view-id>/loginError.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>index</from-outcome>
             <to-view-id>/index.xhtml</to-view-id>

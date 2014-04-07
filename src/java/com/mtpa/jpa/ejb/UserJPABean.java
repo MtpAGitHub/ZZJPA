@@ -8,6 +8,7 @@ package com.mtpa.jpa.ejb;
 /**
  *
  * @author MtpA
+ * 070414   Amended to store passwords in encrypted form (linking in with security added in JSF bean)
  * 060414   Added enum UserRole to args 
  * 260314   Added password encryption from lab example
  * 140314   Created bean
@@ -144,9 +145,8 @@ public class UserJPABean implements Serializable, UserJPALocal {
             BigInteger bigInt = new BigInteger(1, digest);
             String paswdToStoreInDB = bigInt.toString(16);
 
-            ENTUser user = new ENTUser(vForename, vSurname, vUsername, vPassword, vCreatedDate);
+            ENTUser user = new ENTUser(vForename, vSurname, vUsername, paswdToStoreInDB, vCreatedDate);
             userEM.persist(user);
-   System.out.println(">>" + vUserGroup.getUserGroup());
             ENTUserGroup userGroup = new ENTUserGroup(vUsername, vUserGroup.getUserGroup());
             userEM.persist(userGroup);
         } catch (UnsupportedEncodingException | NoSuchAlgorithmException ex) {
