@@ -3,10 +3,10 @@
   <services>
   </services>
   <clients>
-    <client name="WSDateStamp">
-      <wsdl-url>http://localhost:8080/WSDateStamp/WSDateStamp?WSDL</wsdl-url>
-      <local-wsdl-file>localhost_8080/WSDateStamp/WSDateStamp.wsdl</local-wsdl-file>
-      <package-name>com.mtpa.wsassign</package-name>
+    <client name="DateStampWS">
+      <wsdl-url>http://localhost:8080/DateStampWS/DateStampWS?WSDL</wsdl-url>
+      <local-wsdl-file>localhost_8080/DateStampWS/DateStampWS.wsdl</local-wsdl-file>
+      <package-name>com.mtpa.datestamp</package-name>
       <catalog-file>catalog.xml</catalog-file>
       <wsimport-options>
         <wsimport-option>
@@ -23,7 +23,7 @@
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>wsdlLocation</wsimport-option-name>
-          <wsimport-option-value>http://localhost:8080/WSDateStamp/WSDateStamp?WSDL</wsimport-option-value>
+          <wsimport-option-value>http://localhost:8080/DateStampWS/DateStampWS?WSDL</wsimport-option-value>
         </wsimport-option>
         <wsimport-option>
           <wsimport-option-name>xnocompile</wsimport-option-name>

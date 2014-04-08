@@ -27,7 +27,7 @@ public class ConvertCurrencyBean implements ConvertCurrencyLocal {
     @EJB
     RESTfulXMLExtractLocal convAmt;
     
-    private static final String RESTFUL_URI_ROOT = "http://localhost:8080/RestFULAssignment/conversion/";
+    private static final String RESTFUL_URI_ROOT = "http://localhost:8080/119882RESTFulConverter/conversion/";
 
     public ConvertCurrencyBean() {
         

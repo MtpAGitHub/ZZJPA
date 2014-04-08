@@ -26,21 +26,21 @@
             <isset property="conf.dir"/>
         </condition>
     </target>
-    <target name="wsimport-client-WSDateStamp" depends="wsimport-init">
-        <mkdir dir="${build.generated.dir}/jax-wsCache/WSDateStamp"/>
-        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/WSDateStamp" destdir="${build.generated.dir}/jax-wsCache/WSDateStamp" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/WSDateStamp/wsdl/localhost_8080/WSDateStamp/WSDateStamp.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:8080/WSDateStamp/WSDateStamp?WSDL" xnocompile="true" xendorsed="true">
-            <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/WSDateStamp/wsdl/localhost_8080/WSDateStamp/WSDateStamp.wsdl"/>
-            <produces dir="${build.generated.dir}/jax-wsCache/WSDateStamp"/>
+    <target name="wsimport-client-DateStampWS" depends="wsimport-init">
+        <mkdir dir="${build.generated.dir}/jax-wsCache/DateStampWS"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/DateStampWS" destdir="${build.generated.dir}/jax-wsCache/DateStampWS" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/DateStampWS/wsdl/localhost_8080/DateStampWS/DateStampWS.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:8080/DateStampWS/DateStampWS?WSDL" xnocompile="true" xendorsed="true">
+            <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/DateStampWS/wsdl/localhost_8080/DateStampWS/DateStampWS.wsdl"/>
+            <produces dir="${build.generated.dir}/jax-wsCache/DateStampWS"/>
         </wsimport>
         <copy todir="${build.generated.sources.dir}/jax-ws">
-            <fileset dir="${build.generated.dir}/jax-wsCache/WSDateStamp">
+            <fileset dir="${build.generated.dir}/jax-wsCache/DateStampWS">
                 <include name="**/*.java"/>
             </fileset>
         </copy>
     </target>
-    <target name="wsimport-client-clean-WSDateStamp" depends="-init-project">
-        <delete dir="${build.generated.sources.dir}/jax-ws/com/mtpa/wsassign"/>
-        <delete dir="${build.generated.dir}/jax-wsCache/WSDateStamp"/>
+    <target name="wsimport-client-clean-DateStampWS" depends="-init-project">
+        <delete dir="${build.generated.sources.dir}/jax-ws/com/mtpa/datestamp"/>
+        <delete dir="${build.generated.dir}/jax-wsCache/DateStampWS"/>
     </target>
-    <target name="wsimport-client-generate" depends="wsimport-client-WSDateStamp"/>
+    <target name="wsimport-client-generate" depends="wsimport-client-DateStampWS"/>
 </project>
