@@ -9,10 +9,11 @@ package com.mtpa.jpa.jsf;
 /**
  *
  * @author MtpA
- * 020414    Add post construct so that accounts are pre-populated
- * 010414    Refactored to move account list functionality to EJB
- * 310314    Added currency conversion
- * 270314    Created
+ * 090414   Added try/catch blocks to pick up when a currency conversion has failed
+ * 020414   Add post construct so that accounts are pre-populated
+ * 010414   Refactored to move account list functionality to EJB
+ * 310314   Added currency conversion
+ * 270314   Created
  */
 
 import com.mtpa.jpa.entity.ENTAccount;
@@ -162,23 +163,32 @@ public class JSFPaymentBean {
                     if (selectedAcct != null) {
                         payeeActId = selectedAcct.getId();
                         double debitAmt = 0 - paymentAmt;
-                        // take money from payor account
-                        acctPayment.paymentTransaction(payorActId, payeeUserId, payeeActId, debitAmt);
-                        // convert payment amount to payee account currency
-                        paymentAmt = convertAmt.ConvertCurrency(paymentAmt, payorAcct.getAcctCurrency(),selectedAcct.getAcctCurrency());
-                        // pay money into payee account
-                        acctPayment.paymentTransaction(payeeActId, curUser.getUserId(), payorActId, paymentAmt);
+                        try {
+                            // convert payment amount to payee account currency and catch any exception do this FIRST before updating accounts
+                            paymentAmt = convertAmt.ConvertCurrency(paymentAmt, payorAcct.getAcctCurrency(),selectedAcct.getAcctCurrency());
+                            // take money from payor account
+                            acctPayment.paymentTransaction(payorActId, payeeUserId, payeeActId, debitAmt);
+                            // pay money into payee account
+                            acctPayment.paymentTransaction(payeeActId, curUser.getUserId(), payorActId, paymentAmt);
+                        } catch (Exception ex) {
+                            errorTxt.setErrorText("Thrown exception when doing a currency conversion !");
+                            return null;
+                        }
                     } else {
                         errorTxt.setErrorText("Cannot find payee account record");
+                        return null;
                     }
                 } else {
                     errorTxt.setErrorText("Cannot find payee record");
+                    return null;
                 }
             } else {
                 errorTxt.setErrorText("Insufficient funds !");
+                return null;
             }
         } else {
             errorTxt.setErrorText("Something gone wrong with my accounts !");
+            return null;
         }
         debugTxt.setDebugText("Amount paid " + paymentAmt + " to " + payeeUsername);
         return "home";

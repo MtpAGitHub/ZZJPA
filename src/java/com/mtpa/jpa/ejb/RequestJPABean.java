@@ -1,8 +1,18 @@
-//040414    MtpA    Added requestor and requestee calls
-//280314    MtpA    Created
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
 package com.mtpa.jpa.ejb;
 
+/**
+ *
+ * @author MtpA
+ * 090414   Added exception throw on updateStatus as cannot recover here
+ * 040414   Added requestor and requestee calls though only the latter is used (extendibility don't you know...)
+ * 280214   Created class
+ */
 import com.mtpa.jpa.iface.RequestJPALocal;
 import com.mtpa.jpa.entity.ENTRequest;
 import com.mtpa.jpa.enums.CurrencyEnum;
@@ -60,7 +70,7 @@ public class RequestJPABean implements RequestJPALocal {
     }
     
     @Override
-    public synchronized void updateStatus(long vRequestId, RequestStatusEnum vRequestStatus) {
+    public synchronized void updateStatus(long vRequestId, RequestStatusEnum vRequestStatus) throws Exception {
         ENTRequest statusRequest = requestEm.find(ENTRequest.class, vRequestId);
         if (statusRequest != null) {
             requestEm.persist(statusRequest);

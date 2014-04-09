@@ -9,9 +9,10 @@ package com.mtpa.jpa.iface;
 /**
  *
  * @author MtpA
+ * 090414   Added thr exception throw to correspond to method in class
  */
 public interface RESTfulXMLExtractLocal {
 
-    double getConversion(String convData);
+    double getConversion(String convData) throws Exception;
     
 }

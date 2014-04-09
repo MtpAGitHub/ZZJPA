@@ -1,7 +1,17 @@
-//270314    MtpA    Created
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
 package com.mtpa.jpa.ejb;
 
+/**
+ *
+ * @author MtpA
+ * 090414   Added throw of exception as failure to adjust balance needs to be told to user
+ * 270314   Created class
+ */
 import com.mtpa.jpa.iface.AccountJPALocal;
 import com.mtpa.jpa.entity.ENTAccount;
 import com.mtpa.jpa.enums.CurrencyEnum;
@@ -37,6 +47,7 @@ public class AccountJPABean implements AccountJPALocal {
         return findUserAcct.getResultList();
     }
 
+    //getting list rather than single item as cannot be sure that you will only get one result
     @Override
     public synchronized ENTAccount getSingleAccount(String vAccountName) {
         Query findSingleAcct = accountEm.createNamedQuery("findSingleAccount");
@@ -68,14 +79,14 @@ public class AccountJPABean implements AccountJPALocal {
     }
 
     @Override
-    public void adjustBalance(long vAccountId, double vAmount) {        
+    public void adjustBalance(long vAccountId, double vAmount) throws Exception {        
         ENTAccount balanceAcct = accountEm.find(ENTAccount.class, vAccountId);
         if (balanceAcct != null) {
             vAmount = vAmount + balanceAcct.getBalance();
             accountEm.persist(balanceAcct);
             balanceAcct.setBalance(vAmount);
         } else {
-            System.out.println("Something gone astray with the balance");
+            throw new Exception();
         }
     }
 

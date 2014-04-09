@@ -10,7 +10,7 @@ package com.mtpa.jpa.ejb;
  *
  * @author MtpA
  * 090414   Amended the class to return empty lists instead of 'no records found' see code comment
- * 010414    Created class
+ * 010414   Created class
  */
 import com.mtpa.jpa.iface.GetAccountListLocal;
 import com.mtpa.jpa.entity.ENTAccount;
@@ -65,6 +65,7 @@ public class GetAccountListBean implements GetAccountListLocal {
     public void getAccountList(long acctListUserId) {
         List<ENTAccount> acctList = userAcct.getUserAccountList(acctListUserId);
         if (acctList.size() > 0) {
+            accountNameList = new ArrayList<>();
             for (ENTAccount curAcct : acctList) {
                 accountNameList.add(curAcct.getAccountName());
             }

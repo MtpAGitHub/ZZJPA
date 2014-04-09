@@ -1,8 +1,17 @@
-//040414    MtpA    Added call to get own transactions
-//280314    MtpA    Created
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
 package com.mtpa.jpa.ejb;
 
+/**
+ *
+ * @author MtpA
+ * 040414   Added call to get your own transactions (as per spec)
+ * 280314   Created class to manage transactions
+ */
 import com.mtpa.jpa.iface.TransactionJPALocal;
 import com.mtpa.jpa.entity.ENTTransaction;
 import java.util.Date;
@@ -30,7 +39,8 @@ public class TransactionJPABean implements TransactionJPALocal {
     public synchronized List<ENTTransaction> getTransactionList() {
         return transactionEm.createNamedQuery("findAllTransactions").getResultList();
     }
-    
+
+    //parameter used so that can narrow down data search
     @Override
     public synchronized List<ENTTransaction> getTransByAcctId(List<Long> vAcctList) {
         Query myTransactions = transactionEm.createNamedQuery("findTransactionByAccountId");

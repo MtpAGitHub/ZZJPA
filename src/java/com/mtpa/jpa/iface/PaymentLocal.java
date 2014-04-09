@@ -9,9 +9,10 @@ package com.mtpa.jpa.iface;
 /**
  *
  * @author MtpA
+ * 090414   Added exception throw as per class
  */
 public interface PaymentLocal {
 
-    void paymentTransaction(long vHomeActId, long vTpUserId, long vTpActId, double vAmount);
+    void paymentTransaction(long vHomeActId, long vTpUserId, long vTpActId, double vAmount) throws Exception;
     
 }

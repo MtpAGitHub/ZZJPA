@@ -1,8 +1,17 @@
-//020414    MtpA    Updated so that won't try and convert the same currency
-//310314    MtpA    Created
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
 package com.mtpa.jpa.ejb;
 
+/**
+ *
+ * @author MtpA
+ * 090414   Error picked up during testing.  Now throw all exceptions rather than catch as nothing can be done at this point to recover
+ * 310314   Created class
+ */
 import com.mtpa.jpa.iface.ConvertCurrencyLocal;
 import com.mtpa.jpa.iface.RESTfulClientLocal;
 import com.mtpa.jpa.enums.CurrencyEnum;
@@ -34,17 +43,14 @@ public class ConvertCurrencyBean implements ConvertCurrencyLocal {
     }
 
     @Override
-    public double ConvertCurrency(double vAmount, CurrencyEnum vCurrencyFrom, CurrencyEnum vCurrencyTo) {
+    public double ConvertCurrency(double vAmount, CurrencyEnum vCurrencyFrom, CurrencyEnum vCurrencyTo) throws Exception {
+        //if the currency values are different then do a conversion otherwise just send back the same amount
         if (!vCurrencyFrom.equals(vCurrencyTo)) {
+            //call the RESTful service
             String restfulUrl = RESTFUL_URI_ROOT + vCurrencyFrom.getValidCurrency() + "/" + vCurrencyTo.getValidCurrency() + "/" + vAmount;
-            try {
-                String xmlResponse = restfulClient.restfulRequest(restfulUrl, ReqAcceptEnum.XML, ReqTypeEnum.GET, "");
-                return convAmt.getConversion(xmlResponse);
-            } catch (Exception e) {
-                errorTxt.setErrorText("It's all gone Pete Tong");
-                System.out.println(e);
-                return -1;
-            }        
+            //process the body of the response
+            String xmlResponse = restfulClient.restfulRequest(restfulUrl, ReqAcceptEnum.XML, ReqTypeEnum.GET, "");
+            return convAmt.getConversion(xmlResponse);
         } else {
             return vAmount;
         }

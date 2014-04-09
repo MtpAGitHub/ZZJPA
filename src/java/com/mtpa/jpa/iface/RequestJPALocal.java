@@ -15,12 +15,13 @@ import java.util.List;
 /**
  *
  * @author MtpA
+ * 090414   Added exception throw as per main class
  */
 public interface RequestJPALocal {
 
     void createRequest(long vRequestorId, long vRequesteeId, double vAmount, long vRequesteeAccId, CurrencyEnum vCurrecncy, Date vCreateDate);
     
-    void updateStatus(long vRequestId, RequestStatusEnum vRequestStatus);
+    void updateStatus(long vRequestId, RequestStatusEnum vRequestStatus) throws Exception;
 
     List<ENTRequest> getPendingList(RequestStatusEnum vRequestStatus);
             

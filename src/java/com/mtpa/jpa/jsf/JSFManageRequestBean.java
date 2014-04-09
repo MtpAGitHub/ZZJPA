@@ -9,6 +9,7 @@ package com.mtpa.jpa.jsf;
  /**
  *
  * @author MtpA
+ * 090414   Added exception try/catch if can't convert the currency & added formResponse to submitManRequest to deal with exceptions
  * 270314   Created to manage the requests made from another user
  *
  */
@@ -142,14 +143,15 @@ public class JSFManageRequestBean {
     //rejected = just update the status (no payments)
     //confirmed = update the status and make a payment to the selected user/account
     public String submitManRequest() {
+        String formResponse;
         switch(reqStatus) {
             case PENDING:
                 break;
             case REJECTED:
-                changeRequestStatus();
+                formResponse = changeRequestStatus();
                 break;
             case CONFIRMED:
-                changeRequestStatus();
+                formResponse = changeRequestStatus();
                 makePayment();
                 break;
             default:
@@ -159,13 +161,16 @@ public class JSFManageRequestBean {
     }
     
     //change the status on the request for payment
-    private void changeRequestStatus() {
+    private String changeRequestStatus() {
+        //split the drop down item into array using : as a delimiter
         String[] selectionArray = selectedRequest.split(":");
         try {
             requestId = Long.parseLong(selectionArray[0]);
             userRequest.updateStatus(requestId, reqStatus);
-        } catch (NumberFormatException e) {
-            errorTxt.setErrorText("Problem with the user record");
+            return "home";
+        } catch (Exception e) {
+            errorTxt.setErrorText("Problem with amending the status");
+            return null;
         }
     }
     
@@ -177,11 +182,15 @@ public class JSFManageRequestBean {
             if (curReq.getId() == requestId) {
                 double requestAmt = curReq.getRequestAmt();
                 ENTAccount myAccount = account.getSingleAccount(selectedAccount);
-                //convert the requestors amount into my currency and debit from my account
-                double debitAmt = 0 - convAmt.ConvertCurrency(requestAmt, curReq.getCurrency(), myAccount.getAcctCurrency());
-                accountPayment.paymentTransaction(myAccount.getId(), curReq.getRequestorId(), curReq.getAccountId(), debitAmt);                
-                //add request amount in original currency to tp account
-                accountPayment.paymentTransaction(curReq.getAccountId(), curUser.getUserId(), myAccount.getId(), requestAmt);
+                //convert the requestors amount into my currency and debit from my account (catches thrown exception from currency bean)
+                try {
+                    double debitAmt = 0 - convAmt.ConvertCurrency(requestAmt, curReq.getCurrency(), myAccount.getAcctCurrency());
+                    accountPayment.paymentTransaction(myAccount.getId(), curReq.getRequestorId(), curReq.getAccountId(), debitAmt);                
+                    //add request amount in original currency to tp account
+                    accountPayment.paymentTransaction(curReq.getAccountId(), curUser.getUserId(), myAccount.getId(), requestAmt);
+                } catch (Exception ex) {
+                    errorTxt.setErrorText("Error in converting the currency !");
+                }
                 break;
             }
         }

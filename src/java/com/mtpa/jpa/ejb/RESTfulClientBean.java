@@ -1,7 +1,18 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 //230214    -   MtpA    Create class
 
 package com.mtpa.jpa.ejb;
 
+/**
+ *
+ * @author MtpA
+ * 090414   Added exception throw if you do not get a 200 OK from the RESTFul service.  Can't handle here so pass up
+ * 230314   Created class based on previous version I had used in earlier project (hence the 'general nature' of the code)
+ */
 import com.mtpa.jpa.iface.RESTfulClientLocal;
 import com.mtpa.jpa.enums.ReqAcceptEnum;
 import com.mtpa.jpa.enums.ReqTypeEnum;
@@ -26,6 +37,7 @@ public class RESTfulClientBean implements RESTfulClientLocal {
         
     }
 
+    //standard getters & setters
     @Override
     public String getRestUrl() {
         return restUrl;
@@ -66,9 +78,11 @@ public class RESTfulClientBean implements RESTfulClientLocal {
         this.urlParms = urlParms;
     }
     
-    
+
+    //set up the RESTFul client with args passed into method to set the correct message type and response required (in this instance always XML)
     @Override
     public String restfulRequest(String vRESTurl, ReqAcceptEnum vAcceptFormat, ReqTypeEnum vRequestType, String vUrlParms) throws Exception {
+        //set up the Url and create a new restful connection
         URL reqURL = new URL(vRESTurl);
         HttpURLConnection restConnection = (HttpURLConnection) reqURL.openConnection();
         
@@ -87,10 +101,9 @@ public class RESTfulClientBean implements RESTfulClientLocal {
         
         // Send request
         int responseCode = restConnection.getResponseCode();
-        System.out.println("\nSending " + vRequestType.getReqType() + " request " + vAcceptFormat.getReqAccept() + "accept format to URL : " + reqURL);
-        System.out.println("Post parameters : " + vUrlParms);
-        System.out.println("Response Code : " + responseCode);
         
+        //only carry on if you have got an OK status back from the RESTFul service.  Otherwise throw an exception and handle at from end
+        //standard string building loop to read the input stream and convert into a String which we pass back
         if (responseCode == 200) {
             String inputLine;
             StringBuilder response;
@@ -102,7 +115,7 @@ public class RESTfulClientBean implements RESTfulClientLocal {
             System.out.println(response.toString());
             return response.toString();
         } else {
-            return null;            
+            throw new Exception();            
         }
     }    
 }

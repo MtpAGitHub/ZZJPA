@@ -1,7 +1,17 @@
-//310314    MtpA    Created (taken from my existing test project for WS and RESTful)
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
 package com.mtpa.jpa.ejb;
 
+/**
+ *
+ * @author MtpA
+ * 090414   Error picked up during testing.  Now throw all exceptions rather than catch as nothing can be done at this point to recover
+ * 310314   Created taking code from an existing test project for WS and RESTFul
+ */
 import com.mtpa.jpa.iface.RESTfulXMLExtractLocal;
 import java.io.IOException;
 import java.io.StringReader;
@@ -24,22 +34,20 @@ public class RESTfulXMLExtractBean implements RESTfulXMLExtractLocal {
         
     }
 
+    //standard XML parsing.  Build the DOM and then traverse the tree looking for the element CurrencyConversion
+    // then get the attribute ConvertedAmount before extracting the value it holds
     @Override
-    public double getConversion(String convData) {
+    public double getConversion(String convData) throws Exception {
         String baseCurrency="-1";
-        try {
-            Document xmlDomDoc;
-            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-            DocumentBuilder db = dbf.newDocumentBuilder();
-            xmlDomDoc = db.parse(new InputSource(new StringReader(convData)));
-            NodeList baseNodes = xmlDomDoc.getElementsByTagName("CurrencyConversion");
-            for (int i = 0; i < baseNodes.getLength(); i++) {
-                Node baseNode = baseNodes.item(i);
-                baseCurrency = baseNode.getAttributes().getNamedItem("ConvertedAmount").getNodeValue();
-            }
-            return Double.parseDouble(baseCurrency);
-        } catch (ParserConfigurationException | SAXException | IOException | NumberFormatException e) {
-            return -1;
+        Document xmlDomDoc;
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        DocumentBuilder db = dbf.newDocumentBuilder();
+        xmlDomDoc = db.parse(new InputSource(new StringReader(convData)));
+        NodeList baseNodes = xmlDomDoc.getElementsByTagName("CurrencyConversion");
+        for (int i = 0; i < baseNodes.getLength(); i++) {
+            Node baseNode = baseNodes.item(i);
+            baseCurrency = baseNode.getAttributes().getNamedItem("ConvertedAmount").getNodeValue();
         }
+        return Double.parseDouble(baseCurrency);
     }    
 }

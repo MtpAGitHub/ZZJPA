@@ -11,9 +11,10 @@ import com.mtpa.jpa.enums.CurrencyEnum;
 /**
  *
  * @author MtpA
+ * 090414   Added the thrown exception
  */
 public interface ConvertCurrencyLocal {
 
-    double ConvertCurrency(double vAmount, CurrencyEnum vCurrencyFrom, CurrencyEnum vCurrencyTo);
+    double ConvertCurrency(double vAmount, CurrencyEnum vCurrencyFrom, CurrencyEnum vCurrencyTo) throws Exception;
     
 }

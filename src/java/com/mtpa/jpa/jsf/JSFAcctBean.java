@@ -9,6 +9,7 @@ package com.mtpa.jpa.jsf;
  /**
  *
  * @author MtpA
+ * 090414   Added try/catch block on currency conversion
  * 310314   Added the currency conversion
  * 260314   Created backing bean
  *
@@ -78,15 +79,25 @@ public class JSFAcctBean {
 
     //change of value listener on the currency drop down triggered by onclick.  Based on the selected currency show the right amount on screen
     public void currencyChangeListener(AjaxBehaviorEvent currencyEvent) {
-        setAccountBal(convertAmt.ConvertCurrency(1000000, CurrencyEnum.GBP, accountCur));
+        //catch any problem when trying to convert the currency
+        try {
+            setAccountBal(convertAmt.ConvertCurrency(1000000, CurrencyEnum.GBP, accountCur));
+        } catch (Exception ex) {
+            errorTxt.setErrorText("Error converting currency !");
+        }
     }
     
     //response to pressing the submit button on the accout page.  Will check if there is already an account with the same name before creating
     public String submitAccount() {
         if (!accountDet.accountExist(accountName)) {
-            // add new account and default 'from' currency always GBP
-            accountDet.createAccount(curUser.getUserId(), accountName, convertAmt.ConvertCurrency(accountBal, CurrencyEnum.GBP, accountCur), accountCur);
-            return "home";
+            // add new account and default 'from' currency always GBP and catch any exception where the conversion could not take place
+            try {
+                accountDet.createAccount(curUser.getUserId(), accountName, convertAmt.ConvertCurrency(accountBal, CurrencyEnum.GBP, accountCur), accountCur);
+                return "home";
+            } catch (Exception ex) {
+                errorTxt.setErrorText("Error converting currency !");
+                return null;
+            }
         } else {
             errorTxt.setErrorText("Account already exists");
             return "home";
