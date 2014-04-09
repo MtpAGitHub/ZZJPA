@@ -9,6 +9,7 @@ package com.mtpa.jpa.jsf;
  /**
  *
  * @author MtpA
+ * 090414   Added code to filter request list to those that you need to pay (not your own requests) & also deal with empty list better
  * 090414   Added exception try/catch if can't convert the currency & added formResponse to submitManRequest to deal with exceptions
  * 270314   Created to manage the requests made from another user
  *
@@ -24,6 +25,7 @@ import com.mtpa.jpa.iface.PaymentLocal;
 import com.mtpa.jpa.iface.RequestJPALocal;
 import com.mtpa.jpa.iface.UserJPALocal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -117,19 +119,21 @@ public class JSFManageRequestBean {
     }
 
     //when looking to manage requests made of us we are only interested in PENDING ones as they have not yet been processed
-    //get all requests with a PENDING status and then process them into a string to show request id:username:amount:currency
+    //get all requests with a PENDING status (and the same as own user id) and then process them into a string to show request id:username:amount:currency
     //this is done to make the list readable on the screen
     public List<String> getAllPendingRequests() {
         requestList = userRequest.getPendingList(reqStatus.PENDING);
         List<String> reqDetailsList = new ArrayList<>();
         if (requestList.size() > 0) {
             for (ENTRequest curReq : requestList) {
-                ENTUser userDetail = tpUser.getUserById(curReq.getRequestorId());
-                String requestDetail = curReq.getId().toString() + ": " + userDetail.getUsername() + " : " + curReq.getRequestAmt() + " : " + curReq.getCurrency();
-                reqDetailsList.add(requestDetail);
+                if (curReq.getRequesteeId().equals(curUser.getUserId())) {
+                    ENTUser userDetail = tpUser.getUserById(curReq.getRequestorId());
+                    String requestDetail = curReq.getId().toString() + ": " + userDetail.getUsername() + " : " + curReq.getRequestAmt() + " : " + curReq.getCurrency();
+                    reqDetailsList.add(requestDetail);                    
+                }
             }
         } else {
-            reqDetailsList.add("NoRecordsFound");
+            reqDetailsList = Collections.<String>emptyList();
         }
         return reqDetailsList;
     }
@@ -143,21 +147,25 @@ public class JSFManageRequestBean {
     //rejected = just update the status (no payments)
     //confirmed = update the status and make a payment to the selected user/account
     public String submitManRequest() {
-        String formResponse;
-        switch(reqStatus) {
-            case PENDING:
-                break;
-            case REJECTED:
-                formResponse = changeRequestStatus();
-                break;
-            case CONFIRMED:
-                formResponse = changeRequestStatus();
-                makePayment();
-                break;
-            default:
-                break;
+        if (selectedRequest != null) {
+            String formResponse;
+            switch(reqStatus) {
+                case PENDING:
+                    break;
+                case REJECTED:
+                    formResponse = changeRequestStatus();
+                    break;
+                case CONFIRMED:
+                    formResponse = changeRequestStatus();
+                    makePayment();
+                    break;
+                default:
+                    break;
+            }
+            return "home";            
+        } else {
+            return null;
         }
-        return "home";
     }
     
     //change the status on the request for payment
