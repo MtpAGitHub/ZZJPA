@@ -9,9 +9,11 @@ package com.mtpa.jpa.jsf;
 /**
  *
  * @author MtpA
+ * 090414   Added check to see if user already registered
  * 060414   Add new arg to registerUser to utilise enum and make safe allocation as a USER (always from this screen)
  * 230314   Created bean
  */
+import com.mtpa.jpa.entity.ENTUser;
 import com.mtpa.jpa.enums.UserGroupEnum;
 import com.mtpa.jpa.iface.DateStampLocal;
 import com.mtpa.jpa.iface.UserJPALocal;
@@ -33,6 +35,8 @@ public class JSFRegisterBean {
      //uses JSF backing beans from the JSF container
     @Inject
     JSFDebugBean debugMsg;
+    @Inject
+    JSFErrorBean errorTxt;
     
     private String  userForename;
     private String  userSurname;
@@ -93,10 +97,17 @@ public class JSFRegisterBean {
         this.userGroup = userGroup;
     }
 
+    //do a check to see if the username already exists
     //register the new user and utilise the ENUM to make sure the role cannot be invalid (default is USER)
     public String registerUser() {
-        registeredUser.setUserDetails(userForename, userSurname, userUsername, userPassword, userGroup, registerDate.getWsDateStamp());
-        debugMsg.setDebugText("We have registered");
-        return "index";
+        ENTUser existingUser = registeredUser.getUserByName(userUsername);
+        if (existingUser == null) {
+            registeredUser.setUserDetails(userForename, userSurname, userUsername, userPassword, userGroup, registerDate.getWsDateStamp());
+            debugMsg.setDebugText("We have registered");
+            return "index";            
+        } else {
+            errorTxt.setErrorText("User " + userUsername + " is already registered");
+            return null;
+        }
     }
 }

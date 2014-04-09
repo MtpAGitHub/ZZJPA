@@ -16,7 +16,7 @@
         <navigation-case>
             <from-outcome>register</from-outcome>
             <to-view-id>/newUser.xhtml</to-view-id>
-            <!--            <redirect></redirect>-->
+            <redirect></redirect>
         </navigation-case>
         <navigation-case>
             <from-outcome>admin</from-outcome>
@@ -26,7 +26,7 @@
         <navigation-case>
             <from-outcome>loginerr</from-outcome>
             <to-view-id>/loginError.xhtml</to-view-id>
-            <!--            <redirect></redirect>-->
+            <redirect></redirect>
         </navigation-case>
     </navigation-rule>
 
@@ -37,7 +37,7 @@
         <navigation-case>
             <from-outcome>index</from-outcome>
             <to-view-id>/index.xhtml</to-view-id>
-            <!--            <redirect></redirect>-->
+            <redirect></redirect>
         </navigation-case>
     </navigation-rule>
 
@@ -48,13 +48,19 @@
         <navigation-case>
             <from-outcome>index</from-outcome>
             <to-view-id>/index.xhtml</to-view-id>
-            <!--            <redirect></redirect>-->
+            <redirect></redirect>
         </navigation-case>
         <navigation-case>
             <from-outcome>admin</from-outcome>
             <to-view-id>/admin/adminMain.xhtml</to-view-id>
-            <!--            <redirect></redirect>-->
+            <redirect></redirect>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>admin</from-outcome>
+            <to-view-id>/admin/adminMain.xhtml</to-view-id>
+            <redirect></redirect>
+        </navigation-case>
+
     </navigation-rule>
 
 <!-- home page -->
@@ -64,27 +70,27 @@
         <navigation-case>
             <from-outcome>logout</from-outcome>
             <to-view-id>/logout.xhtml</to-view-id>
-            <!--            <redirect></redirect>-->
+            <redirect></redirect>
         </navigation-case>
         <navigation-case>
             <from-outcome>account</from-outcome>
             <to-view-id>/user/newAccount.xhtml</to-view-id>
-            <!--            <redirect></redirect>-->
+            <redirect></redirect>
         </navigation-case>
         <navigation-case>
             <from-outcome>payment</from-outcome>
             <to-view-id>/user/newPayment.xhtml</to-view-id>
-            <!--            <redirect></redirect>-->
+            <redirect></redirect>
         </navigation-case>
         <navigation-case>
             <from-outcome>request</from-outcome>
             <to-view-id>/user/newRequest.xhtml</to-view-id>
-            <!--            <redirect></redirect>-->
+            <redirect></redirect>
         </navigation-case>
         <navigation-case>
             <from-outcome>manrequest</from-outcome>
             <to-view-id>/user/manRequest.xhtml</to-view-id>
-            <!--            <redirect></redirect>-->
+            <redirect></redirect>
         </navigation-case>
     </navigation-rule>
 
@@ -95,7 +101,7 @@
         <navigation-case>
             <from-outcome>home</from-outcome>
             <to-view-id>/user/homePage.xhtml</to-view-id>
-            <!--            <redirect></redirect>-->
+            <redirect></redirect>
         </navigation-case>
     </navigation-rule>
 
@@ -106,7 +112,7 @@
         <navigation-case>
             <from-outcome>home</from-outcome>
             <to-view-id>/user/homePage.xhtml</to-view-id>
-            <!--            <redirect></redirect>-->
+            <redirect></redirect>
         </navigation-case>
     </navigation-rule>
 
@@ -117,7 +123,7 @@
         <navigation-case>
             <from-outcome>home</from-outcome>
             <to-view-id>/user/homePage.xhtml</to-view-id>
-            <!--            <redirect></redirect>-->
+            <redirect></redirect>
         </navigation-case>
     </navigation-rule>
 
@@ -128,7 +134,7 @@
         <navigation-case>
             <from-outcome>home</from-outcome>
             <to-view-id>/user/homePage.xhtml</to-view-id>
-            <!--            <redirect></redirect>-->
+            <redirect></redirect>
         </navigation-case>
     </navigation-rule>
 
@@ -139,12 +145,12 @@
         <navigation-case>
             <from-outcome>adminreg</from-outcome>
             <to-view-id>/admin/adminRegister.xhtml</to-view-id>
-            <!--            <redirect></redirect>-->
+            <redirect></redirect>
         </navigation-case>
         <navigation-case>
             <from-outcome>logout</from-outcome>
             <to-view-id>/logout.xhtml</to-view-id>
-            <!--            <redirect></redirect>-->
+            <redirect></redirect>
         </navigation-case>
     </navigation-rule>
 
@@ -155,17 +161,17 @@
         <navigation-case>
             <from-outcome>adminhome</from-outcome>
             <to-view-id>/admin/adminHome.xhtml</to-view-id>
-            <!--            <redirect></redirect>-->
+            <redirect></redirect>
         </navigation-case>
         <navigation-case>
             <from-outcome>index</from-outcome>
             <to-view-id>/admin/adminHome.xhtml</to-view-id>
-            <!--            <redirect></redirect>-->
+            <redirect></redirect>
         </navigation-case>
         <navigation-case>
             <from-outcome>logout</from-outcome>
             <to-view-id>/logout.xhtml</to-view-id>
-            <!--            <redirect></redirect>-->
+            <redirect></redirect>
         </navigation-case>
     </navigation-rule>
 

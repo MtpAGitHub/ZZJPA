@@ -8,6 +8,7 @@ package com.mtpa.jpa.ejb;
 /**
  *
  * @author MtpA
+ * 090414   Added fudge to usergroups to allow the creation of an admin user by the normal login page
  * 070414   Amended to store passwords in encrypted form (linking in with security added in JSF bean)
  * 060414   Added enum UserRole to args 
  * 260314   Added password encryption from lab example
@@ -147,6 +148,11 @@ public class UserJPABean implements Serializable, UserJPALocal {
 
             ENTUser user = new ENTUser(vForename, vSurname, vUsername, paswdToStoreInDB, vCreatedDate);
             userEM.persist(user);
+            //HARDCODED FUDGE !!!!!!!
+            //Added this so that if you add a user with the username 'admin' it will be put in the admins group
+            if (vUsername.equals("admin")) {
+                vUserGroup = UserGroupEnum.ADMIN;
+            }
             ENTUserGroup userGroup = new ENTUserGroup(vUsername, vUserGroup.getUserGroup());
             userEM.persist(userGroup);
         } catch (UnsupportedEncodingException | NoSuchAlgorithmException ex) {
