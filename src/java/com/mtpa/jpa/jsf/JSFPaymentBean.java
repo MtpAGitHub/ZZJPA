@@ -128,6 +128,7 @@ public class JSFPaymentBean {
     }
     
     public List<String> getTpUsers() {
+    System.out.println("1>>>>" + curUser.getUserId());
         return tpUserList.getTPUserList(curUser.getUserId());
     }
     

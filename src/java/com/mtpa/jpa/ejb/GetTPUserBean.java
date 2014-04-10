@@ -40,7 +40,6 @@ public class GetTPUserBean implements GetTPUserLocal {
         if (userList.size() > 0) {
             for (ENTUser curUser : userList) {
                 usernameList.add(curUser.getUsername());
-                break;
             }
             return usernameList;
         } else {
